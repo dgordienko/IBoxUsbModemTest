@@ -1,0 +1,74 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="ContentModelStore">
+    <e p="$USER_HOME$/.cache/JetBrains/Rider2020.1/extResources" t="IncludeRecursive" />
+    <e p="$USER_HOME$/.cache/JetBrains/Rider2020.1/resharper-host/local/Transient/ReSharperHost/v201/SolutionCaches/_IBoxUsbModemTest.-748266665.00" t="ExcludeRecursive" />
+    <e p="$PROJECT_DIR$" t="IncludeFlat">
+      <e p="IBoxUsbModemTest.sln" t="IncludeFlat" />
+      <e p="IBoxUsbModemUnitTest" t="IncludeRecursive">
+        <e p="IBoxUsbModemUnitTest.csproj" t="IncludeRecursive" />
+        <e p="Modem" t="Include">
+          <e p="Adapter.cs" t="Include" />
+          <e p="ConnectConfiguration.cs" t="Include" />
+          <e p="ConnectionInfo.cs" t="Include" />
+          <e p="ConnectionType.cs" t="Include" />
+          <e p="ConnectionTypeEx.cs" t="Include" />
+          <e p="DbStorageItem.cs" t="Include" />
+          <e p="DeviceConfiguration.cs" t="Include" />
+          <e p="Disposable.cs" t="Include" />
+          <e p="GprsProvider.cs" t="Include" />
+          <e p="GprsProviderEx.cs" t="Include" />
+          <e p="HostEnvironment.cs" t="Include" />
+          <e p="HostOsType.cs" t="Include" />
+          <e p="IAdapter.cs" t="Include" />
+          <e p="IDisposableService.cs" t="Include" />
+          <e p="IManagerConfigurationService.cs" t="Include" />
+          <e p="IModem.cs" t="Include" />
+          <e p="ModelModem.cs" t="Include" />
+          <e p="ModelModemEx.cs" t="Include" />
+          <e p="Modem.cs" t="Include" />
+          <e p="ModemSettingsExtentions.cs" t="Include" />
+          <e p="ModemStatus.cs" t="Include" />
+          <e p="ShellConsole.cs" t="Include" />
+          <e p="SignalQuality.cs" t="Include" />
+        </e>
+        <e p="Properties" t="Include">
+          <e p="AssemblyInfo.cs" t="Include" />
+        </e>
+        <e p="UsbModemTestCase.cs" t="Include" />
+        <e p="bin" t="ExcludeRecursive" />
+        <e p="obj" t="ExcludeRecursive" />
+        <e p="packages.config" t="Include" />
+      </e>
+      <e p="packages" t="ExcludeRecursive">
+        <e p="SQLitePCLRaw.lib.e_sqlite3.2.0.2/runtimes" t="Include">
+          <e p="linux-arm" t="Include">
+            <e p="native" t="Include">
+              <e p="libe_sqlite3.so" t="Include" />
+            </e>
+          </e>
+          <e p="linux-arm64" t="Include">
+            <e p="native" t="Include">
+              <e p="libe_sqlite3.so" t="Include" />
+            </e>
+          </e>
+          <e p="linux-armel" t="Include">
+            <e p="native" t="Include">
+              <e p="libe_sqlite3.so" t="Include" />
+            </e>
+          </e>
+          <e p="linux-x64" t="Include">
+            <e p="native" t="Include">
+              <e p="libe_sqlite3.so" t="Include" />
+            </e>
+          </e>
+          <e p="linux-x86" t="Include">
+            <e p="native" t="Include">
+              <e p="libe_sqlite3.so" t="Include" />
+            </e>
+          </e>
+        </e>
+      </e>
+    </e>
+  </component>
+</project>
