@@ -1,4 +1,6 @@
 ﻿
+using System.IO.Ports;
+using System.Xml.Linq;
 using FluentAssertions;
 using IBoxUsbModemUnitTest.Modem;
 using Serilog;
@@ -8,7 +10,7 @@ namespace IBoxUsbModemUnitTest
 {
     public class UsbModemTestCase
     {
-        [Theory(Name ="Test USB Modem")]
+        [Theory]
         [InlineData("/dev/ttyS0", 115200)]
         public void TestConnectSerial(string port, int baudrate)
         {
@@ -21,6 +23,7 @@ namespace IBoxUsbModemUnitTest
                 PortName = port
             };
             configuration.Should().NotBeNull();
+            var ports = SerialPort.GetPortNames();
             var modem = new Modem.Modem(logger, configuration);
             modem.Should().NotBeNull();
         }
