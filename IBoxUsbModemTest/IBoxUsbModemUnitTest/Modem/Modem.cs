@@ -11,6 +11,13 @@ using Serilog;
 
 namespace IBoxUsbModemUnitTest.Modem
 {
+    public static class FormatResponse
+    {
+        public static string ToResponseData(this string value)
+        {
+            return $"{ value.Replace('\r', '|').Replace('\n', '|')}";
+        }
+    }
     /// <summary>
     /// MC35    http://www.radiofid.ru/upload_data//at-commands/mc35at.pdf
     /// Wavecom http://nsk-embedded-downloads.googlecode.com/files/wavecom%202400a%20at%20commands.pdf
@@ -95,21 +102,28 @@ namespace IBoxUsbModemUnitTest.Modem
         /// </summary>
         /// <param name="port">порт подлкючения устройства</param>
         /// <param name="command">Комманда</param>
-        private string SendATCommand(SerialPort port, string command)
+        public string SendATCommand(SerialPort port, string command)
         {
             logger.Information(string.Format("Write: {0}", command));
             var buffer = new StringBuilder();
             var response = string.Empty;
             try
             {
-                if (!port.IsOpen) port.Open();
+                if (!port.IsOpen)
+                {
+                    port.Open();
+                    port.DiscardInBuffer();
+                    port.DiscardOutBuffer();
+                }
+                
                 var data = Encoding.ASCII.GetBytes($"{command}\r");
                 port.Write(data, 0, data.Length);
+
                 Thread.Sleep(300);
+
                 if (port.BytesToRead > 0)
                 {
-                    while (port.BytesToRead != 0)
-                        buffer.Append(port.ReadExisting());
+                    while (port.BytesToRead != 0) buffer.Append(port.ReadExisting());
                     response = buffer.ToString();
                     var readData = $"{ response.Replace('\r', '|').Replace('\n', '|')}";
                     logger.Information(string.Format($"Read: {readData}"));
@@ -121,14 +135,14 @@ namespace IBoxUsbModemUnitTest.Modem
             }
             catch (IOException exception)
             {
-                logger.Information($"Modem.SendATCommand Exception: {exception.Message}");
-                throw exception;
+                logger.Error(exception, $"Modem.SendATCommand Exception: {exception.Message}");
+                //throw exception;
             }
             catch (Exception exception)
             {
                 // TODO: debug logger??? для неизвестной ошибки пусть  падает в лог ее стектрейс (для продуктовой эксплуатации  скорее всего неприменимо) 
-                logger.Information($"Modem.SendATCommand Exception: {exception}{Environment.NewLine}{exception.StackTrace}");
-                throw exception; // TODO: уточнить поведение на тесте 
+                logger.Error(exception,$"Modem.SendATCommand Exception: {exception.Message}{Environment.NewLine}{exception.StackTrace}");
+                //throw exception; // TODO: уточнить поведение на тесте 
             }
             finally
             {
@@ -142,7 +156,7 @@ namespace IBoxUsbModemUnitTest.Modem
             return response;
         }
 
-        private SerialPort ConfigurePort()
+        public SerialPort ConfigurePort()
         {
             var result = new SerialPort(_portName, _baudeRate, Parity.None, 8, StopBits.One)
             {
@@ -221,7 +235,7 @@ namespace IBoxUsbModemUnitTest.Modem
                     //Manufacturer
                     response = retry.Execute(() =>
                     {
-                        return SendATCommand(port, "AT+GMI\r");
+                        return SendATCommand(port, "AT+GMI");
                     });
                     matches = Regex.Matches(response, @"[\S ]+", RegexOptions.Singleline);
                     if ((matches.Count >= 2) && ("OK".Equals(matches[matches.Count - 1].Value, StringComparison.OrdinalIgnoreCase)))
@@ -251,24 +265,22 @@ namespace IBoxUsbModemUnitTest.Modem
                     }
                     result.IsSuccess &= vNetStatus == 1;
                     description.Add("Сеть: " + vNetStatusDescr);
-
-                    //GetImei() - код модема как сетевого у-ва
-
-                    response = SendATCommand(port, "AT+CGSN");
+                    response = retry.Execute(()=>{
+                        return SendATCommand(port, "AT+CGSN");
+                    });
 
                     matches = Regex.Matches(response, @"\d{10,}", RegexOptions.IgnoreCase);
                     if (matches.Count > 0)
                         // Imei is serial number
                         result.Imei = result.SerialNumber = matches[0].Value;
+                    // AT+CGMR  Request revision identification of software status
+                    response =  retry.Execute(()=> { 
+                        return SendATCommand(port, "AT+CGMR"); 
+                    }); 
 
-                    //GetSerialNumber()
-                    response = SendATCommand(port, "AT+CGMR\r"); // AT+CGMR  Request revision identification of software status
                     matches = Regex.Matches(response, @"[\S ]+", RegexOptions.Singleline);
                     if ((matches.Count >= 2) && ("OK".Equals(matches[matches.Count - 1].Value, StringComparison.OrdinalIgnoreCase)))
                         result.RevisionId = matches[matches.Count - 2].Value;
-
-                    //GetSignalQuality()
-                    // "AT+CSQ\r\r\n+CSQ: 26,99\r\n\r\nOK\r\n"      "\r\n+CSQ: 20,0\r\n\r\nOK\r\n"
                     var quality = GetSignalQuality(port);
                     result.SignalQuality = quality;
                 }
