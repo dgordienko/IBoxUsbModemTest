@@ -1,9 +1,8 @@
-
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio 15
+# Visual Studio Version 16
+VisualStudioVersion = 16.0.30011.22
+MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "IBoxUsbModemUnitTest", "IBoxUsbModemUnitTest\IBoxUsbModemUnitTest.csproj", "{4F8A04FF-C621-4493-8B88-7FBD476B9D80}"
-EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Ports", "Ports\Ports.csproj", "{FA79F2F8-96E6-43E9-AD76-E71DF65E4727}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -15,9 +14,11 @@ Global
 		{4F8A04FF-C621-4493-8B88-7FBD476B9D80}.Debug|x86.Build.0 = Debug|Any CPU
 		{4F8A04FF-C621-4493-8B88-7FBD476B9D80}.Release|x86.ActiveCfg = Release|Any CPU
 		{4F8A04FF-C621-4493-8B88-7FBD476B9D80}.Release|x86.Build.0 = Release|Any CPU
-		{FA79F2F8-96E6-43E9-AD76-E71DF65E4727}.Debug|x86.ActiveCfg = Debug|x86
-		{FA79F2F8-96E6-43E9-AD76-E71DF65E4727}.Debug|x86.Build.0 = Debug|x86
-		{FA79F2F8-96E6-43E9-AD76-E71DF65E4727}.Release|x86.ActiveCfg = Release|x86
-		{FA79F2F8-96E6-43E9-AD76-E71DF65E4727}.Release|x86.Build.0 = Release|x86
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {C81159A7-F7D5-4AEB-9E4E-DFABF0697AD6}
 	EndGlobalSection
 EndGlobal

@@ -32,6 +32,7 @@ namespace IBoxUsbModemUnitTest.Modem
                 case ModelModem.Cinterion: return "BGS2-E";
                 case ModelModem.Quectel: return "Quectel M95";
                 case ModelModem.TU32: return "Huawei TU32";
+                case ModelModem.MU709: return "MU709s-2";
             }
             throw new ArgumentOutOfRangeException("...добавь case...");
         }
@@ -39,8 +40,8 @@ namespace IBoxUsbModemUnitTest.Modem
         public static ModelModem Parse(string val)
         {
             foreach (ModelModem e in Enum.GetValues(typeof(ModelModem)))
-                if ((e.Description().Equals(val, StringComparison.OrdinalIgnoreCase)) ||
-                    (e.ToString().Equals(val, StringComparison.OrdinalIgnoreCase)))
+                if (e.Description().Equals(val, StringComparison.OrdinalIgnoreCase) ||
+                    e.ToString().Equals(val, StringComparison.OrdinalIgnoreCase))
                     return e;
             throw new ArgumentException(string.Format("Unknown value '{0}'", val));
         }
@@ -57,6 +58,10 @@ namespace IBoxUsbModemUnitTest.Modem
                 return ModelModem.Wavecom;
             if (atManufacturer.StartsWith("PANTECH", StringComparison.OrdinalIgnoreCase)) // PANTECH UM175      PANTECH UM175AL
                 return ModelModem.PantechUM175;
+
+            if (atManufacturer.StartsWith("Huawei", StringComparison.OrdinalIgnoreCase)) 
+                return ModelModem.MU709;            
+
             return ModelModem.Unknown;
         }
 
@@ -73,6 +78,9 @@ namespace IBoxUsbModemUnitTest.Modem
                 return ModelModem.Wavecom;
             if (atModelName.StartsWith("UM175", StringComparison.OrdinalIgnoreCase)) // PANTECH UM175      PANTECH UM175AL
                 return ModelModem.PantechUM175;
+
+            if (atModelName.StartsWith("MU709", StringComparison.OrdinalIgnoreCase)) 
+                return ModelModem.MU709;
 
             return ModelModem.Unknown;
         }

@@ -238,13 +238,13 @@ namespace IBoxUsbModemUnitTest.Modem
                         return SendATCommand(port, "AT+GMI");
                     });
                     matches = Regex.Matches(response, @"[\S ]+", RegexOptions.Singleline);
-                    if ((matches.Count >= 2) && ("OK".Equals(matches[matches.Count - 1].Value, StringComparison.OrdinalIgnoreCase)))
+                    if ((matches.Count >= 2) && "OK".Equals(matches[matches.Count - 1].Value, StringComparison.OrdinalIgnoreCase))
                     {
                         result.Manufacturer = matches[matches.Count - 2].Value.Trim();
                     }
                     var vModel = result.AsModel();//преобразует производитель+модель в модель
                     result.IsSuccess &= vModel != ModelModem.Unknown; //!string.IsNullOrEmpty(vModemStatus.ModelName);
-                    description.Add(vModel != ModelModem.Unknown ? "Есть модель" : "Нет модели");
+                    description.Add(vModel != ModelModem.Unknown ? "Detected" : "Unknown");
                     logger.Information(string.Format("Manufacturer: {0}", vModel));
 
                     //состояние сети
