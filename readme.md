@@ -1,4 +1,4 @@
-# Huawei Technologies Co., Ltd. ME906s
+# Huawei Technologies Co., Ltd. MU709s
 
 ## Enviroment
 
