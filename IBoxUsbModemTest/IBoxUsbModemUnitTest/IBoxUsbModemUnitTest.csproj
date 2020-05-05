@@ -195,7 +195,9 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="UsbModemTestCase.cs" />
+    <Compile Include="HuaweiTechnologiesModemIntegrationTest.cs" />
+    <Compile Include="HuaweiTechnologiesModemShellTest.cs" />
+    <Compile Include="HuaweiTechnologiesModemNetworkTest.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Modem\IAdapter.cs" />
     <Compile Include="Modem\Disposable.cs" />

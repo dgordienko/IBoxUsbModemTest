@@ -75,7 +75,7 @@ namespace IBoxUsbModemUnitTest.Modem
         public static GprsProvider Parse(string val)
         {
             foreach (GprsProvider e in Enum.GetValues(typeof(GprsProvider)))
-                if ((e.ProviderName().Equals(val, StringComparison.OrdinalIgnoreCase)) ||
+                if (e.ProviderName().Equals(val, StringComparison.OrdinalIgnoreCase) ||
                     (e.ToString().Equals(val, StringComparison.OrdinalIgnoreCase)))
                     return e;
             throw new ArgumentException(string.Format("Unknown value '{0}'", val));
@@ -131,6 +131,8 @@ namespace IBoxUsbModemUnitTest.Modem
                 case ModelModem.PantechUM175:
                     return self.AdditionalInitCommand();
                 case ModelModem.Wavecom: return string.Empty;
+                case ModelModem.MU709:
+                    return self.AdditionalInitCommand(); // TODO: выяснить при тестировании
             }
             throw new ArgumentOutOfRangeException("...добавь case...");
         }
