@@ -13,12 +13,10 @@ namespace IBoxUsbModemUnitTest
     /// </summary>
     public class HuaweiTechnologiesModemNetworkTest
     {
-        private readonly Logger _logger;
-        public HuaweiTechnologiesModemNetworkTest()
-        {
-            _logger = new LoggerConfiguration().
-                WriteTo.Console().CreateLogger();
-        }
+        private readonly Logger _logger = new LoggerConfiguration()
+            .WriteTo.File("HuaweiTechnologiesModemNetworkTest.txt", rollingInterval: RollingInterval.Day)
+            .WriteTo.Console().CreateLogger();
+
 
         private readonly ConnectConfiguration _configuration = new ConnectConfiguration
         {
