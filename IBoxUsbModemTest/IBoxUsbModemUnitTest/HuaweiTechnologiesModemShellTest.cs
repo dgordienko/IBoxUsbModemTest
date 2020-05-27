@@ -15,7 +15,9 @@ namespace IBoxUsbModemUnitTest
     /// </summary>
     public class HuaweiTechnologiesModemShellTest
     {
-        private readonly Logger _logger = new LoggerConfiguration().WriteTo.Console().CreateLogger();
+        private readonly Logger _logger = new LoggerConfiguration()
+            .WriteTo.File("HuaweiTechnologiesModemShellTest.txt", rollingInterval: RollingInterval.Day)
+            .WriteTo.Console().CreateLogger();
 
         private readonly ConnectConfiguration _configuration = new ConnectConfiguration
         {
@@ -47,7 +49,7 @@ namespace IBoxUsbModemUnitTest
         /// Reset the module
         /// </summary>
         /// <param name="command">AT^RESET</param>
-        [Theory(DisplayName = "Reset the module",Skip ="reset nodem, not requarid")]        
+        [Theory(DisplayName = "Reset the module")]        
         [InlineData("AT^RESET")]
         public void ResetModule(string command)
         {
