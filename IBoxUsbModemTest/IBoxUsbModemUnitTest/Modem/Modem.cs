@@ -136,13 +136,13 @@ namespace IBoxUsbModemUnitTest.Modem
             catch (IOException exception)
             {
                 logger.Error(exception, $"Modem.SendATCommand Exception: {exception.Message}");
-                //throw exception;
+                throw exception;
             }
             catch (Exception exception)
             {
                 // TODO: debug logger??? для неизвестной ошибки пусть  падает в лог ее стектрейс (для продуктовой эксплуатации  скорее всего неприменимо) 
                 logger.Error(exception,$"Modem.SendATCommand Exception: {exception.Message}{Environment.NewLine}{exception.StackTrace}");
-                //throw exception; // TODO: уточнить поведение на тесте 
+                throw exception; // TODO: уточнить поведение на тесте 
             }
             finally
             {

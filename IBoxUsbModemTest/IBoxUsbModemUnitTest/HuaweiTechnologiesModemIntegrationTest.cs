@@ -91,13 +91,10 @@ namespace IBoxUsbModemUnitTest
                 {
                     _logger.Debug(ex.Message, ex.StackTrace);
                     errorCount++;
-                    continue;
-                }
-                //проверка на то что найден хотя бы один модем
-                errorCount.Should().BeLessThan(portList.Count);
+                    //continue;
+                }                                
             }
+            errorCount.Should().BeLessThan(portList.Count);
         }
     }
-
- 
 }

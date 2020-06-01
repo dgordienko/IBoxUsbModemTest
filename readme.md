@@ -48,3 +48,36 @@ alias xunit="mono IBoxUsbModemTest/packages/xunit.runner.console.2.4.1/tools/net
 xunit IBoxUsbModemTest/IBoxUsbModemUnitTest/bin/Debug/IBoxUsbModemUnitTest.dll -html report_test.html
 
 ```
+
+Установка модема в OC ArchLinux
+~~~
+ # проверка подключенного порта 
+ ls -l /dev/ | grep USB
+~~~
+
+В случае, если не обнаружены подключенные устройства выполнить команду
+
+~~~
+lsusb | grep MU709
+~~~
+
+Результатом выполнения команды будет вывод следющего вида
+~~~
+Bus 003 Device 004: ID 12d1:1c25 Huawei Technoligies Co., Ltd. MU709
+~~~
+Создать, или скопировать файл с правилами
+
+~~~
+vim /etc/udev/rules.d/10-mu709.rules
+~~~
+со следующим содержимым
+~~~
+ACTION=="add", SUBSYSTEM=="usb", ATTRS{idVendor}=="12d1", ATTRS{idProduct}=="1c25", MODE="0666", SYMLINK="ttyUSB0"
+~~~
+
+Перезагрузить udev и выполнить проверку порта.
+~~~
+udevadm control --reload-rules
+
+ls -l /dev/ | grep USB
+~~~

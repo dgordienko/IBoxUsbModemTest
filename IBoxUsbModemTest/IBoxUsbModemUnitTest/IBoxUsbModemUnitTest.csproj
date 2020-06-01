@@ -225,6 +225,7 @@
     <Compile Include="Modem\Modem.cs" />
     <Compile Include="Modem\IManagerConfigurationService.cs" />
     <Compile Include="Modem\IDisposableService.cs" />
+    <Compile Include="HuaweiTechnologiesModemInstallationTest.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="app.config">
