@@ -97,14 +97,4 @@ namespace IBoxUsbModemUnitTest
             errorCount.Should().BeLessThan(portList.Count);
         }
     }
-
-
-    public class HuaweiTechnologiesModemInstallationTest
-    {
-        [Fact(DisplayName ="Set OS modem rules")]
-        public void ApplyConfigurationRulles()
-        {
-
-        }
-    }
 }
