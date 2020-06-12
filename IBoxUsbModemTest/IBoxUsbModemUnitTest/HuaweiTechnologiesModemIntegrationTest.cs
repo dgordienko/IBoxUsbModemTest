@@ -53,7 +53,7 @@ namespace IBoxUsbModemUnitTest
         /// <summary>
         /// Перебор списка с именами портов и отправыка команды echo
         /// </summary>
-        [Fact(DisplayName ="Found active port")]
+        [Fact(DisplayName ="Found active port", Skip ="Obsolete")]
         public void PortConnectionCheck()
         {
 

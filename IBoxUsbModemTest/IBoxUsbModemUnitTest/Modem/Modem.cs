@@ -116,7 +116,7 @@ namespace IBoxUsbModemUnitTest.Modem
                     port.DiscardOutBuffer();
                 }
                 
-                var data = Encoding.ASCII.GetBytes($"{command}\r");
+                var data = Encoding.ASCII.GetBytes($"{command}\n");
                 port.Write(data, 0, data.Length);
 
                 Thread.Sleep(300);
