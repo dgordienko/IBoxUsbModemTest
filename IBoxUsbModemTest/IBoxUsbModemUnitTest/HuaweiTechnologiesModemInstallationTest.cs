@@ -5,7 +5,7 @@ namespace IBoxUsbModemUnitTest
 {
     public class HuaweiTechnologiesModemInstallationTest
     {
-        [Fact(DisplayName = "Set OS modem rules")]
+        [Fact(DisplayName = "Set OS modem rules", Skip ="Not implemented")]
         public void ApplyConfigurationRulles()
         {
            
