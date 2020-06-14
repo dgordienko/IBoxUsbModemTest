@@ -67,7 +67,7 @@ namespace IBoxUsbModemUnitTest.Modem
                 var regKey = Microsoft.Win32.Registry.LocalMachine.OpenSubKey(@"SOFTWARE\Microsoft\Windows NT\CurrentVersion");
                 // @"SOFTWARE\Wow6432Node\Microsoft\Windows NT\CurrentVersion"
                 if (regKey != null)
-                    OsVersion = string.Format("{0} ({1})", regKey.GetValue("ProductName"), OsVersion);
+                    OsVersion = $"{regKey.GetValue("ProductName")} ({OsVersion})";
             }
             catch (Exception ex)
             {
@@ -195,9 +195,7 @@ namespace IBoxUsbModemUnitTest.Modem
             }
         }
 
-        public static string ExeAssemblyVersion
-        {
-            get { return FileVersionInfo.GetVersionInfo(Assembly.GetExecutingAssembly().Location).FileVersion; }
-        }
+        public static string ExeAssemblyVersion => FileVersionInfo
+            .GetVersionInfo(Assembly.GetExecutingAssembly().Location).FileVersion;
     }
 }

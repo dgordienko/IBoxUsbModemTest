@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project>
+  <component name="MSBuildSolutionManager">
+    <option name="enabled" value="true" />
+    <option name="url" value="file://$PROJECT_DIR$/IBoxUsbModemTest.sln" />
+    <option name="projects">
+      <map>
+        <entry key="IBoxUsbModemUnitTest">
+          <value>
+            <ProjectOptions>
+              <option name="target" value="mono-dotnet" />
+              <option name="moduleName" value="IBoxUsbModemUnitTest" />
+            </ProjectOptions>
+          </value>
+        </entry>
+      </map>
+    </option>
+  </component>
+</project>

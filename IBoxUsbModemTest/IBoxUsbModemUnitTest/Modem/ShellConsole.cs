@@ -16,10 +16,7 @@ namespace IBoxUsbModemUnitTest.Modem
             Colored = WithDateTime = HostEnvironment.IsWindows;
         }
 
-        private static string DtNow
-        {
-            get { return DateTime.Now.ToString("[yyyy-MM-dd HH:mm:ss.fff]   "); }
-        }
+        private static string DtNow => DateTime.Now.ToString("[yyyy-MM-dd HH:mm:ss.fff]   ");
 
         #region WriteInfo
 

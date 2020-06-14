@@ -72,13 +72,29 @@ namespace IBoxUsbModemUnitTest
         [InlineData("ATE")]
         public void TestEcho(string command)
         {
-            var modem = new Modem.Modem(_logger, _configuration);
-            modem.ApplyConfiguration(_configuration);
-            var usb = modem.ConfigurePort();
-            var response = modem.SendATCommand(usb, command);
-            response.Should().NotBeNullOrEmpty("response should not be null");
-            var result = Regex.Matches(response, @"OK", RegexOptions.IgnoreCase).Count;
-            result.Should().BeGreaterThan(0, "result must be OK");
+            var serial = ModemSerialPort.Instance;
+            
+            serial.OnSerialPortOpened += (sender, e) => {
+                _logger.Debug($"call OnSerialPortOpened event; port={_configuration.PortName}");
+                if (e)
+                {
+                    ((ModemSerialPort) sender).SendString(command);
+                }
+            };
+
+            serial.OnStatusChanged += (sender, e) => {
+                _logger.Debug($"call OnStatusChanged event; port={_configuration.PortName}");
+            };
+            serial.OnDataReceived += (sender, e) =>
+            {
+                _logger.Debug($"call OnDataReceived event; port={_configuration.PortName}");
+                var result = Regex.Matches(e, @"OK", RegexOptions.IgnoreCase).Count;
+                result.Should().BeGreaterThan(0, "result must be OK");
+                (sender as ModemSerialPort)?.Close();
+            };
+            
+            serial.Open(portname:_configuration.PortName, baudrate:_configuration.BaudRate);
+            
         }
 
         [Theory(DisplayName = "Restore factory settings")]
