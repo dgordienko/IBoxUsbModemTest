@@ -11,6 +11,199 @@ using Serilog;
 
 namespace IBoxUsbModemUnitTest.Modem
 {
+
+    public sealed class SerialPortHelper
+    {
+        private static readonly Lazy<SerialPortHelper> lazy = new Lazy<SerialPortHelper>(() => new SerialPortHelper());
+        public static SerialPortHelper Instance { get { return lazy.Value; } }
+
+        private readonly SerialPort serial;
+        private Thread _readThread;
+        private volatile bool _keepReading;
+
+        private SerialPortHelper()
+        {
+            serial = new SerialPort();
+            _readThread = null;
+            _keepReading = false;
+        }
+
+        /// <summary>
+        /// Update the serial port status to the event subscriber
+        /// </summary>
+        public event EventHandler<string> OnStatusChanged;
+
+        /// <summary>
+        /// Update received data from the serial port to the event subscriber
+        /// </summary>
+        public event EventHandler<string> OnDataReceived;
+
+        /// <summary>
+        /// Update TRUE/FALSE for the serial port connection to the event subscriber
+        /// </summary>
+        public event EventHandler<bool> OnSerialPortOpened;
+
+        /// <summary>
+        /// Return TRUE if the serial port is currently connected
+        /// </summary>
+        public bool IsOpen { get { return serial.IsOpen; } }
+
+        /// <summary>
+        /// Open the serial port connection 
+        /// </summary>
+        /// <param name="portname">ttyUSB0 / ttyUSB1 / ttyUSB2 / etc.</param>
+        /// <param name="baudrate">115200/param>
+        /// <param name="parity">None / Odd / Even / Mark / Space</param>
+        /// <param name="databits">5 / 6 / 7 / 8</param>
+        /// <param name="stopbits">None / One / Two / OnePointFive</param>
+        /// <param name="handshake">None / XOnXOff / RequestToSend / RequestToSendXOnXOff</param>
+        public void Open(
+            string portname = "ttyUSB0",
+            int baudrate = 115200,
+            Parity parity = Parity.None,
+            int databits = 8,
+            StopBits stopbits = StopBits.One,
+            Handshake handshake = Handshake.None)
+        {
+            Close();
+
+            try
+            {
+                serial.PortName = portname;
+                serial.BaudRate = baudrate;
+                serial.Parity = parity;
+                serial.DataBits = databits;
+                serial.StopBits = stopbits;
+                serial.Handshake = handshake;
+
+                serial.ReadTimeout = 50;
+                serial.WriteTimeout = 50;
+
+                serial.Open();
+                StartReading();
+            }
+            catch (IOException)
+            {
+                OnStatusChanged?.Invoke(this, string.Format("{0} does not exist.", portname));
+            }
+            catch (UnauthorizedAccessException)
+            {
+                OnStatusChanged?.Invoke(this, string.Format("{0} already in use.", portname));
+            }
+            catch (Exception ex)
+            {
+                OnStatusChanged?.Invoke(this, "Error: " + ex.Message);
+            }
+
+            if (serial.IsOpen)
+            {
+                string sb = StopBits.None.ToString().Substring(0, 1);
+                switch (serial.StopBits)
+                {
+                    case StopBits.One:
+                        sb = "1"; break;
+                    case StopBits.OnePointFive:
+                        sb = "1.5"; break;
+                    case StopBits.Two:
+                        sb = "2"; break;
+                    default:
+                        break;
+                }
+
+                string p = serial.Parity.ToString().Substring(0, 1);
+                string hs = serial.Handshake == Handshake.None ? "No Handshake" : serial.Handshake.ToString();
+
+                OnStatusChanged?.Invoke(this, string.Format("Connected to {0}: {1} bps, {2}{3}{4}, {5}.",
+                    serial.PortName, serial.BaudRate, serial.DataBits,
+                    p, sb, hs));
+
+                OnSerialPortOpened?.Invoke(this, true);
+            }
+            else
+            {
+                OnStatusChanged?.Invoke(this, string.Format("{0} already in use.", portname));
+                OnSerialPortOpened?.Invoke(this, false);
+            }
+        }
+
+        /// <summary>
+        /// Close the serial port connection
+        /// </summary>
+        public void Close()
+        {
+            StopReading();
+            serial.Close();
+            OnStatusChanged?.Invoke(this, "Connection closed.");
+            OnSerialPortOpened?.Invoke(this, false);
+        }
+
+        /// <summary>
+        /// Send/write string to the serial port
+        /// </summary>
+        /// <param name="message"></param>
+        public void SendString(string message)
+        {
+            if (serial.IsOpen)
+            {
+                try
+                {
+
+                    serial.Write(message);
+
+                    OnStatusChanged?.Invoke(this, string.Format("Message sent: {0}", message));
+                }
+                catch (Exception ex)
+                {
+                    OnStatusChanged?.Invoke(this, string.Format("Failed to send string: {0}", ex.Message));
+                }
+            }
+        }
+
+        private void StartReading()
+        {
+            if (!_keepReading)
+            {
+                _keepReading = true;
+                _readThread = new Thread(ReadPort);
+                _readThread.Start();
+            }
+        }
+
+        private void StopReading()
+        {
+            if (_keepReading)
+            {
+                _keepReading = false;
+                _readThread.Join();
+                _readThread = null;
+            }
+        }
+
+        private void ReadPort()
+        {
+            while (_keepReading)
+            {
+                if (serial.IsOpen)
+                {
+                    var readBuffer = new byte[serial.ReadBufferSize + 1];
+                    try
+                    {
+                        var count = serial.Read(readBuffer, 0, serial.ReadBufferSize);
+                        var data = Encoding.ASCII.GetString(readBuffer, 0, count);
+                        OnDataReceived?.Invoke(this, data);
+                    }
+                    catch (TimeoutException) { }
+                }
+                else
+                {
+                    TimeSpan waitTime = new TimeSpan(0, 0, 0, 0, 300);
+                    Thread.Sleep(waitTime);
+                }
+            }
+        }
+    }
+
+
     public static class FormatResponse
     {
         public static string ToResponseData(this string value)
@@ -60,8 +253,8 @@ namespace IBoxUsbModemUnitTest.Modem
         /// </summary>
         /// <param name="logService">Logging</param>
         /// <param name="configurationService">configuration</param>
-        public Modem(ILogger logService,IManagerConfigurationService<ConnectConfiguration> configurationService)
-        {        
+        public Modem(ILogger logService, IManagerConfigurationService<ConnectConfiguration> configurationService)
+        {
             logger = logService;
             var configuration = configurationService.LoadConfiguration();
             SetPort(configuration.PortName, configuration.BaudRate);
@@ -115,8 +308,8 @@ namespace IBoxUsbModemUnitTest.Modem
                     port.DiscardInBuffer();
                     port.DiscardOutBuffer();
                 }
-                
-                var data = Encoding.ASCII.GetBytes($"{command}\n");
+
+                var data = Encoding.ASCII.GetBytes($"{command}\r\n");
                 port.Write(data, 0, data.Length);
 
                 Thread.Sleep(300);
@@ -141,7 +334,7 @@ namespace IBoxUsbModemUnitTest.Modem
             catch (Exception exception)
             {
                 // TODO: debug logger??? для неизвестной ошибки пусть  падает в лог ее стектрейс (для продуктовой эксплуатации  скорее всего неприменимо) 
-                logger.Error(exception,$"Modem.SendATCommand Exception: {exception.Message}{Environment.NewLine}{exception.StackTrace}");
+                logger.Error(exception, $"Modem.SendATCommand Exception: {exception.Message}{Environment.NewLine}{exception.StackTrace}");
                 throw exception; // TODO: уточнить поведение на тесте 
             }
             finally
@@ -265,7 +458,8 @@ namespace IBoxUsbModemUnitTest.Modem
                     }
                     result.IsSuccess &= vNetStatus == 1;
                     description.Add("Сеть: " + vNetStatusDescr);
-                    response = retry.Execute(()=>{
+                    response = retry.Execute(() =>
+                    {
                         return SendATCommand(port, "AT+CGSN");
                     });
 
@@ -274,9 +468,10 @@ namespace IBoxUsbModemUnitTest.Modem
                         // Imei is serial number
                         result.Imei = result.SerialNumber = matches[0].Value;
                     // AT+CGMR  Request revision identification of software status
-                    response =  retry.Execute(()=> { 
-                        return SendATCommand(port, "AT+CGMR"); 
-                    }); 
+                    response = retry.Execute(() =>
+                    {
+                        return SendATCommand(port, "AT+CGMR");
+                    });
 
                     matches = Regex.Matches(response, @"[\S ]+", RegexOptions.Singleline);
                     if ((matches.Count >= 2) && ("OK".Equals(matches[matches.Count - 1].Value, StringComparison.OrdinalIgnoreCase)))
