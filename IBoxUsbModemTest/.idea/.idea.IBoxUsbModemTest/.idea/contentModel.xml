@@ -2,10 +2,14 @@
 <project version="4">
   <component name="ContentModelStore">
     <e p="$USER_HOME$/.cache/JetBrains/Rider2020.1/extResources" t="IncludeRecursive" />
-    <e p="$USER_HOME$/.cache/JetBrains/Rider2020.1/resharper-host/local/Transient/ReSharperHost/v201/SolutionCaches/_IBoxUsbModemTest.-748266665.00" t="ExcludeRecursive" />
+    <e p="$USER_HOME$/.cache/JetBrains/Rider2020.1/resharper-host/local/Transient/ReSharperHost/v201/SolutionCaches/_IBoxUsbModemTest.308275130.00" t="ExcludeRecursive" />
     <e p="$PROJECT_DIR$" t="IncludeFlat">
       <e p="IBoxUsbModemTest.sln" t="IncludeFlat" />
       <e p="IBoxUsbModemUnitTest" t="IncludeRecursive">
+        <e p="HuaweiTechnologiesModemInstallationTest.cs" t="Include" />
+        <e p="HuaweiTechnologiesModemIntegrationTest.cs" t="Include" />
+        <e p="HuaweiTechnologiesModemNetworkTest.cs" t="Include" />
+        <e p="HuaweiTechnologiesModemShellTest.cs" t="Include" />
         <e p="IBoxUsbModemUnitTest.csproj" t="IncludeRecursive" />
         <e p="Modem" t="Include">
           <e p="Adapter.cs" t="Include" />
@@ -27,6 +31,7 @@
           <e p="ModelModem.cs" t="Include" />
           <e p="ModelModemEx.cs" t="Include" />
           <e p="Modem.cs" t="Include" />
+          <e p="ModemSerialPort.cs" t="Include" />
           <e p="ModemSettingsExtentions.cs" t="Include" />
           <e p="ModemStatus.cs" t="Include" />
           <e p="ShellConsole.cs" t="Include" />
@@ -35,13 +40,14 @@
         <e p="Properties" t="Include">
           <e p="AssemblyInfo.cs" t="Include" />
         </e>
-        <e p="UsbModemTestCase.cs" t="Include" />
+        <e p="SerialPortHelperTestCase.cs" t="Include" />
+        <e p="app.config" t="Include" />
         <e p="bin" t="ExcludeRecursive" />
         <e p="obj" t="ExcludeRecursive" />
         <e p="packages.config" t="Include" />
       </e>
       <e p="packages" t="ExcludeRecursive">
-        <e p="SQLitePCLRaw.lib.e_sqlite3.2.0.2/runtimes" t="Include">
+        <e p="SQLitePCLRaw.lib.e_sqlite3.2.0.3/runtimes" t="Include">
           <e p="linux-arm" t="Include">
             <e p="native" t="Include">
               <e p="libe_sqlite3.so" t="Include" />
@@ -68,6 +74,10 @@
             </e>
           </e>
         </e>
+        <e p="xunit.runner.visualstudio.2.4.2/build/net452/xunit.abstractions.dll" t="Include" />
+        <e p="xunit.runner.visualstudio.2.4.2/build/net452/xunit.runner.reporters.net452.dll" t="Include" />
+        <e p="xunit.runner.visualstudio.2.4.2/build/net452/xunit.runner.utility.net452.dll" t="Include" />
+        <e p="xunit.runner.visualstudio.2.4.2/build/net452/xunit.runner.visualstudio.testadapter.dll" t="Include" />
       </e>
     </e>
   </component>

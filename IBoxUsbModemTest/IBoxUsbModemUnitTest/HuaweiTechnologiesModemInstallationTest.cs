@@ -29,10 +29,8 @@ namespace IBoxUsbModemUnitTest
                     CreateNoWindow = true
                 }
             };
-
             proc.Start();
             proc.WaitForExit();
-
             return proc.StandardOutput.ReadToEnd();
         }
     }

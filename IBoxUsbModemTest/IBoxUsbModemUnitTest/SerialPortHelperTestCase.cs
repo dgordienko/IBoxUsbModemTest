@@ -21,7 +21,7 @@ namespace IBoxUsbModemUnitTest
             PortName = ConfigurationManager.AppSettings["port"]
         };
 
-        [Theory(DisplayName ="Send commands to serialport (ThreadModel)")]
+        [Theory(DisplayName ="Send commands to serial port (ThreadModel)")]
         [InlineData("ATE")]
         [InlineData("ATZ")]
         [InlineData("AT+GSN")]
@@ -30,33 +30,34 @@ namespace IBoxUsbModemUnitTest
         [InlineData("AT+CGMM")]        
         public void SerialPortHelperTest(string command) {
             _logger.Information($"send {command}");
-            var helper = SerialPortHelper.Instance;
+            var helper = ModemSerialPort.Instance;
 
             helper.OnSerialPortOpened += (sender, e) => {
                 _logger.Information($"call OnSerialPortOpened event; port={_configuration.PortName}");
-                sender.Should().BeOfType<SerialPortHelper>();
-                e.Should().BeTrue();
+                sender.Should().BeOfType<ModemSerialPort>();
             };
 
             helper.OnStatusChanged += (sender, e) => {
                 _logger.Information($"call OnStatusChanged event; port={_configuration.PortName}");
-                sender.Should().BeOfType<SerialPortHelper>();
+                sender.Should().BeOfType<ModemSerialPort>();
             };
             helper.OnDataReceived += (sender, e) =>
             {
                 _logger.Information($"call OnDataReceived event; port={_configuration.PortName}");
-                sender.Should().BeOfType<SerialPortHelper>();
+                sender.Should().BeOfType<ModemSerialPort>();
                 e.Should().NotBeNullOrWhiteSpace();
                 e.Should().NotBeNullOrEmpty();
+                (sender as ModemSerialPort)?.Close();
             };
 
             helper.Should().NotBeNull();
             if (!helper.IsOpen)
             {
-                helper.Open(portname:_configuration.PortName,baudrate:_configuration.BaudRate);             
+                var portName = $"/dev/{_configuration.PortName}";
+                var baudRate = _configuration.BaudRate;
+                helper.Open(portname: portName,baudrate:baudRate);             
                 helper.SendString(command);
             }
-
         }
     }
 }

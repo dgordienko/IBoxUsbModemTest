@@ -1,7 +1,41 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
+  <component name="BranchesTreeState">
+    <expand>
+      <path>
+        <item name="ROOT" type="e8cecc67:BranchNodeDescriptor" />
+        <item name="LOCAL_ROOT" type="e8cecc67:BranchNodeDescriptor" />
+      </path>
+      <path>
+        <item name="ROOT" type="e8cecc67:BranchNodeDescriptor" />
+        <item name="REMOTE_ROOT" type="e8cecc67:BranchNodeDescriptor" />
+      </path>
+      <path>
+        <item name="ROOT" type="e8cecc67:BranchNodeDescriptor" />
+        <item name="REMOTE_ROOT" type="e8cecc67:BranchNodeDescriptor" />
+        <item name="GROUP_NODE:origin" type="e8cecc67:BranchNodeDescriptor" />
+      </path>
+    </expand>
+    <select />
+  </component>
   <component name="ChangeListManager">
-    <list default="true" id="7e7f8a4d-4fa5-47cf-bc64-fee00774893c" name="Default Changelist" comment="" />
+    <list default="true" id="7e7f8a4d-4fa5-47cf-bc64-fee00774893c" name="Default Changelist" comment="">
+      <change afterPath="$PROJECT_DIR$/IBoxUsbModemUnitTest/Modem/ModemSerialPort.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/.idea.IBoxUsbModemTest/.idea/contentModel.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.idea.IBoxUsbModemTest/.idea/contentModel.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/.idea.IBoxUsbModemTest/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.idea.IBoxUsbModemTest/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/IBoxUsbModemUnitTest/HuaweiTechnologiesModemInstallationTest.cs" beforeDir="false" afterPath="$PROJECT_DIR$/IBoxUsbModemUnitTest/HuaweiTechnologiesModemInstallationTest.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/IBoxUsbModemUnitTest/HuaweiTechnologiesModemShellTest.cs" beforeDir="false" afterPath="$PROJECT_DIR$/IBoxUsbModemUnitTest/HuaweiTechnologiesModemShellTest.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/IBoxUsbModemUnitTest/IBoxUsbModemUnitTest.csproj" beforeDir="false" afterPath="$PROJECT_DIR$/IBoxUsbModemUnitTest/IBoxUsbModemUnitTest.csproj" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/IBoxUsbModemUnitTest/Modem/ConnectConfiguration.cs" beforeDir="false" afterPath="$PROJECT_DIR$/IBoxUsbModemUnitTest/Modem/ConnectConfiguration.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/IBoxUsbModemUnitTest/Modem/DeviceConfiguration.cs" beforeDir="false" afterPath="$PROJECT_DIR$/IBoxUsbModemUnitTest/Modem/DeviceConfiguration.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/IBoxUsbModemUnitTest/Modem/HostEnvironment.cs" beforeDir="false" afterPath="$PROJECT_DIR$/IBoxUsbModemUnitTest/Modem/HostEnvironment.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/IBoxUsbModemUnitTest/Modem/Modem.cs" beforeDir="false" afterPath="$PROJECT_DIR$/IBoxUsbModemUnitTest/Modem/Modem.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/IBoxUsbModemUnitTest/Modem/ModemStatus.cs" beforeDir="false" afterPath="$PROJECT_DIR$/IBoxUsbModemUnitTest/Modem/ModemStatus.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/IBoxUsbModemUnitTest/Modem/ShellConsole.cs" beforeDir="false" afterPath="$PROJECT_DIR$/IBoxUsbModemUnitTest/Modem/ShellConsole.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/IBoxUsbModemUnitTest/Modem/SignalQuality.cs" beforeDir="false" afterPath="$PROJECT_DIR$/IBoxUsbModemUnitTest/Modem/SignalQuality.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/IBoxUsbModemUnitTest/SerialPortHelperTestCase.cs" beforeDir="false" afterPath="$PROJECT_DIR$/IBoxUsbModemUnitTest/SerialPortHelperTestCase.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/IBoxUsbModemUnitTest/app.config" beforeDir="false" afterPath="$PROJECT_DIR$/IBoxUsbModemUnitTest/app.config" afterDir="false" />
+    </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -11,12 +45,55 @@
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$/.." />
   </component>
   <component name="HighlightingSettingsPerFile">
-    <setting file="file://$PROJECT_DIR$/IBoxUsbModemUnitTest/UsbModemTestCase.cs" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/IBoxUsbModemUnitTest/HuaweiTechnologiesModemNetworkTest.cs" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/IBoxUsbModemUnitTest/HuaweiTechnologiesModemIntegrationTest.cs" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/IBoxUsbModemUnitTest/HuaweiTechnologiesModemShellTest.cs" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/IBoxUsbModemUnitTest/app.config" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/IBoxUsbModemUnitTest/Modem/ConnectionInfo.cs" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/IBoxUsbModemUnitTest/Modem/IAdapter.cs" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/IBoxUsbModemUnitTest/Modem/SignalQuality.cs" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/IBoxUsbModemUnitTest/Modem/DbStorageItem.cs" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/IBoxUsbModemUnitTest/Modem/ModemSerialPort.cs" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/IBoxUsbModemUnitTest/Modem/ConnectConfiguration.cs" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/IBoxUsbModemUnitTest/Modem/ConnectionType.cs" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/IBoxUsbModemUnitTest/Modem/ConnectionTypeEx.cs" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/DecompilerCache/decompiler/0350163F-DA64-4960-871A-084E928B71DC/b4/b87c83c2/TestInvoker`1.cs" root0="SKIP_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/IBoxUsbModemUnitTest/Modem/Adapter.cs" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/IBoxUsbModemUnitTest/Modem/HostOsType.cs" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/IBoxUsbModemUnitTest/Modem/GprsProvider.cs" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/IBoxUsbModemUnitTest/Modem/ModemStatus.cs" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/DecompilerCache/decompiler/0350163F-DA64-4960-871A-084E928B71DC/0d/3bdafb94/ExecutionTimer.cs" root0="SKIP_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/IBoxUsbModemUnitTest/Modem/IDisposableService.cs" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/IBoxUsbModemUnitTest/Modem/ModemSettingsExtentions.cs" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/IBoxUsbModemUnitTest/Modem/HostEnvironment.cs" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/IBoxUsbModemUnitTest/Modem/GprsProviderEx.cs" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/IBoxUsbModemUnitTest/Modem/DeviceConfiguration.cs" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/IBoxUsbModemUnitTest/Modem/ShellConsole.cs" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/IBoxUsbModemUnitTest/Modem/ModelModemEx.cs" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/IBoxUsbModemUnitTest/Modem/IModem.cs" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/IBoxUsbModemUnitTest/Modem/Modem.cs" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/IBoxUsbModemUnitTest/Modem/IManagerConfigurationService.cs" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/IBoxUsbModemUnitTest/Modem/Disposable.cs" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/IBoxUsbModemUnitTest/SerialPortHelperTestCase.cs" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/IBoxUsbModemUnitTest/HuaweiTechnologiesModemInstallationTest.cs" root0="FORCE_HIGHLIGHTING" />
   </component>
   <component name="IdeDocumentHistory">
     <option name="CHANGED_PATHS">
       <list>
         <option value="$PROJECT_DIR$/IBoxUsbModemUnitTest/UsbModemTestCase.cs" />
+        <option value="$PROJECT_DIR$/IBoxUsbModemUnitTest/Modem/SerialPortHelper.cs" />
+        <option value="$PROJECT_DIR$/IBoxUsbModemUnitTest/SerialPortHelperTestCase.cs" />
+        <option value="$PROJECT_DIR$/IBoxUsbModemUnitTest/Modem/ModemSerialPort.cs" />
+        <option value="$PROJECT_DIR$/IBoxUsbModemUnitTest/Modem/ConnectConfiguration.cs" />
+        <option value="$PROJECT_DIR$/IBoxUsbModemUnitTest/Modem/DeviceConfiguration.cs" />
+        <option value="$PROJECT_DIR$/IBoxUsbModemUnitTest/Modem/Modem.cs" />
+        <option value="$PROJECT_DIR$/IBoxUsbModemUnitTest/Modem/ShellConsole.cs" />
+        <option value="$PROJECT_DIR$/IBoxUsbModemUnitTest/Modem/SignalQuality.cs" />
+        <option value="$PROJECT_DIR$/IBoxUsbModemUnitTest/Modem/ModemStatus.cs" />
+        <option value="$PROJECT_DIR$/IBoxUsbModemUnitTest/Modem/HostEnvironment.cs" />
+        <option value="$PROJECT_DIR$/IBoxUsbModemUnitTest/HuaweiTechnologiesModemInstallationTest.cs" />
+        <option value="$PROJECT_DIR$/IBoxUsbModemUnitTest/HuaweiTechnologiesModemShellTest.cs" />
+        <option value="$PROJECT_DIR$/IBoxUsbModemUnitTest/app.config" />
       </list>
     </option>
   </component>
@@ -32,6 +109,8 @@
     <property name="RunOnceActivity.OpenProjectViewOnStart" value="true" />
     <property name="RunOnceActivity.ShowReadmeOnStart" value="true" />
     <property name="WebServerToolWindowFactoryState" value="false" />
+    <property name="nodejs_package_manager_path" value="npm" />
+    <property name="settings.editor.selected.configurable" value="preferences.editor" />
   </component>
   <component name="TaskManager">
     <task active="true" id="Default" summary="Default task">
@@ -43,76 +122,160 @@
       <workItem from="1587932214001" duration="77000" />
       <workItem from="1587932542029" duration="157000" />
       <workItem from="1587932948087" duration="90000" />
+      <workItem from="1592142254356" duration="1298000" />
+      <workItem from="1592144300023" duration="378000" />
+      <workItem from="1592146913327" duration="961000" />
+      <workItem from="1592148090684" duration="970000" />
+      <workItem from="1592149256292" duration="1157000" />
+      <workItem from="1592152722434" duration="784000" />
+      <workItem from="1592153855238" duration="2372000" />
+      <workItem from="1592163114456" duration="921000" />
     </task>
     <servers />
+  </component>
+  <component name="TypeScriptGeneratedFilesManager">
+    <option name="version" value="2" />
+  </component>
+  <component name="Vcs.Log.Tabs.Properties">
+    <option name="TAB_STATES">
+      <map>
+        <entry key="MAIN">
+          <value>
+            <State />
+          </value>
+        </entry>
+      </map>
+    </option>
+    <option name="oldMeFiltersMigrated" value="true" />
   </component>
   <component name="VcsManagerConfiguration">
     <option name="CLEAR_INITIAL_COMMIT_MESSAGE" value="true" />
   </component>
   <component name="WindowStateProjectService">
-    <state width="1807" height="371" key="GridCell.Tab.0.bottom" timestamp="1587933429747">
+    <state x="451" y="210" key="#com.intellij.execution.impl.EditConfigurationsDialog" timestamp="1592147267851">
       <screen x="67" y="27" width="1853" height="1053" />
     </state>
-    <state width="1807" height="371" key="GridCell.Tab.0.bottom/67.27.1853.1053@67.27.1853.1053" timestamp="1587933429747" />
-    <state width="1807" height="371" key="GridCell.Tab.0.center" timestamp="1587933429746">
+    <state x="451" y="210" key="#com.intellij.execution.impl.EditConfigurationsDialog/67.27.1853.1053@67.27.1853.1053" timestamp="1592147267851" />
+    <state width="1807" height="362" key="GridCell.Tab.0.bottom" timestamp="1592164114976">
       <screen x="67" y="27" width="1853" height="1053" />
     </state>
-    <state width="1807" height="371" key="GridCell.Tab.0.center/67.27.1853.1053@67.27.1853.1053" timestamp="1587933429746" />
-    <state width="1807" height="371" key="GridCell.Tab.0.left" timestamp="1587933429746">
+    <state width="1807" height="362" key="GridCell.Tab.0.bottom/67.27.1853.1053@67.27.1853.1053" timestamp="1592164114976" />
+    <state width="1807" height="362" key="GridCell.Tab.0.center" timestamp="1592164114975">
       <screen x="67" y="27" width="1853" height="1053" />
     </state>
-    <state width="1807" height="371" key="GridCell.Tab.0.left/67.27.1853.1053@67.27.1853.1053" timestamp="1587933429746" />
-    <state width="1807" height="371" key="GridCell.Tab.0.right" timestamp="1587933429747">
+    <state width="1807" height="362" key="GridCell.Tab.0.center/67.27.1853.1053@67.27.1853.1053" timestamp="1592164114975" />
+    <state width="1807" height="362" key="GridCell.Tab.0.left" timestamp="1592164114973">
       <screen x="67" y="27" width="1853" height="1053" />
     </state>
-    <state width="1807" height="371" key="GridCell.Tab.0.right/67.27.1853.1053@67.27.1853.1053" timestamp="1587933429747" />
-    <state width="1807" height="371" key="GridCell.Tab.1.bottom" timestamp="1587933429749">
+    <state width="1807" height="362" key="GridCell.Tab.0.left/67.27.1853.1053@67.27.1853.1053" timestamp="1592164114973" />
+    <state width="1807" height="362" key="GridCell.Tab.0.right" timestamp="1592164114976">
       <screen x="67" y="27" width="1853" height="1053" />
     </state>
-    <state width="1807" height="371" key="GridCell.Tab.1.bottom/67.27.1853.1053@67.27.1853.1053" timestamp="1587933429749" />
-    <state width="1807" height="371" key="GridCell.Tab.1.center" timestamp="1587933429748">
+    <state width="1807" height="362" key="GridCell.Tab.0.right/67.27.1853.1053@67.27.1853.1053" timestamp="1592164114976" />
+    <state width="1807" height="362" key="GridCell.Tab.1.bottom" timestamp="1592164114980">
       <screen x="67" y="27" width="1853" height="1053" />
     </state>
-    <state width="1807" height="371" key="GridCell.Tab.1.center/67.27.1853.1053@67.27.1853.1053" timestamp="1587933429748" />
-    <state width="1807" height="371" key="GridCell.Tab.1.left" timestamp="1587933429748">
+    <state width="1807" height="362" key="GridCell.Tab.1.bottom/67.27.1853.1053@67.27.1853.1053" timestamp="1592164114980" />
+    <state width="1807" height="362" key="GridCell.Tab.1.center" timestamp="1592164114978">
       <screen x="67" y="27" width="1853" height="1053" />
     </state>
-    <state width="1807" height="371" key="GridCell.Tab.1.left/67.27.1853.1053@67.27.1853.1053" timestamp="1587933429748" />
-    <state width="1807" height="371" key="GridCell.Tab.1.right" timestamp="1587933429749">
+    <state width="1807" height="362" key="GridCell.Tab.1.center/67.27.1853.1053@67.27.1853.1053" timestamp="1592164114978" />
+    <state width="1807" height="362" key="GridCell.Tab.1.left" timestamp="1592164114978">
       <screen x="67" y="27" width="1853" height="1053" />
     </state>
-    <state width="1807" height="371" key="GridCell.Tab.1.right/67.27.1853.1053@67.27.1853.1053" timestamp="1587933429749" />
-    <state width="1807" height="371" key="GridCell.Tab.2.bottom" timestamp="1587933429752">
+    <state width="1807" height="362" key="GridCell.Tab.1.left/67.27.1853.1053@67.27.1853.1053" timestamp="1592164114978" />
+    <state width="1807" height="362" key="GridCell.Tab.1.right" timestamp="1592164114979">
       <screen x="67" y="27" width="1853" height="1053" />
     </state>
-    <state width="1807" height="371" key="GridCell.Tab.2.bottom/67.27.1853.1053@67.27.1853.1053" timestamp="1587933429752" />
-    <state width="1807" height="371" key="GridCell.Tab.2.center" timestamp="1587933429751">
+    <state width="1807" height="362" key="GridCell.Tab.1.right/67.27.1853.1053@67.27.1853.1053" timestamp="1592164114979" />
+    <state width="1807" height="362" key="GridCell.Tab.2.bottom" timestamp="1592164114983">
       <screen x="67" y="27" width="1853" height="1053" />
     </state>
-    <state width="1807" height="371" key="GridCell.Tab.2.center/67.27.1853.1053@67.27.1853.1053" timestamp="1587933429751" />
-    <state width="1807" height="371" key="GridCell.Tab.2.left" timestamp="1587933429749">
+    <state width="1807" height="362" key="GridCell.Tab.2.bottom/67.27.1853.1053@67.27.1853.1053" timestamp="1592164114983" />
+    <state width="1807" height="362" key="GridCell.Tab.2.center" timestamp="1592164114982">
       <screen x="67" y="27" width="1853" height="1053" />
     </state>
-    <state width="1807" height="371" key="GridCell.Tab.2.left/67.27.1853.1053@67.27.1853.1053" timestamp="1587933429749" />
-    <state width="1807" height="371" key="GridCell.Tab.2.right" timestamp="1587933429751">
+    <state width="1807" height="362" key="GridCell.Tab.2.center/67.27.1853.1053@67.27.1853.1053" timestamp="1592164114982" />
+    <state width="1807" height="362" key="GridCell.Tab.2.left" timestamp="1592164114981">
       <screen x="67" y="27" width="1853" height="1053" />
     </state>
-    <state width="1807" height="371" key="GridCell.Tab.2.right/67.27.1853.1053@67.27.1853.1053" timestamp="1587933429751" />
-    <state width="1807" height="371" key="GridCell.Tab.3.bottom" timestamp="1587933429754">
+    <state width="1807" height="362" key="GridCell.Tab.2.left/67.27.1853.1053@67.27.1853.1053" timestamp="1592164114981" />
+    <state width="1807" height="362" key="GridCell.Tab.2.right" timestamp="1592164114982">
       <screen x="67" y="27" width="1853" height="1053" />
     </state>
-    <state width="1807" height="371" key="GridCell.Tab.3.bottom/67.27.1853.1053@67.27.1853.1053" timestamp="1587933429754" />
-    <state width="1807" height="371" key="GridCell.Tab.3.center" timestamp="1587933429753">
+    <state width="1807" height="362" key="GridCell.Tab.2.right/67.27.1853.1053@67.27.1853.1053" timestamp="1592164114982" />
+    <state width="1807" height="362" key="GridCell.Tab.3.bottom" timestamp="1592164114986">
       <screen x="67" y="27" width="1853" height="1053" />
     </state>
-    <state width="1807" height="371" key="GridCell.Tab.3.center/67.27.1853.1053@67.27.1853.1053" timestamp="1587933429753" />
-    <state width="1807" height="371" key="GridCell.Tab.3.left" timestamp="1587933429753">
+    <state width="1807" height="362" key="GridCell.Tab.3.bottom/67.27.1853.1053@67.27.1853.1053" timestamp="1592164114986" />
+    <state width="1807" height="362" key="GridCell.Tab.3.center" timestamp="1592164114985">
       <screen x="67" y="27" width="1853" height="1053" />
     </state>
-    <state width="1807" height="371" key="GridCell.Tab.3.left/67.27.1853.1053@67.27.1853.1053" timestamp="1587933429753" />
-    <state width="1807" height="371" key="GridCell.Tab.3.right" timestamp="1587933429754">
+    <state width="1807" height="362" key="GridCell.Tab.3.center/67.27.1853.1053@67.27.1853.1053" timestamp="1592164114985" />
+    <state width="1807" height="362" key="GridCell.Tab.3.left" timestamp="1592164114984">
       <screen x="67" y="27" width="1853" height="1053" />
     </state>
-    <state width="1807" height="371" key="GridCell.Tab.3.right/67.27.1853.1053@67.27.1853.1053" timestamp="1587933429754" />
+    <state width="1807" height="362" key="GridCell.Tab.3.left/67.27.1853.1053@67.27.1853.1053" timestamp="1592164114984" />
+    <state width="1807" height="362" key="GridCell.Tab.3.right" timestamp="1592164114985">
+      <screen x="67" y="27" width="1853" height="1053" />
+    </state>
+    <state width="1807" height="362" key="GridCell.Tab.3.right/67.27.1853.1053@67.27.1853.1053" timestamp="1592164114985" />
+    <state x="482" y="187" key="SettingsEditor" timestamp="1592143584063">
+      <screen x="67" y="27" width="1853" height="1053" />
+    </state>
+    <state x="482" y="187" key="SettingsEditor/67.27.1853.1053@67.27.1853.1053" timestamp="1592143584063" />
+    <state x="167" y="181" width="1653" height="855" key="VCS.FileHistoryDialog" timestamp="1592162183322">
+      <screen x="67" y="27" width="1853" height="1053" />
+    </state>
+    <state x="167" y="181" width="1653" height="855" key="VCS.FileHistoryDialog/67.27.1853.1053@67.27.1853.1053" timestamp="1592162183322" />
+    <state x="521" y="265" width="934" height="575" key="com.intellij.xdebugger.impl.breakpoints.ui.BreakpointsDialogFactory$2" timestamp="1592147692373">
+      <screen x="67" y="27" width="1853" height="1053" />
+    </state>
+    <state x="521" y="265" width="934" height="575" key="com.intellij.xdebugger.impl.breakpoints.ui.BreakpointsDialogFactory$2/67.27.1853.1053@67.27.1853.1053" timestamp="1592147692373" />
+  </component>
+  <component name="XDebuggerManager">
+    <breakpoint-manager>
+      <breakpoints>
+        <line-breakpoint enabled="true" type="DotNet Breakpoints">
+          <url>file://$PROJECT_DIR$/IBoxUsbModemUnitTest/Modem/ModemSerialPort.cs</url>
+          <line>147</line>
+          <properties documentPath="$PROJECT_DIR$/IBoxUsbModemUnitTest/Modem/ModemSerialPort.cs" initialLine="147">
+            <startOffsets>
+              <option value="5076" />
+            </startOffsets>
+            <endOffsets>
+              <option value="5129" />
+            </endOffsets>
+          </properties>
+          <option name="timeStamp" value="39" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="DotNet Breakpoints">
+          <url>file://$PROJECT_DIR$/IBoxUsbModemUnitTest/HuaweiTechnologiesModemShellTest.cs</url>
+          <line>80</line>
+          <properties documentPath="$PROJECT_DIR$/IBoxUsbModemUnitTest/HuaweiTechnologiesModemShellTest.cs" initialLine="80">
+            <startOffsets>
+              <option value="3010" />
+            </startOffsets>
+            <endOffsets>
+              <option value="3057" />
+            </endOffsets>
+          </properties>
+          <option name="timeStamp" value="40" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="DotNet Breakpoints">
+          <url>file://$PROJECT_DIR$/IBoxUsbModemUnitTest/Modem/ModemSerialPort.cs</url>
+          <line>75</line>
+          <properties documentPath="$PROJECT_DIR$/IBoxUsbModemUnitTest/Modem/ModemSerialPort.cs" initialLine="75">
+            <startOffsets>
+              <option value="2582" />
+            </startOffsets>
+            <endOffsets>
+              <option value="2596" />
+            </endOffsets>
+          </properties>
+          <option name="timeStamp" value="41" />
+        </line-breakpoint>
+      </breakpoints>
+    </breakpoint-manager>
   </component>
 </project>

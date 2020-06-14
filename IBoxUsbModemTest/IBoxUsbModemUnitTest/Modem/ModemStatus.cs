@@ -3,7 +3,7 @@
 namespace IBoxUsbModemUnitTest.Modem
 {
 
-    public class ModemStatus
+    public sealed class ModemStatus
     {
         public bool IsSuccess { get; set; }
         public string State { get; set; }
@@ -86,11 +86,11 @@ namespace IBoxUsbModemUnitTest.Modem
 
         public override string ToString()
         {
-            //return base.ToString();
-            return string.Format("succ={0}, state={1}, operator={2}, model='{3} {4}', sn={5}, signal=[{6}], imsi={7}, imei={8}", IsSuccess, State, OperatorName, Manufacturer, ModelName, SerialNumber, SignalQuality, Imsi, Imei);
+            return $"succ={IsSuccess}, state={State}, operator={OperatorName}, model='{Manufacturer} {ModelName}', " +
+                   $"sn={SerialNumber}, signal=[{SignalQuality}], imsi={Imsi}, imei={Imei}";
         }
 
-        public virtual ModemStatus Clone()
+        public ModemStatus Clone()
         {
             return new ModemStatus
             {

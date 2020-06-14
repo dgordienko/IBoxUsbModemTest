@@ -7,22 +7,23 @@ namespace IBoxUsbModemUnitTest.Modem
         [JsonProperty("type")]
         public ConnectionType ConnectionType { get; set; } = ConnectionType.Gprs;
 
-        public const int NetErrorLimitDefault = 15;
-        private int _NetErrorLimit = NetErrorLimitDefault;
+        private const int NetErrorLimitDefault = 15;
+        
+        private int _netErrorLimit = NetErrorLimitDefault;
         public int NetErrorLimit
         {
-            get { return _NetErrorLimit; }
+            get => _netErrorLimit;
             set
             {
                 if (value < 5)
                     return;
-                _NetErrorLimit = value;
+                _netErrorLimit = value;
             }
         }
 
         public override string ToString()
         {
-            return string.Format(" {0}, connectType: {1}", base.ToString(), ConnectionType);
+            return $" {base.ToString()}, connectType: {ConnectionType}";
         }
 
         public bool Equals(ConnectConfiguration other)
@@ -33,8 +34,8 @@ namespace IBoxUsbModemUnitTest.Modem
         private ConnectionInfo _lastInfo;
         public ConnectionInfo LastInfo
         {
-            get { return _lastInfo ?? (_lastInfo = new ConnectionInfo()); }
-            set { _lastInfo = value; }
+            get => _lastInfo ?? (_lastInfo = new ConnectionInfo());
+            set => _lastInfo = value;
         }
     }
 }

@@ -4,37 +4,25 @@ namespace IBoxUsbModemUnitTest.Modem
 {
     public class DeviceConfiguration : DbStorageItem
     {
-        private string _PortName;
         [JsonProperty("port")]
-        public string PortName
-        {
-            get { return _PortName; }
-            set
-            {
-                /*
-                if (string.IsNullOrEmpty(value))
-                    return;
-                */
-                _PortName = value;
-            }
-        }
+        public string PortName { get; set; }
 
-        private int _BaudRate = 19200;
+        private int _baudRate = 19200;
         [JsonProperty("baudrate")]
         public int BaudRate
         {
-            get { return _BaudRate; }
+            get => _baudRate;
             set
             {
                 if (value < 9600)
                     return;
-                _BaudRate = value;
+                _baudRate = value;
             }
         }
 
         public override string ToString()
         {
-            return string.Format("port={0}, baudrate={1}", PortName, BaudRate);
+            return $"port={PortName}, baudrate={BaudRate}";
         }
 
         public bool Equals(DeviceConfiguration other)

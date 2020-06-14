@@ -14,9 +14,7 @@
 
         public override string ToString()
         {
-            if (!IsValid)
-                return "Undefined";
-            return string.Format("{0}dBmW {1}%", dBmW, Percent);
+            return !IsValid ? "Undefined" : $"{dBmW}dBmW {Percent}%";
         }
 
         public bool IsValid { get; set; }
