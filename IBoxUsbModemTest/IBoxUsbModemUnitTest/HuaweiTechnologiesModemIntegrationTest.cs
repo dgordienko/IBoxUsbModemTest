@@ -26,7 +26,7 @@ namespace IBoxUsbModemUnitTest
             PortName = ConfigurationManager.AppSettings["port"]
         };
 
-        [Fact(DisplayName = "Request modem status")]
+        [Fact(DisplayName = "Request modem status", Skip ="obsolete")]
         public void IntegrationModule()
         {
             var modem = new Modem.Modem(_logger, _configuration);
@@ -53,7 +53,7 @@ namespace IBoxUsbModemUnitTest
         /// <summary>
         /// Перебор списка с именами портов и отправыка команды echo
         /// </summary>
-        [Fact(DisplayName ="Found active port", Skip ="Obsolete")]
+        [Fact(DisplayName ="Found active port")]
         public void PortConnectionCheck()
         {
 

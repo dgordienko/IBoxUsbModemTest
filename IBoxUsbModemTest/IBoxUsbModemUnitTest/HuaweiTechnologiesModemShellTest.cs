@@ -27,7 +27,7 @@ namespace IBoxUsbModemUnitTest
         };
 
 
-        [Theory(DisplayName ="Parser model name")]
+        [Theory(DisplayName ="Parser model name", Skip ="obsolete")]
         [InlineData("MU709s-2")]
         public void ModelNameExtention(string name)
         {
@@ -36,7 +36,7 @@ namespace IBoxUsbModemUnitTest
             result.Should().Be(ModelModem.MU709);
         }
 
-        [Theory(DisplayName = "Parser manufacturer name")]
+        [Theory(DisplayName = "Parser manufacturer name", Skip ="obsolete")]
         [InlineData("Huawei Technologies Co., Ltd")]
         public void ManufacturerNameExtention(string value)
         {
@@ -49,7 +49,7 @@ namespace IBoxUsbModemUnitTest
         /// Reset the module
         /// </summary>
         /// <param name="command">AT^RESET</param>
-        [Theory(DisplayName = "Reset the module")]        
+        [Theory(DisplayName = "Reset the module", Skip ="obsolete")]        
         [InlineData("AT^RESET")]
         public void ResetModule(string command)
         {
@@ -68,7 +68,7 @@ namespace IBoxUsbModemUnitTest
         /// Echo command
         /// </summary>
         /// <param name="command">ATE</param>
-        [Theory(DisplayName = "Echo command")]
+        [Theory(DisplayName = "Echo command", Skip ="obsolete")]
         [InlineData("ATE")]
         public void TestEcho(string command)
         {
@@ -97,7 +97,7 @@ namespace IBoxUsbModemUnitTest
             
         }
 
-        [Theory(DisplayName = "Restore factory settings")]
+        [Theory(DisplayName = "Restore factory settings", Skip ="obsolete")]
         [InlineData("ATZ")]
         public void RestoreFactorySettings(string command)
         {
@@ -113,7 +113,7 @@ namespace IBoxUsbModemUnitTest
         /// Product serial number request identification
         /// </summary>
         /// <param name="command">AT+CGSN</param>
-        [Theory(DisplayName = "Request product serial number")]
+        [Theory(DisplayName = "Request product serial number", Skip ="obsolete")]
         [InlineData("AT+CGSN")]
         [InlineData("AT+GSN")]
         public void RequestSerialNumber(string command)
@@ -134,7 +134,7 @@ namespace IBoxUsbModemUnitTest
         /// - 11.652.70.00.00
         /// </summary>
         /// <param name="command">AT+CGMR</param>
-        [Theory(DisplayName = "Request software version")]
+        [Theory(DisplayName = "Request software version", Skip ="obsolete")]
         [InlineData("AT+CGMR")]
         [InlineData("AT+GMR")]
         public void RequestSoftwareVersion(string command)
@@ -155,7 +155,7 @@ namespace IBoxUsbModemUnitTest
         /// - Huawei Technologies Co., Ltd.
         /// </summary>
         /// <param name="command">AT+GMI</param>
-        [Theory(DisplayName = "Request manufacturer")]
+        [Theory(DisplayName = "Request manufacturer", Skip ="obsolete")]
         [InlineData("AT+GMI")]
         public void RequestManufacturer(string command)
         {
@@ -177,7 +177,7 @@ namespace IBoxUsbModemUnitTest
         ///  - MU709s-2
         /// </summary>
         /// <param name="command">Команда определения модели модема</param>
-        [Theory(DisplayName = "Request model identication")]
+        [Theory(DisplayName = "Request model identication", Skip ="obsolete")]
         [InlineData("AT+CGMM")]
         public void RequestModelIdentifation(string command)
         {

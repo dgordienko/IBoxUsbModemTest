@@ -30,7 +30,7 @@ namespace IBoxUsbModemUnitTest
         /// Request IMSI
         /// </summary>
         /// <param name="command">AT+CIMI</param>
-        [Theory(DisplayName = "Request IMSI")]
+        [Theory(DisplayName = "Request IMSI", Skip ="obsolete")]
         [InlineData("AT+CIMI")]
         public void RequestIMSI(string command)
         {
@@ -56,7 +56,7 @@ namespace IBoxUsbModemUnitTest
         /// Register network
         /// </summary>
         /// <param name="command">AT+CREG?</param>
-        [Theory(DisplayName = "Register network")]
+        [Theory(DisplayName = "Register network", Skip ="obsolete")]
         [InlineData("AT+CREG?")]
         public void RegisterNetwork(string command)
         {
@@ -79,7 +79,7 @@ namespace IBoxUsbModemUnitTest
         /// Request sigmal quality
         /// </summary>
         /// <param name="command" cref="AT+CSQ"/>
-        [Theory(DisplayName = "Request signal quality")]
+        [Theory(DisplayName = "Request signal quality", Skip ="obsolete")]
         [InlineData("AT+CSQ")]
         public void RequestSignalQuality(string command)
         {
