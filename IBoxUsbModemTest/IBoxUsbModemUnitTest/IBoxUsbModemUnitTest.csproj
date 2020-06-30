@@ -198,9 +198,14 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="AbstractHandle.cs" />
+    <Compile Include="EchoHandler.cs" />
     <Compile Include="HuaweiTechnologiesModemIntegrationTest.cs" />
     <Compile Include="HuaweiTechnologiesModemShellTest.cs" />
     <Compile Include="HuaweiTechnologiesModemNetworkTest.cs" />
+    <Compile Include="IHandler.cs" />
+    <Compile Include="ModemRequest.cs" />
+    <Compile Include="ModemWorkFlow.cs" />
     <Compile Include="Modem\ModemSerialPort.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Modem\IAdapter.cs" />
