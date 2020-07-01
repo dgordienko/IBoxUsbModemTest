@@ -218,6 +218,7 @@ namespace IBoxUsbModemUnitTest.Modem
                     }
                     result.IsSuccess = !string.IsNullOrEmpty(result.Imsi);
                     description.Add(!string.IsNullOrEmpty(result.Imsi) ? "Есть IMSI" : "Нет IMSI");
+
                     //оператор
                     var vOperator = GprsProviderEx.ParseSimIMSI(result.Imsi);//Преобразует оператор+IMSI в значение оператора
                     result.OperatorName = GprsProviderEx.ProviderName(vOperator);

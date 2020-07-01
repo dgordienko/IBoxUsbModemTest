@@ -63,7 +63,7 @@ namespace IBoxUsbModemUnitTest.Modem
 
             try
             {
-                serial.PortName = portname;
+                serial.PortName = $"/dev/{portname}";
                 serial.BaudRate = baudrate;
                 serial.Parity = parity;
                 serial.DataBits = databits;

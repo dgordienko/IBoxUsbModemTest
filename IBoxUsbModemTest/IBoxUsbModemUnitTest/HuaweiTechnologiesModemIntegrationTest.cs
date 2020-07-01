@@ -64,11 +64,6 @@ namespace IBoxUsbModemUnitTest
                 "ttyUSB2",
                 "ttyUSB3",
                 "ttyUSB4",
-                "ttyUSB5",
-                "ttyUSB6",
-                "ttyUSB7",
-                "ttyUSB8",
-                "ttyUSB9"
             };
             var errorCount = 0;
             foreach (var item in portList)

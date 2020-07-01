@@ -1,6 +1,4 @@
-﻿using System.ComponentModel.Design;
-using System.Configuration;
-using System.Runtime.InteropServices;
+﻿using System.Configuration;
 using System.Threading;
 using FluentAssertions;
 using IBoxUsbModemUnitTest.Modem;
@@ -18,7 +16,7 @@ namespace IBoxUsbModemUnitTest
             .WriteTo.Console().CreateLogger();
 
 
-        private  ModemStatus _status = new ModemStatus
+        private ModemStatus _status = new ModemStatus
         {
             IsSuccess = false,
             State = "Not initialized",
@@ -88,7 +86,7 @@ namespace IBoxUsbModemUnitTest
             }
         }
 
-        [Fact(DisplayName = "ATE Command Handler")]        
+        [Fact(DisplayName = "ATE Command Handler")]
         public void EchoHandlerTest()
         {
             var request = new ModemRequest
@@ -102,7 +100,7 @@ namespace IBoxUsbModemUnitTest
             result.Response.IsSuccess.Should().BeTrue();
         }
 
-        [Fact(DisplayName ="ATZ Command handler")]
+        [Fact(DisplayName = "ATZ Command handler")]
         public void ResetHandlerTest()
         {
             var request = new ModemRequest
@@ -113,6 +111,38 @@ namespace IBoxUsbModemUnitTest
             var handler = new ResetHandler();
             var result = handler.Handel(request, "ATZ");
             result.Should().NotBeNull();
+            result.Response.IsSuccess.Should().BeTrue();
+        }
+
+
+        //"AT+GMI"
+        [Fact(DisplayName = "Get manufacturer test")]
+        public void RequestManufacturerTest()
+        {
+            var request = new ModemRequest
+            {
+                Response = _status,
+                Connection = _configuration
+            };
+            var handler = new RequestManufaturerHandler();
+            var result = handler.Handel(request, "AT+GMI");
+            result.Should().NotBeNull();
+            result.Response.Manufacturer.Should().NotBeEmpty();
+            result.Response.IsSuccess.Should().BeTrue();
+        }
+
+        [Fact(DisplayName = "Get model name handler")]
+        public void RequestModelHandlerTest()
+        {
+            var request = new ModemRequest
+            {
+                Response = _status,
+                Connection = _configuration
+            };
+            var handler = new RequestModelHandler();
+            var result = handler.Handel(request, "AT+GMM");
+            result.Should().NotBeNull();
+            result.Response.ModelName.Should().NotBeEmpty();
             result.Response.IsSuccess.Should().BeTrue();
         }
 
