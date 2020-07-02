@@ -1,0 +1,88 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Project DefaultTargets="Build" ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProjectGuid>{CCF3A7C4-15BE-417C-8DF5-4C71AD94FA81}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <RootNamespace>IBox.Modem.IRZ</RootNamespace>
+    <AssemblyName>IBox.Modem.IRZ</AssemblyName>
+    <TargetFrameworkVersion>v4.7</TargetFrameworkVersion>
+    <ReleaseVersion>1.0.0.1</ReleaseVersion>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug</OutputPath>
+    <DefineConstants>DEBUG;</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <ConsolePause>false</ConsolePause>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release</OutputPath>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <ConsolePause>false</ConsolePause>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="System" />
+    <Reference Include="Newtonsoft.Json">
+      <HintPath>..\packages\Newtonsoft.Json.12.0.3\lib\net45\Newtonsoft.Json.dll</HintPath>
+    </Reference>
+    <Reference Include="System.ValueTuple">
+      <HintPath>..\packages\System.ValueTuple.4.5.0\lib\net47\System.ValueTuple.dll</HintPath>
+    </Reference>
+    <Reference Include="mscorlib" />
+    <Reference Include="Polly">
+      <HintPath>..\packages\Polly.7.2.1\lib\net461\Polly.dll</HintPath>
+    </Reference>
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Shell\Adapter.cs" />
+    <Compile Include="Shell\IAdapter.cs" />
+    <Compile Include="Shell\ConnectConfiguration.cs" />
+    <Compile Include="Shell\DeviceConfiguration.cs" />
+    <Compile Include="Shell\DbStorageItem.cs" />
+    <Compile Include="Shell\ConnectionType.cs" />
+    <Compile Include="Shell\ConnectionInfo.cs" />
+    <Compile Include="Shell\SignalQuality.cs" />
+    <Compile Include="Shell\Disposable.cs" />
+    <Compile Include="Shell\GprsProvider.cs" />
+    <Compile Include="Shell\ShellConsole.cs" />
+    <Compile Include="Shell\HostEnvironment.cs" />
+    <Compile Include="Shell\HostOsType.cs" />
+    <Compile Include="Shell\ModelModem.cs" />
+    <Compile Include="Shell\ModelModemEx.cs" />
+    <Compile Include="Shell\GprsProviderEx.cs" />
+    <Compile Include="Shell\ModemStatus.cs" />
+    <Compile Include="Shell\IDisposableService.cs" />
+    <Compile Include="Shell\IManagerConfigurationService.cs" />
+    <Compile Include="Shell\IModem.cs" />
+    <Compile Include="Shell\ModemSettingsExtentions.cs" />
+    <Compile Include="Shell\FormatResponse.cs" />
+    <Compile Include="Shell\Modem.cs" />
+    <Compile Include="Shell\ILogger.cs" />
+    <Compile Include="Core\ModemManager.cs" />
+    <Compile Include="Protocol\RequestEchoHandler.cs" />
+    <Compile Include="Protocol\RequestResetHandler.cs" />
+    <Compile Include="Protocol\RequestManufaturerHandler.cs" />
+    <Compile Include="Protocol\RequestModelHandler.cs" />
+    <Compile Include="Protocol\RequestImsiHandler.cs" />
+    <Compile Include="Core\IModemRequestHandler.cs" />
+    <Compile Include="Core\ModemRequestContext.cs" />
+    <Compile Include="Core\AbstractModemCommandHandle.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="Shell\" />
+    <Folder Include="Core\" />
+    <Folder Include="Protocol\" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="packages.config" />
+  </ItemGroup>
+  <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
+</Project>

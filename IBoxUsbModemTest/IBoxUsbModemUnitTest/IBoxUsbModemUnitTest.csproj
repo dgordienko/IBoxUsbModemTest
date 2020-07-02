@@ -13,6 +13,7 @@
     <TargetFrameworkVersion>v4.7</TargetFrameworkVersion>
     <NuGetPackageImportStamp>
     </NuGetPackageImportStamp>
+    <ReleaseVersion>1.0.0.1</ReleaseVersion>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
@@ -66,7 +67,7 @@
       <HintPath>..\packages\xunit.extensibility.execution.2.4.1\lib\net452\xunit.execution.desktop.dll</HintPath>
     </Reference>
     <Reference Include="AutoMapper">
-      <HintPath>..\packages\AutoMapper.9.0.0\lib\net461\AutoMapper.dll</HintPath>
+      <HintPath>..\packages\AutoMapper.10.0.0\lib\net461\AutoMapper.dll</HintPath>
     </Reference>
     <Reference Include="Microsoft.CSharp" />
     <Reference Include="Microsoft.Bcl.HashCode">
@@ -198,41 +199,9 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="AbstractHandle.cs" />
-    <Compile Include="EchoHandler.cs" />
-    <Compile Include="HuaweiTechnologiesModemIntegrationTest.cs" />
-    <Compile Include="HuaweiTechnologiesModemShellTest.cs" />
-    <Compile Include="HuaweiTechnologiesModemNetworkTest.cs" />
-    <Compile Include="IHandler.cs" />
-    <Compile Include="ModemRequest.cs" />
-    <Compile Include="ModemWorkFlow.cs" />
-    <Compile Include="Modem\ModemSerialPort.cs" />
+    <Compile Include="MU709IRZModemShellUnit.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Modem\IAdapter.cs" />
-    <Compile Include="Modem\Disposable.cs" />
-    <Compile Include="Modem\Adapter.cs" />
-    <Compile Include="Modem\ModemStatus.cs" />
-    <Compile Include="Modem\ModelModem.cs" />
-    <Compile Include="Modem\ModelModemEx.cs" />
-    <Compile Include="Modem\SignalQuality.cs" />
-    <Compile Include="Modem\GprsProvider.cs" />
-    <Compile Include="Modem\GprsProviderEx.cs" />
-    <Compile Include="Modem\ShellConsole.cs" />
-    <Compile Include="Modem\HostEnvironment.cs" />
-    <Compile Include="Modem\HostOsType.cs" />
-    <Compile Include="Modem\DbStorageItem.cs" />
-    <Compile Include="Modem\DeviceConfiguration.cs" />
-    <Compile Include="Modem\ConnectConfiguration.cs" />
-    <Compile Include="Modem\ConnectionType.cs" />
-    <Compile Include="Modem\ConnectionTypeEx.cs" />
-    <Compile Include="Modem\ConnectionInfo.cs" />
-    <Compile Include="Modem\IModem.cs" />
-    <Compile Include="Modem\ModemSettingsExtentions.cs" />
-    <Compile Include="Modem\Modem.cs" />
-    <Compile Include="Modem\IManagerConfigurationService.cs" />
-    <Compile Include="Modem\IDisposableService.cs" />
-    <Compile Include="HuaweiTechnologiesModemInstallationTest.cs" />
-    <Compile Include="SerialPortHelperTestCase.cs" />
+    <Compile Include="MU709IRZModemProtocolUnit.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="app.config">
@@ -241,6 +210,12 @@
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup />
+  <ItemGroup>
+    <ProjectReference Include="..\IBox.Modem.IRZ\IBox.Modem.IRZ.csproj">
+      <Project>{CCF3A7C4-15BE-417C-8DF5-4C71AD94FA81}</Project>
+      <Name>IBox.Modem.IRZ</Name>
+    </ProjectReference>
+  </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <Import Project="..\packages\xunit.core.2.4.1\build\xunit.core.targets" Condition="Exists('..\packages\xunit.core.2.4.1\build\xunit.core.targets')" />
   <Import Project="..\packages\SQLitePCLRaw.lib.e_sqlite3.2.0.3\build\net461\SQLitePCLRaw.lib.e_sqlite3.targets" Condition="Exists('..\packages\SQLitePCLRaw.lib.e_sqlite3.2.0.3\build\net461\SQLitePCLRaw.lib.e_sqlite3.targets')" />
