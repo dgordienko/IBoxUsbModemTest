@@ -52,13 +52,15 @@ namespace IBox.Modem.IRZ.Protocol
                         //оператор
                         var @operator = GprsProviderEx.ParseSimIMSI(result.Imsi);//Преобразует оператор+IMSI в значение оператора
                         result.OperatorName = GprsProviderEx.ProviderName(@operator);
-                        result.IsSuccess &= @operator != GprsProvider.Undefined;
+                        result.IsSuccess = @operator != GprsProvider.Undefined;
                         var desc = @operator != GprsProvider.Undefined ? ISOPERATOR : NOTOPERATOR;
-                        result.State = string.Join(",", result.State, desc);
+                        request.Description.Add(desc);
+                        //result.State = string.Join(",", result.State, desc);
                     }
                     result.IsSuccess = !string.IsNullOrEmpty(result.Imsi);
                     var description = !string.IsNullOrEmpty(result.Imsi) ? "Есть IMSI" : "Нет IMSI";
-                    result.State = string.Join(",", result.State, description);
+                    request.Description.Add(description);
+                    //result.State = string.Join(",", result.State, description);
                     recived = false;
                     (sender as ModemManager)?.Close();
                 };

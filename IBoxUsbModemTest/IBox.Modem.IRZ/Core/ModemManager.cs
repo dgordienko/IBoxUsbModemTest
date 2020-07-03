@@ -12,17 +12,17 @@ namespace IBox.Modem.IRZ.Core
     /// </summary>
     public sealed class ModemManager
     {
-        private static readonly Lazy<ModemManager> lazy = new Lazy<ModemManager>(() => new ModemManager());
+        private static readonly Lazy<ModemManager> Lazy = new Lazy<ModemManager>(() => new ModemManager());
 
-        public static ModemManager Instance => lazy.Value;
+        public static ModemManager Instance => Lazy.Value;
 
-        private readonly SerialPort serial;
+        private readonly SerialPort _serial;
         private Thread _readThread;
         private volatile bool _keepReading;
 
         private ModemManager()
         {
-            serial = new SerialPort();
+            _serial = new SerialPort();
             _readThread = null;
             _keepReading = false;
         }
@@ -45,13 +45,13 @@ namespace IBox.Modem.IRZ.Core
         /// <summary>
         /// Return TRUE if the serial port is currently connected
         /// </summary>
-        public bool IsOpen { get { return serial.IsOpen; } }
+        public bool IsOpen => _serial.IsOpen;
 
         /// <summary>
         /// Open the serial port connection 
         /// </summary>
         /// <param name="portname">ttyUSB0 / ttyUSB1 / ttyUSB2 / etc.</param>
-        /// <param name="baudrate">115200/param>
+        /// <param name="baudrate">115200</param>
         /// <param name="parity">None / Odd / Even / Mark / Space</param>
         /// <param name="databits">5 / 6 / 7 / 8</param>
         /// <param name="stopbits">None / One / Two / OnePointFive</param>
@@ -68,20 +68,20 @@ namespace IBox.Modem.IRZ.Core
 
             try
             {
-                serial.PortName = $"{portname}";
-                serial.BaudRate = baudrate;
-                serial.Parity = parity;
-                serial.DataBits = databits;
-                serial.StopBits = stopbits;
-                serial.Handshake = handshake;
+                _serial.PortName = $"{portname}";
+                _serial.BaudRate = baudrate;
+                _serial.Parity = parity;
+                _serial.DataBits = databits;
+                _serial.StopBits = stopbits;
+                _serial.Handshake = handshake;
 
-                serial.ReadTimeout = 300;
-                serial.WriteTimeout = 300;
+                _serial.ReadTimeout = 300;
+                _serial.WriteTimeout = 300;
 
-                serial.Open();
+                _serial.Open();
 
-                serial.DiscardInBuffer();
-                serial.DiscardOutBuffer();
+                _serial.DiscardInBuffer();
+                _serial.DiscardOutBuffer();
 
                 StartReading();
             }
@@ -98,10 +98,10 @@ namespace IBox.Modem.IRZ.Core
                 OnStatusChanged?.Invoke(this, "Error: " + ex.Message);
             }
 
-            if (serial.IsOpen)
+            if (_serial.IsOpen)
             {
                 string sb = StopBits.None.ToString().Substring(0, 1);
-                switch (serial.StopBits)
+                switch (_serial.StopBits)
                 {
                     case StopBits.One:
                         sb = "1"; break;
@@ -109,22 +109,19 @@ namespace IBox.Modem.IRZ.Core
                         sb = "1.5"; break;
                     case StopBits.Two:
                         sb = "2"; break;
-                    default:
-                        break;
                 }
 
-                string p = serial.Parity.ToString().Substring(0, 1);
-                string hs = serial.Handshake == Handshake.None ? "No Handshake" : serial.Handshake.ToString();
+                string p = _serial.Parity.ToString().Substring(0, 1);
+                string hs = _serial.Handshake == Handshake.None ? "No Handshake" : _serial.Handshake.ToString();
 
-                OnStatusChanged?.Invoke(this, string.Format("Connected to {0}: {1} bps, {2}{3}{4}, {5}.",
-                    serial.PortName, serial.BaudRate, serial.DataBits,
-                    p, sb, hs));
+                OnStatusChanged?.Invoke(this,
+                    $"Connected to {_serial.PortName}: {_serial.BaudRate} bps, {_serial.DataBits}{p}{sb}, {hs}.");
 
                 OnSerialPortOpened?.Invoke(this, true);
             }
             else
             {
-                OnStatusChanged?.Invoke(this, string.Format("{0} already in use.", portname));
+                OnStatusChanged?.Invoke(this, $"{portname} already in use.");
                 OnSerialPortOpened?.Invoke(this, false);
             }
         }
@@ -135,7 +132,7 @@ namespace IBox.Modem.IRZ.Core
         public void Close()
         {
             StopReading();
-            serial.Close();
+            _serial.Close();
             OnStatusChanged?.Invoke(this, "Connection closed.");
             OnSerialPortOpened?.Invoke(this, false);
         }
@@ -146,12 +143,12 @@ namespace IBox.Modem.IRZ.Core
         /// <param name="message"></param>
         public void SendString(string message)
         {
-            if (serial.IsOpen)
+            if (_serial.IsOpen)
             {
                 try
                 {
                     var data = Encoding.ASCII.GetBytes($"{message}\r\n");
-                    serial.Write(data, 0, data.Length);
+                    _serial.Write(data, 0, data.Length);
                     OnStatusChanged?.Invoke(this, $"Command sent: {message}");
                 }
                 catch (Exception ex)
@@ -185,12 +182,12 @@ namespace IBox.Modem.IRZ.Core
         {
             while (_keepReading)
             {
-                if (serial.IsOpen)
+                if (_serial.IsOpen)
                 {
-                    var readBuffer = new byte[serial.ReadBufferSize + 1];
+                    var readBuffer = new byte[_serial.ReadBufferSize + 1];
                     try
                     {
-                        var count = serial.Read(readBuffer, 0, serial.ReadBufferSize);
+                        var count = _serial.Read(readBuffer, 0, _serial.ReadBufferSize);
                         var data = Encoding.ASCII.GetString(readBuffer, 0, count);
                         OnDataReceived?.Invoke(this, data);
                     }

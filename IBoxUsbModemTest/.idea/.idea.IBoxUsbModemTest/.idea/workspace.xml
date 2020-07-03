@@ -20,21 +20,11 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="7e7f8a4d-4fa5-47cf-bc64-fee00774893c" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/IBoxUsbModemUnitTest/Modem/ModemSerialPort.cs" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/.idea.IBoxUsbModemTest/.idea/contentModel.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.idea.IBoxUsbModemTest/.idea/contentModel.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/.idea.IBoxUsbModemTest/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.idea.IBoxUsbModemTest/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/IBoxUsbModemUnitTest/HuaweiTechnologiesModemInstallationTest.cs" beforeDir="false" afterPath="$PROJECT_DIR$/IBoxUsbModemUnitTest/HuaweiTechnologiesModemInstallationTest.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/IBoxUsbModemUnitTest/HuaweiTechnologiesModemShellTest.cs" beforeDir="false" afterPath="$PROJECT_DIR$/IBoxUsbModemUnitTest/HuaweiTechnologiesModemShellTest.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/IBoxUsbModemUnitTest/IBoxUsbModemUnitTest.csproj" beforeDir="false" afterPath="$PROJECT_DIR$/IBoxUsbModemUnitTest/IBoxUsbModemUnitTest.csproj" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/IBoxUsbModemUnitTest/Modem/ConnectConfiguration.cs" beforeDir="false" afterPath="$PROJECT_DIR$/IBoxUsbModemUnitTest/Modem/ConnectConfiguration.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/IBoxUsbModemUnitTest/Modem/DeviceConfiguration.cs" beforeDir="false" afterPath="$PROJECT_DIR$/IBoxUsbModemUnitTest/Modem/DeviceConfiguration.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/IBoxUsbModemUnitTest/Modem/HostEnvironment.cs" beforeDir="false" afterPath="$PROJECT_DIR$/IBoxUsbModemUnitTest/Modem/HostEnvironment.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/IBoxUsbModemUnitTest/Modem/Modem.cs" beforeDir="false" afterPath="$PROJECT_DIR$/IBoxUsbModemUnitTest/Modem/Modem.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/IBoxUsbModemUnitTest/Modem/ModemStatus.cs" beforeDir="false" afterPath="$PROJECT_DIR$/IBoxUsbModemUnitTest/Modem/ModemStatus.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/IBoxUsbModemUnitTest/Modem/ShellConsole.cs" beforeDir="false" afterPath="$PROJECT_DIR$/IBoxUsbModemUnitTest/Modem/ShellConsole.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/IBoxUsbModemUnitTest/Modem/SignalQuality.cs" beforeDir="false" afterPath="$PROJECT_DIR$/IBoxUsbModemUnitTest/Modem/SignalQuality.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/IBoxUsbModemUnitTest/SerialPortHelperTestCase.cs" beforeDir="false" afterPath="$PROJECT_DIR$/IBoxUsbModemUnitTest/SerialPortHelperTestCase.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/IBoxUsbModemUnitTest/app.config" beforeDir="false" afterPath="$PROJECT_DIR$/IBoxUsbModemUnitTest/app.config" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/IBox.Modem.IRZ/Core/ModemManager.cs" beforeDir="false" afterPath="$PROJECT_DIR$/IBox.Modem.IRZ/Core/ModemManager.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/IBox.Modem.IRZ/Protocol/RequestEchoHandler.cs" beforeDir="false" afterPath="$PROJECT_DIR$/IBox.Modem.IRZ/Protocol/RequestEchoHandler.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/IBox.Modem.IRZ/Shell/ModelModemEx.cs" beforeDir="false" afterPath="$PROJECT_DIR$/IBox.Modem.IRZ/Shell/ModelModemEx.cs" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -45,37 +35,13 @@
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$/.." />
   </component>
   <component name="HighlightingSettingsPerFile">
-    <setting file="file://$PROJECT_DIR$/IBoxUsbModemUnitTest/HuaweiTechnologiesModemNetworkTest.cs" root0="FORCE_HIGHLIGHTING" />
-    <setting file="file://$PROJECT_DIR$/IBoxUsbModemUnitTest/HuaweiTechnologiesModemIntegrationTest.cs" root0="FORCE_HIGHLIGHTING" />
-    <setting file="file://$PROJECT_DIR$/IBoxUsbModemUnitTest/HuaweiTechnologiesModemShellTest.cs" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/IBox.Modem.IRZ/Shell/Adapter.cs" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/IBox.Modem.IRZ/Protocol/RequestEchoHandler.cs" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/IBoxUsbModemUnitTest/app.config" root0="FORCE_HIGHLIGHTING" />
-    <setting file="file://$PROJECT_DIR$/IBoxUsbModemUnitTest/Modem/ConnectionInfo.cs" root0="FORCE_HIGHLIGHTING" />
-    <setting file="file://$PROJECT_DIR$/IBoxUsbModemUnitTest/Modem/IAdapter.cs" root0="FORCE_HIGHLIGHTING" />
-    <setting file="file://$PROJECT_DIR$/IBoxUsbModemUnitTest/Modem/SignalQuality.cs" root0="FORCE_HIGHLIGHTING" />
-    <setting file="file://$PROJECT_DIR$/IBoxUsbModemUnitTest/Modem/DbStorageItem.cs" root0="FORCE_HIGHLIGHTING" />
-    <setting file="file://$PROJECT_DIR$/IBoxUsbModemUnitTest/Modem/ModemSerialPort.cs" root0="FORCE_HIGHLIGHTING" />
-    <setting file="file://$PROJECT_DIR$/IBoxUsbModemUnitTest/Modem/ConnectConfiguration.cs" root0="FORCE_HIGHLIGHTING" />
-    <setting file="file://$PROJECT_DIR$/IBoxUsbModemUnitTest/Modem/ConnectionType.cs" root0="FORCE_HIGHLIGHTING" />
-    <setting file="file://$PROJECT_DIR$/IBoxUsbModemUnitTest/Modem/ConnectionTypeEx.cs" root0="FORCE_HIGHLIGHTING" />
-    <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/DecompilerCache/decompiler/0350163F-DA64-4960-871A-084E928B71DC/b4/b87c83c2/TestInvoker`1.cs" root0="SKIP_HIGHLIGHTING" />
-    <setting file="file://$PROJECT_DIR$/IBoxUsbModemUnitTest/Modem/Adapter.cs" root0="FORCE_HIGHLIGHTING" />
-    <setting file="file://$PROJECT_DIR$/IBoxUsbModemUnitTest/Modem/HostOsType.cs" root0="FORCE_HIGHLIGHTING" />
-    <setting file="file://$PROJECT_DIR$/IBoxUsbModemUnitTest/Modem/GprsProvider.cs" root0="FORCE_HIGHLIGHTING" />
-    <setting file="file://$PROJECT_DIR$/IBoxUsbModemUnitTest/Modem/ModemStatus.cs" root0="FORCE_HIGHLIGHTING" />
-    <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/DecompilerCache/decompiler/0350163F-DA64-4960-871A-084E928B71DC/0d/3bdafb94/ExecutionTimer.cs" root0="SKIP_HIGHLIGHTING" />
-    <setting file="file://$PROJECT_DIR$/IBoxUsbModemUnitTest/Modem/IDisposableService.cs" root0="FORCE_HIGHLIGHTING" />
-    <setting file="file://$PROJECT_DIR$/IBoxUsbModemUnitTest/Modem/ModemSettingsExtentions.cs" root0="FORCE_HIGHLIGHTING" />
-    <setting file="file://$PROJECT_DIR$/IBoxUsbModemUnitTest/Modem/HostEnvironment.cs" root0="FORCE_HIGHLIGHTING" />
-    <setting file="file://$PROJECT_DIR$/IBoxUsbModemUnitTest/Modem/GprsProviderEx.cs" root0="FORCE_HIGHLIGHTING" />
-    <setting file="file://$PROJECT_DIR$/IBoxUsbModemUnitTest/Modem/DeviceConfiguration.cs" root0="FORCE_HIGHLIGHTING" />
-    <setting file="file://$PROJECT_DIR$/IBoxUsbModemUnitTest/Modem/ShellConsole.cs" root0="FORCE_HIGHLIGHTING" />
-    <setting file="file://$PROJECT_DIR$/IBoxUsbModemUnitTest/Modem/ModelModemEx.cs" root0="FORCE_HIGHLIGHTING" />
-    <setting file="file://$PROJECT_DIR$/IBoxUsbModemUnitTest/Modem/IModem.cs" root0="FORCE_HIGHLIGHTING" />
-    <setting file="file://$PROJECT_DIR$/IBoxUsbModemUnitTest/Modem/Modem.cs" root0="FORCE_HIGHLIGHTING" />
-    <setting file="file://$PROJECT_DIR$/IBoxUsbModemUnitTest/Modem/IManagerConfigurationService.cs" root0="FORCE_HIGHLIGHTING" />
-    <setting file="file://$PROJECT_DIR$/IBoxUsbModemUnitTest/Modem/Disposable.cs" root0="FORCE_HIGHLIGHTING" />
-    <setting file="file://$PROJECT_DIR$/IBoxUsbModemUnitTest/SerialPortHelperTestCase.cs" root0="FORCE_HIGHLIGHTING" />
-    <setting file="file://$PROJECT_DIR$/IBoxUsbModemUnitTest/HuaweiTechnologiesModemInstallationTest.cs" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/IBox.Modem.IRZ/Core/ModemManager.cs" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/IBoxUsbModemUnitTest/MU709IRZModemShellUnit.cs" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/IBox.Modem.IRZ/Shell/ModelModemEx.cs" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/IBox.Modem.IRZ/Shell/ConnectConfiguration.cs" root0="FORCE_HIGHLIGHTING" />
   </component>
   <component name="IdeDocumentHistory">
     <option name="CHANGED_PATHS">
@@ -94,6 +60,9 @@
         <option value="$PROJECT_DIR$/IBoxUsbModemUnitTest/HuaweiTechnologiesModemInstallationTest.cs" />
         <option value="$PROJECT_DIR$/IBoxUsbModemUnitTest/HuaweiTechnologiesModemShellTest.cs" />
         <option value="$PROJECT_DIR$/IBoxUsbModemUnitTest/app.config" />
+        <option value="$PROJECT_DIR$/IBox.Modem.IRZ/Protocol/RequestEchoHandler.cs" />
+        <option value="$PROJECT_DIR$/IBox.Modem.IRZ/Core/ModemManager.cs" />
+        <option value="$PROJECT_DIR$/IBox.Modem.IRZ/Shell/ModelModemEx.cs" />
       </list>
     </option>
   </component>
@@ -110,7 +79,7 @@
     <property name="RunOnceActivity.ShowReadmeOnStart" value="true" />
     <property name="WebServerToolWindowFactoryState" value="false" />
     <property name="nodejs_package_manager_path" value="npm" />
-    <property name="settings.editor.selected.configurable" value="preferences.editor" />
+    <property name="settings.editor.selected.configurable" value="preferences.sourceCode.C#" />
   </component>
   <component name="TaskManager">
     <task active="true" id="Default" summary="Default task">
@@ -130,6 +99,7 @@
       <workItem from="1592152722434" duration="784000" />
       <workItem from="1592153855238" duration="2372000" />
       <workItem from="1592163114456" duration="921000" />
+      <workItem from="1593758649186" duration="659000" />
     </task>
     <servers />
   </component>
@@ -220,9 +190,10 @@
       <screen x="67" y="27" width="1853" height="1053" />
     </state>
     <state width="1807" height="362" key="GridCell.Tab.3.right/67.27.1853.1053@67.27.1853.1053" timestamp="1592164114985" />
-    <state x="482" y="187" key="SettingsEditor" timestamp="1592143584063">
-      <screen x="67" y="27" width="1853" height="1053" />
+    <state x="430" y="183" key="SettingsEditor" timestamp="1593758705993">
+      <screen x="0" y="28" width="1920" height="1018" />
     </state>
+    <state x="430" y="183" key="SettingsEditor/0.28.1920.1018@0.28.1920.1018" timestamp="1593758705993" />
     <state x="482" y="187" key="SettingsEditor/67.27.1853.1053@67.27.1853.1053" timestamp="1592143584063" />
     <state x="167" y="181" width="1653" height="855" key="VCS.FileHistoryDialog" timestamp="1592162183322">
       <screen x="67" y="27" width="1853" height="1053" />
@@ -239,41 +210,33 @@
         <line-breakpoint enabled="true" type="DotNet Breakpoints">
           <url>file://$PROJECT_DIR$/IBoxUsbModemUnitTest/Modem/ModemSerialPort.cs</url>
           <line>147</line>
-          <properties documentPath="$PROJECT_DIR$/IBoxUsbModemUnitTest/Modem/ModemSerialPort.cs" initialLine="147">
-            <startOffsets>
-              <option value="5076" />
-            </startOffsets>
-            <endOffsets>
-              <option value="5129" />
-            </endOffsets>
-          </properties>
+          <properties documentPath="$PROJECT_DIR$/IBoxUsbModemUnitTest/Modem/ModemSerialPort.cs" initialLine="147" />
           <option name="timeStamp" value="39" />
         </line-breakpoint>
         <line-breakpoint enabled="true" type="DotNet Breakpoints">
           <url>file://$PROJECT_DIR$/IBoxUsbModemUnitTest/HuaweiTechnologiesModemShellTest.cs</url>
           <line>80</line>
-          <properties documentPath="$PROJECT_DIR$/IBoxUsbModemUnitTest/HuaweiTechnologiesModemShellTest.cs" initialLine="80">
-            <startOffsets>
-              <option value="3010" />
-            </startOffsets>
-            <endOffsets>
-              <option value="3057" />
-            </endOffsets>
-          </properties>
+          <properties documentPath="$PROJECT_DIR$/IBoxUsbModemUnitTest/HuaweiTechnologiesModemShellTest.cs" initialLine="80" />
           <option name="timeStamp" value="40" />
         </line-breakpoint>
         <line-breakpoint enabled="true" type="DotNet Breakpoints">
           <url>file://$PROJECT_DIR$/IBoxUsbModemUnitTest/Modem/ModemSerialPort.cs</url>
           <line>75</line>
-          <properties documentPath="$PROJECT_DIR$/IBoxUsbModemUnitTest/Modem/ModemSerialPort.cs" initialLine="75">
+          <properties documentPath="$PROJECT_DIR$/IBoxUsbModemUnitTest/Modem/ModemSerialPort.cs" initialLine="75" />
+          <option name="timeStamp" value="41" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="DotNet Breakpoints">
+          <url>file://$PROJECT_DIR$/IBox.Modem.IRZ/Shell/ModelModemEx.cs</url>
+          <line>51</line>
+          <properties documentPath="$PROJECT_DIR$/IBox.Modem.IRZ/Shell/ModelModemEx.cs" initialLine="51">
             <startOffsets>
-              <option value="2582" />
+              <option value="2142" />
             </startOffsets>
             <endOffsets>
-              <option value="2596" />
+              <option value="2155" />
             </endOffsets>
           </properties>
-          <option name="timeStamp" value="41" />
+          <option name="timeStamp" value="42" />
         </line-breakpoint>
       </breakpoints>
     </breakpoint-manager>

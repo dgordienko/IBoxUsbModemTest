@@ -16,7 +16,7 @@ namespace IBoxUsbModemUnitTest
             
 
         [Theory(DisplayName ="Parser model name")]
-        [InlineData("MU709s-2")]
+        [InlineData("MU709")]
         public void ModelNameExtention(string name)
         {
             var result = ModelModemEx.Parse(name);

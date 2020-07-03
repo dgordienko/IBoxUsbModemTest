@@ -39,14 +39,19 @@ namespace IBox.Modem.IRZ.Shell
             throw new ArgumentOutOfRangeException("...добавь case...");
         }
 
-        public static ModelModem Parse(string val)
+        public static ModelModem Parse(string request)
         {
             var models = Enum.GetValues(typeof(ModelModem));
             foreach (ModelModem model in models)
-                if (model.Description().Equals(val, StringComparison.OrdinalIgnoreCase) ||
-                    model.ToString().Equals(val, StringComparison.OrdinalIgnoreCase))
+            {
+                var description = model.Description();
+                var mdl = model.ToString();
+                
+                if (model.Description().Equals(request, StringComparison.OrdinalIgnoreCase) ||
+                    model.ToString().Equals(request, StringComparison.OrdinalIgnoreCase))
                     return model;
-            throw new ArgumentException(string.Format("Unknown value '{0}'", val));
+            }
+            throw new ArgumentException($"Unknown value '{request}'");
         }
 
         public static ModelModem ParseManufacturer(string atManufacturer)

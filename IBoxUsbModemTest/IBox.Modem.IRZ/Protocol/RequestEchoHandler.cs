@@ -11,10 +11,15 @@ namespace IBox.Modem.IRZ.Protocol
     /// </summary>
     public sealed class RequestEchoHandler : AbstractModemCommandHandle
     {
+        private const string NOECHO = @"Нет ответа ЭХО";
+        private const string ECHO = @"ЭХО";
+        private const string AT = @"AT";
+        private const string OK = @"OK";
+
         public override ModemRequestContext Handel(ModemRequestContext request, string @param)
         {
             var result = request.Response;
-            if (param == "AT")
+            if (param == AT)
             {
                 var helper = ModemManager.Instance;
                 var recived = false;
@@ -40,9 +45,9 @@ namespace IBox.Modem.IRZ.Protocol
                 };
                 helper.OnDataReceived += (sender, response) =>
                 {
-                    var check = "OK";
-                    result.IsSuccess = Regex.Matches(response, $"{check}", RegexOptions.IgnoreCase).Count > 0;
-                    result.State = string.Join(",", result.IsSuccess ? "ЭХО" : "Нет ответа ЭХО");
+                    result.IsSuccess = Regex.Matches(response, $"{OK}", RegexOptions.IgnoreCase).Count > 0;
+                    request.Description.Add(result.IsSuccess ? ECHO : NOECHO);
+                    //result.State = string.Join(",", result.IsSuccess ? ECHO : NOECHO);
                     recived = false;
                     (sender as ModemManager)?.Close();
                 };

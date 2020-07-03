@@ -13,6 +13,9 @@ namespace IBox.Modem.IRZ.Protocol
     public sealed class RequestResetHandler : AbstractModemCommandHandle
     {
         private const string ATZ = "ATZ";
+        private const string OK = "OK";
+        private const string REDY = "Готов";
+        private const string NOTREDY = "Не готов";
 
         public override ModemRequestContext Handel(ModemRequestContext request, string @param)
         {
@@ -43,9 +46,9 @@ namespace IBox.Modem.IRZ.Protocol
                 };
                 helper.OnDataReceived += (sender, response) =>
                 {
-                    var @params = "OK";
-                    result.IsSuccess = Regex.Matches(response, $"{@params}", RegexOptions.IgnoreCase).Count > 0;
-                    result.State = string.Join(",", result.State, result.IsSuccess ? "Готов" : "Не готов");
+                    result.IsSuccess = Regex.Matches(response, $"{OK}", RegexOptions.IgnoreCase).Count > 0;
+                    request.Description.Add(result.IsSuccess ? REDY : NOTREDY);
+                    //result.State = string.Join(",", result.State, result.IsSuccess ? REDY : NOTREDY);
                     recived = false;
                     (sender as ModemManager)?.Close();
                 };
@@ -59,7 +62,7 @@ namespace IBox.Modem.IRZ.Protocol
                 }
                 return request;
             }
-            return base.Handel(request, "AT");
+            return base.Handel(request, @param);
         }
     }
 }

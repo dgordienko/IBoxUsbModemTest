@@ -9,6 +9,7 @@ namespace IBox.Modem.IRZ.Protocol
     public sealed class RequestModelHandler : AbstractModemCommandHandle
     {
         private const string ATGMM = "AT+GMM";
+        private const string OK = "OK";
 
         public override ModemRequestContext Handel(ModemRequestContext request, string param)
         {
@@ -41,8 +42,8 @@ namespace IBox.Modem.IRZ.Protocol
                 {
 
                     var matches = Regex.Matches(response, @"[\S ]+", RegexOptions.Singleline);
-                    if ((matches.Count >= 2) && ("OK".Equals(matches[matches.Count - 1].Value,
-                        StringComparison.OrdinalIgnoreCase)))
+                    if ((matches.Count >= 2) && OK.Equals(matches[matches.Count - 1].Value,
+                        StringComparison.OrdinalIgnoreCase))
                     {
                         result.IsSuccess = true;
                         result.ModelName = matches[matches.Count - 2].Value.Trim();

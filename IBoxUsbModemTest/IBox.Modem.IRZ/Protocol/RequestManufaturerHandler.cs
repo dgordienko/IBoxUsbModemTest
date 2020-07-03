@@ -11,6 +11,9 @@ namespace IBox.Modem.IRZ.Protocol
     public sealed class RequestManufaturerHandler : AbstractModemCommandHandle
     {
         private const string ATGMI = "AT+GMI";
+        private const string DETECTED = "Detected";
+        private const string UNKNOWN = "Unknown";
+        private const string OK = "OK";
 
         public override ModemRequestContext Handel(ModemRequestContext request, string param)
         {
@@ -41,15 +44,15 @@ namespace IBox.Modem.IRZ.Protocol
                 };
                 helper.OnDataReceived += (sender, response) =>
                 {
-
                     var matches = Regex.Matches(response, @"[\S ]+", RegexOptions.Singleline);
-                    if ((matches.Count >= 2) && "OK".Equals(matches[matches.Count - 1].Value, StringComparison.OrdinalIgnoreCase))
+                    if ((matches.Count >= 2) && OK.Equals(matches[matches.Count - 1].Value, StringComparison.OrdinalIgnoreCase))
                     {
                         result.Manufacturer = matches[matches.Count - 2].Value.Trim();
                         var model = result.AsModel();
-                        result.IsSuccess &= model != ModelModem.Unknown;
-                        var desc = model != ModelModem.Unknown ? "Detected" : "Unknown";
-                        result.State = string.Join(",", result.State, desc);
+                        result.IsSuccess = model != ModelModem.Unknown;
+                        var desc = model != ModelModem.Unknown ? DETECTED : UNKNOWN;
+                        request.Description.Add(desc);
+                        //result.State = string.Join(",", result.State, desc);
                     }
                     recived = false;
                     (sender as ModemManager)?.Close();
