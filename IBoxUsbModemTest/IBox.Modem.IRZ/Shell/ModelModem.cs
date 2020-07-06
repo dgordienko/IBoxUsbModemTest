@@ -1,6 +1,5 @@
 ﻿namespace IBox.Modem.IRZ.Shell
 {
-
     public enum ModelModem
     {
         //None,

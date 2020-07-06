@@ -7,67 +7,64 @@ using IBox.Modem.IRZ.Shell;
 
 namespace IBox.Modem.IRZ.Protocol
 {
-
-    public sealed class RequestManufaturerHandler : AbstractModemCommandHandle
+    public sealed class RequestManufaturerHandler : AbstractModemCommandHandler
     {
         private const string ATGMI = "AT+GMI";
         private const string DETECTED = "Detected";
         private const string UNKNOWN = "Unknown";
         private const string OK = "OK";
 
-        public override ModemRequestContext Handel(ModemRequestContext request, string param)
+        public override ModemRequestContext Handle(ModemRequestContext request, string param)
         {
-            var result = request.Response;
             if (param == ATGMI)
             {
+                var result = request.Response;
                 var helper = ModemManager.Instance;
-                var recived = false;
+                var received = false;
                 helper.OnSerialPortOpened += (sender, response) =>
                 {
                     if (response)
                     {
                         try
                         {
+                            received = true;
                             helper.SendString(param);
                         }
                         catch (Exception exception)
                         {
                             Debug.WriteLine(exception.Message);
                             result.State = exception.Message;
+                            request.Response.IsSuccess = false;
+                            request.Description.Add($"Error send {ATGMI} - {exception.Message}");
+                            received = false;
+#if DEBUG
+                            throw;
+#endif
                         }
-                        recived = true;
                     }
                 };
-                helper.OnStatusChanged += (sender, response) =>
-                {
-                    Debug.WriteLine(response);
-                };
+                helper.OnStatusChanged += (sender, response) => { Debug.WriteLine(response); };
                 helper.OnDataReceived += (sender, response) =>
                 {
                     var matches = Regex.Matches(response, @"[\S ]+", RegexOptions.Singleline);
-                    if ((matches.Count >= 2) && OK.Equals(matches[matches.Count - 1].Value, StringComparison.OrdinalIgnoreCase))
+                    if (matches.Count >= 2 &&
+                        OK.Equals(matches[matches.Count - 1].Value, StringComparison.OrdinalIgnoreCase))
                     {
-                        result.Manufacturer = matches[matches.Count - 2].Value.Trim();
+                        request.Response.Manufacturer = matches[matches.Count - 2].Value.Trim();
                         var model = result.AsModel();
+                        request.Response.ModelName = model.ShortName();
                         result.IsSuccess = model != ModelModem.Unknown;
                         var desc = model != ModelModem.Unknown ? DETECTED : UNKNOWN;
-                        request.Description.Add(desc);
-                        //result.State = string.Join(",", result.State, desc);
+                        request.Description.Add($"{desc} {request.Response.ModelName}");
                     }
-                    recived = false;
+                    received = false;
                     (sender as ModemManager)?.Close();
                 };
-                if (!helper.IsOpen)
-                {
-                    helper.Open(portname: request.Connection.PortName);
-                }
-                while (recived)
-                {
-                    Thread.Sleep(300);
-                }
+                if (!helper.IsOpen) helper.Open(request.Connection.PortName);
+                while (received) Thread.Sleep(300);
                 return request;
             }
-            return base.Handel(request, param);
+            return base.Handle(request, param);
         }
     }
 }

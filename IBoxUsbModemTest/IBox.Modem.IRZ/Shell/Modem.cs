@@ -12,17 +12,11 @@ using Polly.Retry;
 namespace IBox.Modem.IRZ.Shell
 {
     /// <summary>
-    /// MC35    http://www.radiofid.ru/upload_data//at-commands/mc35at.pdf
-    /// Wavecom http://nsk-embedded-downloads.googlecode.com/files/wavecom%202400a%20at%20commands.pdf
+    ///     MC35    http://www.radiofid.ru/upload_data//at-commands/mc35at.pdf
+    ///     Wavecom http://nsk-embedded-downloads.googlecode.com/files/wavecom%202400a%20at%20commands.pdf
     /// </summary>
     public class Modem : Adapter, IModem
     {
-
-        private string _portName;
-        private int _baudeRate;
-
-        public List<int> AvailableBaudRates { get; } = new List<int> { 9600, 19200, 38400, 115200 };
-
         public enum RegStatus
         {
             Error = -1,
@@ -33,20 +27,24 @@ namespace IBox.Modem.IRZ.Shell
             Unknown = 4,
             Roaming = 5
         }
-        public ModemStatus FailedModemStatus { get; } = new ModemStatus
-        {
-            IsSuccess = false,
-            State = "Not initialized",
-            Manufacturer = "None",
-            ModelName = "",
-            SerialNumber = "SN xyz",
-            SignalQuality = new SignalQuality { dBmW = 0, Percent = "0.0", IsValid = false },
-            Imsi = string.Empty,
-            Imei = string.Empty,
-            OperatorName = ""
-        };
 
 
+        private const int RetryCount = 3;
+        private const int TimeOutRetry = 500;
+
+        /// <summary>
+        ///     Политика переспроса при выполнении AT-команды
+        ///     если результат пустая строка или возникла ошибка доступа к порту,  или какая-то другая ошибка
+        /// </summary>
+        private readonly RetryPolicy<string> retry = Policy
+            .HandleResult(string.Empty)
+            .Or<IOException>()
+            .Or<Exception>()
+            .WaitAndRetry(RetryCount, attempt => TimeSpan.FromMilliseconds(TimeOutRetry));
+
+        private int _baudeRate;
+
+        private string _portName;
 
 
         public Modem(ILogger logService, ConnectConfiguration configurationService)
@@ -55,8 +53,23 @@ namespace IBox.Modem.IRZ.Shell
             SetPort(configuration.PortName, configuration.BaudRate);
         }
 
+        public List<int> AvailableBaudRates { get; } = new List<int> {9600, 19200, 38400, 115200};
+
+        public ModemStatus FailedModemStatus { get; } = new ModemStatus
+        {
+            IsSuccess = false,
+            State = "Not initialized",
+            Manufacturer = "None",
+            ModelName = "",
+            SerialNumber = "SN xyz",
+            SignalQuality = new SignalQuality {dBmW = 0, Percent = "0.0", IsValid = false},
+            Imsi = string.Empty,
+            Imei = string.Empty,
+            OperatorName = ""
+        };
+
         /// <summary>
-        /// Уставновка настроек порта
+        ///     Уставновка настроек порта
         /// </summary>
         public void SetPort(string portName, int baudeRate)
         {
@@ -65,7 +78,7 @@ namespace IBox.Modem.IRZ.Shell
         }
 
         /// <summary>
-        /// Применение конфигурации 
+        ///     Применение конфигурации
         /// </summary>
         /// <param name="configuration">конфигурация</param>
         /// <returns></returns>
@@ -75,8 +88,102 @@ namespace IBox.Modem.IRZ.Shell
             return true;
         }
 
+        public ModemStatus GetModemStatus()
+        {
+            var result = FailedModemStatus.Clone();
+            var description = new List<string>();
+            var response = string.Empty;
+            MatchCollection matches;
+            using (var port = ConfigurePort())
+            {
+                try
+                {
+                    response = retry.Execute(() => { return SendATCommand(port, "ATZ"); });
+                    result.IsSuccess = Regex.Matches(response, @"OK", RegexOptions.IgnoreCase).Count > 0;
+                    description.Add(result.IsSuccess ? "Готов" : "Не готов");
+                    response = retry.Execute(() => { return SendATCommand(port, "AT"); });
+                    result.IsSuccess = Regex.Matches(response, @"OK", RegexOptions.IgnoreCase).Count > 0;
+                    description.Add(result.IsSuccess ? "ЭХО" : "Нет ответа ЭХО");
+                    response = retry.Execute(() => { return SendATCommand(port, "AT+CIMI"); });
+                    matches = Regex.Matches(response, @"\d{10,}", RegexOptions.IgnoreCase);
+                    if (matches.Count > 0) result.Imsi = matches[0].Value;
+                    result.IsSuccess = !string.IsNullOrEmpty(result.Imsi);
+                    description.Add(!string.IsNullOrEmpty(result.Imsi) ? "Есть IMSI" : "Нет IMSI");
+
+                    //оператор
+                    var vOperator =
+                        GprsProviderEx.ParseSimIMSI(result.Imsi); //Преобразует оператор+IMSI в значение оператора
+                    result.OperatorName = vOperator.ProviderName();
+                    result.IsSuccess &= vOperator != GprsProvider.Undefined;
+                    description.Add(vOperator != GprsProvider.Undefined ? "Есть оператор" : "Нет оператора");
+                    //Model
+                    response = retry.Execute(() => { return SendATCommand(port, "AT+GMM"); });
+                    matches = Regex.Matches(response, @"[\S ]+", RegexOptions.Singleline);
+                    if (matches.Count >= 2 &&
+                        "OK".Equals(matches[matches.Count - 1].Value, StringComparison.OrdinalIgnoreCase))
+                        result.ModelName = matches[matches.Count - 2].Value.Trim();
+                    //Manufacturer
+                    response = retry.Execute(() => { return SendATCommand(port, "AT+GMI"); });
+                    matches = Regex.Matches(response, @"[\S ]+", RegexOptions.Singleline);
+                    if (matches.Count >= 2 &&
+                        "OK".Equals(matches[matches.Count - 1].Value, StringComparison.OrdinalIgnoreCase))
+                        result.Manufacturer = matches[matches.Count - 2].Value.Trim();
+                    var vModel = result.AsModel(); //преобразует производитель+модель в модель
+                    result.IsSuccess &= vModel != ModelModem.Unknown; //!string.IsNullOrEmpty(vModemStatus.ModelName);
+                    description.Add(vModel != ModelModem.Unknown ? "Detected" : "Unknown");
+                    //состояние сети
+                    response = retry.Execute(() => { return SendATCommand(port, "AT+CREG?"); });
+
+                    var vNetStatus = -1;
+                    var vNetStatusDescr = "неизвестно";
+
+                    var vAnswPos = response.IndexOf("+CREG:");
+                    if (vAnswPos >= 0)
+                    {
+                        vAnswPos += "+CREG: 0,".Length;
+                        if (int.TryParse(response.Substring(vAnswPos, 1), out vNetStatus))
+                            vNetStatusDescr = vNetStatus.ToNetworkStatus();
+                    }
+
+                    result.IsSuccess = vNetStatus == 1;
+                    description.Add("Сеть: " + vNetStatusDescr);
+
+
+                    response = retry.Execute(() => { return SendATCommand(port, "AT+CGSN"); });
+
+                    matches = Regex.Matches(response, @"\d{10,}", RegexOptions.IgnoreCase);
+                    if (matches.Count > 0)
+                        // Imei is serial number
+                        result.Imei = result.SerialNumber = matches[0].Value;
+                    // AT+CGMR  Request revision identification of software status
+                    response = retry.Execute(() => { return SendATCommand(port, "AT+CGMR"); });
+
+                    matches = Regex.Matches(response, @"[\S ]+", RegexOptions.Singleline);
+                    if (matches.Count >= 2 &&
+                        "OK".Equals(matches[matches.Count - 1].Value, StringComparison.OrdinalIgnoreCase))
+                        result.RevisionId = matches[matches.Count - 2].Value;
+                    var quality = GetSignalQuality(port);
+                    result.SignalQuality = quality;
+                }
+                catch (IOException ex)
+                {
+                    result.State = string.Format("Ошибка: {0}", ex.Message);
+                }
+                catch (Exception ex)
+                {
+                    result.State = string.Format("Ошибка: {0}", ex.Message);
+                }
+                finally
+                {
+                    result.State = string.Join(", ", description);
+                }
+            }
+
+            return result;
+        }
+
         /// <summary>
-        /// Отправка АТ коммандыы  
+        ///     Отправка АТ коммандыы
         /// </summary>
         /// <param name="port">порт подлкючения устройства</param>
         /// <param name="command">Комманда</param>
@@ -99,12 +206,11 @@ namespace IBox.Modem.IRZ.Shell
                 Thread.Sleep(300);
 
 
-
                 if (port.BytesToRead > 0)
                 {
                     while (port.BytesToRead != 0) buffer.Append(port.ReadExisting());
                     response = buffer.ToString();
-                    var readData = $"{ response.Replace('\r', '|').Replace('\n', '|')}";
+                    var readData = $"{response.Replace('\r', '|').Replace('\n', '|')}";
                 }
                 else
                 {
@@ -118,7 +224,8 @@ namespace IBox.Modem.IRZ.Shell
             catch (Exception exception)
             {
                 // TODO: debug logger??? для неизвестной ошибки пусть  падает в лог ее стектрейс (для продуктовой эксплуатации  скорее всего неприменимо) 
-                Debug.WriteLine(exception, $"Modem.SendATCommand Exception: {exception.Message}{Environment.NewLine}{exception.StackTrace}");
+                Debug.WriteLine(exception,
+                    $"Modem.SendATCommand Exception: {exception.Message}{Environment.NewLine}{exception.StackTrace}");
                 throw exception; // TODO: уточнить поведение на тесте 
             }
             finally
@@ -130,6 +237,7 @@ namespace IBox.Modem.IRZ.Shell
                     port.Close();
                 }
             }
+
             return response;
         }
 
@@ -147,155 +255,21 @@ namespace IBox.Modem.IRZ.Shell
         }
 
 
-        private const int RetryCount = 3;
-        private const int TimeOutRetry = 500;
-
         /// <summary>
-        /// Политика переспроса при выполнении AT-команды
-        /// если результат пустая строка или возникла ошибка доступа к порту,  или какая-то другая ошибка
-        /// </summary>
-        private readonly RetryPolicy<string> retry = Policy
-            .HandleResult(string.Empty)
-            .Or<IOException>()
-            .Or<Exception>()
-            .WaitAndRetry(RetryCount, attempt => TimeSpan.FromMilliseconds(TimeOutRetry));
-
-        public ModemStatus GetModemStatus()
-        {
-            var result = FailedModemStatus.Clone();
-            var description = new List<string>();
-            var response = string.Empty;
-            MatchCollection matches;
-            using (var port = ConfigurePort())
-            {
-                try
-                {
-                    response = retry.Execute(() =>
-                    {
-                        return SendATCommand(port, "ATZ");
-                    });
-                    result.IsSuccess = Regex.Matches(response, @"OK", RegexOptions.IgnoreCase).Count > 0;
-                    description.Add(result.IsSuccess ? "Готов" : "Не готов");
-                    response = retry.Execute(() =>
-                    {
-                        return SendATCommand(port, "AT");
-                    });
-                    result.IsSuccess = Regex.Matches(response, @"OK", RegexOptions.IgnoreCase).Count > 0;
-                    description.Add(result.IsSuccess ? "ЭХО" : "Нет ответа ЭХО");
-                    response = retry.Execute(() =>
-                    {
-                        return SendATCommand(port, "AT+CIMI");
-                    });
-                    matches = Regex.Matches(response, @"\d{10,}", RegexOptions.IgnoreCase);
-                    if (matches.Count > 0)
-                    {
-                        result.Imsi = matches[0].Value;
-                    }
-                    result.IsSuccess = !string.IsNullOrEmpty(result.Imsi);
-                    description.Add(!string.IsNullOrEmpty(result.Imsi) ? "Есть IMSI" : "Нет IMSI");
-
-                    //оператор
-                    var vOperator = GprsProviderEx.ParseSimIMSI(result.Imsi);//Преобразует оператор+IMSI в значение оператора
-                    result.OperatorName = GprsProviderEx.ProviderName(vOperator);
-                    result.IsSuccess &= vOperator != GprsProvider.Undefined;
-                    description.Add(vOperator != GprsProvider.Undefined ? "Есть оператор" : "Нет оператора");
-                    //Model
-                    response = retry.Execute(() =>
-                    {
-                        return SendATCommand(port, "AT+GMM");
-                    });
-                    matches = Regex.Matches(response, @"[\S ]+", RegexOptions.Singleline);
-                    if ((matches.Count >= 2) && ("OK".Equals(matches[matches.Count - 1].Value, StringComparison.OrdinalIgnoreCase)))
-                    {
-                        result.ModelName = matches[matches.Count - 2].Value.Trim();
-                    }
-                    //Manufacturer
-                    response = retry.Execute(() =>
-                    {
-                        return SendATCommand(port, "AT+GMI");
-                    });
-                    matches = Regex.Matches(response, @"[\S ]+", RegexOptions.Singleline);
-                    if ((matches.Count >= 2) && "OK".Equals(matches[matches.Count - 1].Value, StringComparison.OrdinalIgnoreCase))
-                    {
-                        result.Manufacturer = matches[matches.Count - 2].Value.Trim();
-                    }
-                    var vModel = result.AsModel();//преобразует производитель+модель в модель
-                    result.IsSuccess &= vModel != ModelModem.Unknown; //!string.IsNullOrEmpty(vModemStatus.ModelName);
-                    description.Add(vModel != ModelModem.Unknown ? "Detected" : "Unknown");
-                    //состояние сети
-                    response = retry.Execute(() =>
-                    {
-                        return SendATCommand(port, "AT+CREG?");
-                    });
-
-                    var vNetStatus = -1;
-                    var vNetStatusDescr = "неизвестно";
-
-                    var vAnswPos = response.IndexOf("+CREG:");
-                    if (vAnswPos >= 0)
-                    {
-                        vAnswPos += "+CREG: 0,".Length;
-                        if (int.TryParse(response.Substring(vAnswPos, 1), out vNetStatus))
-                            vNetStatusDescr = vNetStatus.ToNetworkStatus();
-                    }
-                    result.IsSuccess &= vNetStatus == 1;
-                    description.Add("Сеть: " + vNetStatusDescr);
-                    response = retry.Execute(() =>
-                    {
-                        return SendATCommand(port, "AT+CGSN");
-                    });
-
-                    matches = Regex.Matches(response, @"\d{10,}", RegexOptions.IgnoreCase);
-                    if (matches.Count > 0)
-                        // Imei is serial number
-                        result.Imei = result.SerialNumber = matches[0].Value;
-                    // AT+CGMR  Request revision identification of software status
-                    response = retry.Execute(() =>
-                    {
-                        return SendATCommand(port, "AT+CGMR");
-                    });
-
-                    matches = Regex.Matches(response, @"[\S ]+", RegexOptions.Singleline);
-                    if ((matches.Count >= 2) && ("OK".Equals(matches[matches.Count - 1].Value, StringComparison.OrdinalIgnoreCase)))
-                        result.RevisionId = matches[matches.Count - 2].Value;
-                    var quality = GetSignalQuality(port);
-                    result.SignalQuality = quality;
-                }
-                catch (IOException ex)
-                {
-                    result.State = string.Format("Ошибка: {0}", ex.Message);
-                }
-                catch (Exception ex)
-                {
-                    result.State = string.Format("Ошибка: {0}", ex.Message);
-                }
-                finally
-                {
-                    result.State = string.Join(", ", description);
-                }
-            }
-            return result;
-        }
-
-
-        /// <summary>
-        /// проверка качества связи
+        ///     проверка качества связи
         /// </summary>
         private SignalQuality GetSignalQuality(SerialPort serial)
         {
-            var result = new SignalQuality()
+            var result = new SignalQuality
             {
                 dBmW = 0,
                 IsValid = false,
                 Percent = string.Empty
             };
-            var response = retry.Execute(() =>
-            {
-                return SendATCommand(serial, "AT+CSQ");
-            });
+            var response = retry.Execute(() => { return SendATCommand(serial, "AT+CSQ"); });
             if (string.IsNullOrEmpty(response)) return result;
             var matches = Regex.Matches(response, @"[\S ]+", RegexOptions.Singleline);
-            if ((matches.Count >= 2) && "OK".Equals(matches[matches.Count - 1].Value, StringComparison.OrdinalIgnoreCase))
+            if (matches.Count >= 2 && "OK".Equals(matches[matches.Count - 1].Value, StringComparison.OrdinalIgnoreCase))
             {
                 matches = Regex.Matches(matches[matches.Count - 2].Value, @"\d+", RegexOptions.None);
                 if (matches.Count > 0)
@@ -308,7 +282,10 @@ namespace IBox.Modem.IRZ.Shell
                         result.IsValid = false;
                     }
 
-                    else if (r == 99) return result;
+                    else if (r == 99)
+                    {
+                        return result;
+                    }
 
                     else
                     {
@@ -318,6 +295,7 @@ namespace IBox.Modem.IRZ.Shell
                     }
                 }
             }
+
             return result;
         }
     }

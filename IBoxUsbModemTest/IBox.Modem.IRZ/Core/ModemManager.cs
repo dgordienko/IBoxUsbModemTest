@@ -8,17 +8,16 @@ using System.Threading;
 namespace IBox.Modem.IRZ.Core
 {
     /// <summary>
-    /// Serial-USB manager 
+    /// Serial-USB manager
     /// </summary>
     public sealed class ModemManager
     {
-        private static readonly Lazy<ModemManager> Lazy = new Lazy<ModemManager>(() => new ModemManager());
-
-        public static ModemManager Instance => Lazy.Value;
+        private static readonly Lazy<ModemManager> Lazy = 
+            new Lazy<ModemManager>(() => new ModemManager());
 
         private readonly SerialPort _serial;
-        private Thread _readThread;
         private volatile bool _keepReading;
+        private Thread _readThread;
 
         private ModemManager()
         {
@@ -27,28 +26,30 @@ namespace IBox.Modem.IRZ.Core
             _keepReading = false;
         }
 
-        /// <summary>
-        /// Update the serial port status to the event subscriber
-        /// </summary>
-        public event EventHandler<string> OnStatusChanged;
+        public static ModemManager Instance => Lazy.Value;
 
         /// <summary>
-        /// Update received data from the serial port to the event subscriber
-        /// </summary>
-        public event EventHandler<string> OnDataReceived;
-
-        /// <summary>
-        /// Update TRUE/FALSE for the serial port connection to the event subscriber
-        /// </summary>
-        public event EventHandler<bool> OnSerialPortOpened;
-
-        /// <summary>
-        /// Return TRUE if the serial port is currently connected
+        ///     Return TRUE if the serial port is currently connected
         /// </summary>
         public bool IsOpen => _serial.IsOpen;
 
         /// <summary>
-        /// Open the serial port connection 
+        ///     Update the serial port status to the event subscriber
+        /// </summary>
+        public event EventHandler<string> OnStatusChanged;
+
+        /// <summary>
+        ///     Update received data from the serial port to the event subscriber
+        /// </summary>
+        public event EventHandler<string> OnDataReceived;
+
+        /// <summary>
+        ///     Update TRUE/FALSE for the serial port connection to the event subscriber
+        /// </summary>
+        public event EventHandler<bool> OnSerialPortOpened;
+
+        /// <summary>
+        ///     Open the serial port connection
         /// </summary>
         /// <param name="portname">ttyUSB0 / ttyUSB1 / ttyUSB2 / etc.</param>
         /// <param name="baudrate">115200</param>
@@ -100,22 +101,27 @@ namespace IBox.Modem.IRZ.Core
 
             if (_serial.IsOpen)
             {
-                string sb = StopBits.None.ToString().Substring(0, 1);
+                var sb = StopBits.None.ToString().Substring(0, 1);
                 switch (_serial.StopBits)
                 {
                     case StopBits.One:
-                        sb = "1"; break;
+                        sb = "1";
+                        break;
                     case StopBits.OnePointFive:
-                        sb = "1.5"; break;
+                        sb = "1.5";
+                        break;
                     case StopBits.Two:
-                        sb = "2"; break;
+                        sb = "2";
+                        break;
                 }
 
-                string p = _serial.Parity.ToString().Substring(0, 1);
-                string hs = _serial.Handshake == Handshake.None ? "No Handshake" : _serial.Handshake.ToString();
+                var p = _serial.Parity.ToString().Substring(0, 1);
+                var hs = _serial.Handshake == Handshake.None ? "No Handshake" : 
+                    _serial.Handshake.ToString();
 
                 OnStatusChanged?.Invoke(this,
-                    $"Connected to {_serial.PortName}: {_serial.BaudRate} bps, {_serial.DataBits}{p}{sb}, {hs}.");
+                    $"Connected to {_serial.PortName}: {_serial.BaudRate} bps, " +
+                    	"{_serial.DataBits}{p}{sb}, {hs}.");
 
                 OnSerialPortOpened?.Invoke(this, true);
             }
@@ -127,7 +133,7 @@ namespace IBox.Modem.IRZ.Core
         }
 
         /// <summary>
-        /// Close the serial port connection
+        ///     Close the serial port connection
         /// </summary>
         public void Close()
         {
@@ -138,24 +144,25 @@ namespace IBox.Modem.IRZ.Core
         }
 
         /// <summary>
-        /// Send/write string to the serial port
+        ///     Send/write string to the serial port
         /// </summary>
         /// <param name="message"></param>
         public void SendString(string message)
         {
             if (_serial.IsOpen)
-            {
                 try
                 {
                     var data = Encoding.ASCII.GetBytes($"{message}\r\n");
                     _serial.Write(data, 0, data.Length);
                     OnStatusChanged?.Invoke(this, $"Command sent: {message}");
                 }
-                catch (Exception ex)
+                catch (Exception exception)
                 {
-                    OnStatusChanged?.Invoke(this, $"Failed to send command {message}: {ex.Message}");
+                    OnStatusChanged?.Invoke(this, $"Failed to send command {message}: {exception.Message}");
+#if DEBUG
+                    throw;
+#endif
                 }
-            }
         }
 
         private void StartReading()
@@ -181,7 +188,6 @@ namespace IBox.Modem.IRZ.Core
         private void ReadPort()
         {
             while (_keepReading)
-            {
                 if (_serial.IsOpen)
                 {
                     var readBuffer = new byte[_serial.ReadBufferSize + 1];
@@ -202,7 +208,6 @@ namespace IBox.Modem.IRZ.Core
                     var waitTime = new TimeSpan(0, 0, 0, 0, 300);
                     Thread.Sleep(waitTime);
                 }
-            }
         }
     }
 }

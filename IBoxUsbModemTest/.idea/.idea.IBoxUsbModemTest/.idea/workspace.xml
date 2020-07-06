@@ -16,15 +16,60 @@
         <item name="GROUP_NODE:origin" type="e8cecc67:BranchNodeDescriptor" />
       </path>
     </expand>
-    <select />
+    <select>
+      <path>
+        <item name="ROOT" type="e8cecc67:BranchNodeDescriptor" />
+        <item name="REMOTE_ROOT" type="e8cecc67:BranchNodeDescriptor" />
+        <item name="GROUP_NODE:origin" type="e8cecc67:BranchNodeDescriptor" />
+        <item name="BRANCH:origin/master" type="e8cecc67:BranchNodeDescriptor" />
+      </path>
+    </select>
   </component>
   <component name="ChangeListManager">
     <list default="true" id="7e7f8a4d-4fa5-47cf-bc64-fee00774893c" name="Default Changelist" comment="">
+      <change afterPath="$PROJECT_DIR$/IBox.Modem.IRZ/Protocol/RequestImeiHandler.cs" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/IBox.Modem.IRZ/Protocol/RequestNetworkStatusHanler.cs" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/IBox.Modem.IRZ/Protocol/RequestRevisionIdentificationHandler.cs" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/IBox.Modem.IRZ/Protocol/RequestSignalQuality.cs" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/.idea.IBoxUsbModemTest/.idea/contentModel.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.idea.IBoxUsbModemTest/.idea/contentModel.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/.idea.IBoxUsbModemTest/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.idea.IBoxUsbModemTest/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/IBox.Modem.IRZ/Core/AbstractModemCommandHandle.cs" beforeDir="false" afterPath="$PROJECT_DIR$/IBox.Modem.IRZ/Core/AbstractModemCommandHandle.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/IBox.Modem.IRZ/Core/IModemRequestHandler.cs" beforeDir="false" afterPath="$PROJECT_DIR$/IBox.Modem.IRZ/Core/IModemRequestHandler.cs" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/IBox.Modem.IRZ/Core/ModemManager.cs" beforeDir="false" afterPath="$PROJECT_DIR$/IBox.Modem.IRZ/Core/ModemManager.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/IBox.Modem.IRZ/Core/ModemRequestContext.cs" beforeDir="false" afterPath="$PROJECT_DIR$/IBox.Modem.IRZ/Core/ModemRequestContext.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/IBox.Modem.IRZ/IBox.Modem.IRZ.csproj" beforeDir="false" afterPath="$PROJECT_DIR$/IBox.Modem.IRZ/IBox.Modem.IRZ.csproj" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/IBox.Modem.IRZ/Properties/AssemblyInfo.cs" beforeDir="false" afterPath="$PROJECT_DIR$/IBox.Modem.IRZ/Properties/AssemblyInfo.cs" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/IBox.Modem.IRZ/Protocol/RequestEchoHandler.cs" beforeDir="false" afterPath="$PROJECT_DIR$/IBox.Modem.IRZ/Protocol/RequestEchoHandler.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/IBox.Modem.IRZ/Protocol/RequestImsiHandler.cs" beforeDir="false" afterPath="$PROJECT_DIR$/IBox.Modem.IRZ/Protocol/RequestImsiHandler.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/IBox.Modem.IRZ/Protocol/RequestManufaturerHandler.cs" beforeDir="false" afterPath="$PROJECT_DIR$/IBox.Modem.IRZ/Protocol/RequestManufaturerHandler.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/IBox.Modem.IRZ/Protocol/RequestModelHandler.cs" beforeDir="false" afterPath="$PROJECT_DIR$/IBox.Modem.IRZ/Protocol/RequestModelHandler.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/IBox.Modem.IRZ/Protocol/RequestResetHandler.cs" beforeDir="false" afterPath="$PROJECT_DIR$/IBox.Modem.IRZ/Protocol/RequestResetHandler.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/IBox.Modem.IRZ/Shell/Adapter.cs" beforeDir="false" afterPath="$PROJECT_DIR$/IBox.Modem.IRZ/Shell/Adapter.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/IBox.Modem.IRZ/Shell/ConnectConfiguration.cs" beforeDir="false" afterPath="$PROJECT_DIR$/IBox.Modem.IRZ/Shell/ConnectConfiguration.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/IBox.Modem.IRZ/Shell/ConnectionInfo.cs" beforeDir="false" afterPath="$PROJECT_DIR$/IBox.Modem.IRZ/Shell/ConnectionInfo.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/IBox.Modem.IRZ/Shell/ConnectionType.cs" beforeDir="false" afterPath="$PROJECT_DIR$/IBox.Modem.IRZ/Shell/ConnectionType.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/IBox.Modem.IRZ/Shell/DbStorageItem.cs" beforeDir="false" afterPath="$PROJECT_DIR$/IBox.Modem.IRZ/Shell/DbStorageItem.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/IBox.Modem.IRZ/Shell/DeviceConfiguration.cs" beforeDir="false" afterPath="$PROJECT_DIR$/IBox.Modem.IRZ/Shell/DeviceConfiguration.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/IBox.Modem.IRZ/Shell/Disposable.cs" beforeDir="false" afterPath="$PROJECT_DIR$/IBox.Modem.IRZ/Shell/Disposable.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/IBox.Modem.IRZ/Shell/FormatResponse.cs" beforeDir="false" afterPath="$PROJECT_DIR$/IBox.Modem.IRZ/Shell/FormatResponse.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/IBox.Modem.IRZ/Shell/GprsProvider.cs" beforeDir="false" afterPath="$PROJECT_DIR$/IBox.Modem.IRZ/Shell/GprsProvider.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/IBox.Modem.IRZ/Shell/GprsProviderEx.cs" beforeDir="false" afterPath="$PROJECT_DIR$/IBox.Modem.IRZ/Shell/GprsProviderEx.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/IBox.Modem.IRZ/Shell/HostEnvironment.cs" beforeDir="false" afterPath="$PROJECT_DIR$/IBox.Modem.IRZ/Shell/HostEnvironment.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/IBox.Modem.IRZ/Shell/HostOsType.cs" beforeDir="false" afterPath="$PROJECT_DIR$/IBox.Modem.IRZ/Shell/HostOsType.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/IBox.Modem.IRZ/Shell/IAdapter.cs" beforeDir="false" afterPath="$PROJECT_DIR$/IBox.Modem.IRZ/Shell/IAdapter.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/IBox.Modem.IRZ/Shell/IDisposableService.cs" beforeDir="false" afterPath="$PROJECT_DIR$/IBox.Modem.IRZ/Shell/IDisposableService.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/IBox.Modem.IRZ/Shell/IManagerConfigurationService.cs" beforeDir="false" afterPath="$PROJECT_DIR$/IBox.Modem.IRZ/Shell/IManagerConfigurationService.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/IBox.Modem.IRZ/Shell/IModem.cs" beforeDir="false" afterPath="$PROJECT_DIR$/IBox.Modem.IRZ/Shell/IModem.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/IBox.Modem.IRZ/Shell/ModelModem.cs" beforeDir="false" afterPath="$PROJECT_DIR$/IBox.Modem.IRZ/Shell/ModelModem.cs" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/IBox.Modem.IRZ/Shell/ModelModemEx.cs" beforeDir="false" afterPath="$PROJECT_DIR$/IBox.Modem.IRZ/Shell/ModelModemEx.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/IBox.Modem.IRZ/Shell/Modem.cs" beforeDir="false" afterPath="$PROJECT_DIR$/IBox.Modem.IRZ/Shell/Modem.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/IBox.Modem.IRZ/Shell/ModemSettingsExtentions.cs" beforeDir="false" afterPath="$PROJECT_DIR$/IBox.Modem.IRZ/Shell/ModemSettingsExtentions.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/IBox.Modem.IRZ/Shell/ModemStatus.cs" beforeDir="false" afterPath="$PROJECT_DIR$/IBox.Modem.IRZ/Shell/ModemStatus.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/IBox.Modem.IRZ/Shell/ShellConsole.cs" beforeDir="false" afterPath="$PROJECT_DIR$/IBox.Modem.IRZ/Shell/ShellConsole.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/IBox.Modem.IRZ/Shell/SignalQuality.cs" beforeDir="false" afterPath="$PROJECT_DIR$/IBox.Modem.IRZ/Shell/SignalQuality.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/IBoxUsbModemUnitTest/MU709IRZModemProtocolUnit.cs" beforeDir="false" afterPath="$PROJECT_DIR$/IBoxUsbModemUnitTest/MU709IRZModemProtocolUnit.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/IBoxUsbModemUnitTest/MU709IRZModemShellUnit.cs" beforeDir="false" afterPath="$PROJECT_DIR$/IBoxUsbModemUnitTest/MU709IRZModemShellUnit.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/IBoxUsbModemUnitTest/Properties/AssemblyInfo.cs" beforeDir="false" afterPath="$PROJECT_DIR$/IBoxUsbModemUnitTest/Properties/AssemblyInfo.cs" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -34,14 +79,35 @@
   <component name="Git.Settings">
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$/.." />
   </component>
+  <component name="GithubPullRequestsUISettings">
+    <option name="hiddenUrls">
+      <set>
+        <option value="https://github.com/dgordienko/IBoxUsbModemTest.git" />
+      </set>
+    </option>
+  </component>
   <component name="HighlightingSettingsPerFile">
-    <setting file="file://$PROJECT_DIR$/IBox.Modem.IRZ/Shell/Adapter.cs" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/IBox.Modem.IRZ/Protocol/RequestManufaturerHandler.cs" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/IBox.Modem.IRZ/Protocol/RequestResetHandler.cs" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/IBox.Modem.IRZ/Protocol/RequestImsiHandler.cs" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/IBox.Modem.IRZ/Protocol/RequestEchoHandler.cs" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/IBox.Modem.IRZ/Core/AbstractModemCommandHandle.cs" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/IBox.Modem.IRZ/Protocol/RequestModelHandler.cs" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/IBox.Modem.IRZ/Core/IModemRequestHandler.cs" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/IBoxUsbModemUnitTest/app.config" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/IBox.Modem.IRZ/Core/ModemManager.cs" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/IBoxUsbModemUnitTest/MU709IRZModemShellUnit.cs" root0="FORCE_HIGHLIGHTING" />
-    <setting file="file://$PROJECT_DIR$/IBox.Modem.IRZ/Shell/ModelModemEx.cs" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/IBoxUsbModemUnitTest/MU709IRZModemProtocolUnit.cs" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/IBox.Modem.IRZ/Shell/SignalQuality.cs" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/IBox.Modem.IRZ/Shell/ConnectConfiguration.cs" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/IBox.Modem.IRZ/Shell/ModemSettingsExtentions.cs" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/IBox.Modem.IRZ/Shell/Adapter.cs" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/IBox.Modem.IRZ/Protocol/RequestNetworkStatusHanler.cs" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/IBox.Modem.IRZ/Protocol/RequestImeiHandler.cs" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/IBox.Modem.IRZ/Protocol/RequestSignalQuality.cs" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/IBox.Modem.IRZ/Shell/Modem.cs" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/IBox.Modem.IRZ/Protocol/RequestRevisionIdentificationHandler.cs" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/IBox.Modem.IRZ/Shell/ModelModemEx.cs" root0="FORCE_HIGHLIGHTING" />
   </component>
   <component name="IdeDocumentHistory">
     <option name="CHANGED_PATHS">
@@ -60,9 +126,22 @@
         <option value="$PROJECT_DIR$/IBoxUsbModemUnitTest/HuaweiTechnologiesModemInstallationTest.cs" />
         <option value="$PROJECT_DIR$/IBoxUsbModemUnitTest/HuaweiTechnologiesModemShellTest.cs" />
         <option value="$PROJECT_DIR$/IBoxUsbModemUnitTest/app.config" />
-        <option value="$PROJECT_DIR$/IBox.Modem.IRZ/Protocol/RequestEchoHandler.cs" />
         <option value="$PROJECT_DIR$/IBox.Modem.IRZ/Core/ModemManager.cs" />
         <option value="$PROJECT_DIR$/IBox.Modem.IRZ/Shell/ModelModemEx.cs" />
+        <option value="$PROJECT_DIR$/IBoxUsbModemUnitTest/MU709IRZModemProtocolUnit.cs" />
+        <option value="$PROJECT_DIR$/IBoxUsbModemUnitTest/MU709IRZModemShellUnit.cs" />
+        <option value="$PROJECT_DIR$/IBox.Modem.IRZ/Protocol/RequestNetworkStatusHanler.cs" />
+        <option value="$PROJECT_DIR$/IBox.Modem.IRZ/Shell/Modem.cs" />
+        <option value="$PROJECT_DIR$/IBox.Modem.IRZ/Protocol/RequestModelHandler.cs" />
+        <option value="$PROJECT_DIR$/IBox.Modem.IRZ/Protocol/RequestImsiHandler.cs" />
+        <option value="$PROJECT_DIR$/IBox.Modem.IRZ/Protocol/RequestManufaturerHandler.cs" />
+        <option value="$PROJECT_DIR$/IBox.Modem.IRZ/Protocol/RequestResetHandler.cs" />
+        <option value="$PROJECT_DIR$/IBox.Modem.IRZ/Protocol/RequestRevisionIdentificationHandler.cs" />
+        <option value="$PROJECT_DIR$/IBox.Modem.IRZ/Protocol/RequestImeiHandler.cs" />
+        <option value="$PROJECT_DIR$/IBox.Modem.IRZ/Protocol/RequestEchoHandler.cs" />
+        <option value="$PROJECT_DIR$/IBox.Modem.IRZ/Core/AbstractModemCommandHandle.cs" />
+        <option value="$PROJECT_DIR$/IBox.Modem.IRZ/Core/IModemRequestHandler.cs" />
+        <option value="$PROJECT_DIR$/IBox.Modem.IRZ/Protocol/RequestSignalQuality.cs" />
       </list>
     </option>
   </component>
@@ -100,6 +179,7 @@
       <workItem from="1592153855238" duration="2372000" />
       <workItem from="1592163114456" duration="921000" />
       <workItem from="1593758649186" duration="659000" />
+      <workItem from="1594027044979" duration="7315000" />
     </task>
     <servers />
   </component>
@@ -111,7 +191,19 @@
       <map>
         <entry key="MAIN">
           <value>
-            <State />
+            <State>
+              <option name="FILTERS">
+                <map>
+                  <entry key="branch">
+                    <value>
+                      <list>
+                        <option value="origin/master" />
+                      </list>
+                    </value>
+                  </entry>
+                </map>
+              </option>
+            </State>
           </value>
         </entry>
       </map>
@@ -126,6 +218,10 @@
       <screen x="67" y="27" width="1853" height="1053" />
     </state>
     <state x="451" y="210" key="#com.intellij.execution.impl.EditConfigurationsDialog/67.27.1853.1053@67.27.1853.1053" timestamp="1592147267851" />
+    <state x="700" y="397" width="510" height="283" key="ANALYSIS_DLG_com.jetbrains.rider.actions.impl.cleanup.RiderCodeCleanupAction$actionPerformed$dlg$1" timestamp="1594044383360">
+      <screen x="0" y="28" width="1920" height="1014" />
+    </state>
+    <state x="700" y="397" width="510" height="283" key="ANALYSIS_DLG_com.jetbrains.rider.actions.impl.cleanup.RiderCodeCleanupAction$actionPerformed$dlg$1/0.28.1920.1014@0.28.1920.1014" timestamp="1594044383360" />
     <state width="1807" height="362" key="GridCell.Tab.0.bottom" timestamp="1592164114976">
       <screen x="67" y="27" width="1853" height="1053" />
     </state>
@@ -190,14 +286,16 @@
       <screen x="67" y="27" width="1853" height="1053" />
     </state>
     <state width="1807" height="362" key="GridCell.Tab.3.right/67.27.1853.1053@67.27.1853.1053" timestamp="1592164114985" />
-    <state x="430" y="183" key="SettingsEditor" timestamp="1593758705993">
-      <screen x="0" y="28" width="1920" height="1018" />
+    <state x="430" y="182" width="1007" height="737" key="SettingsEditor" timestamp="1594027658371">
+      <screen x="0" y="28" width="1920" height="1014" />
     </state>
+    <state x="430" y="182" width="1007" height="737" key="SettingsEditor/0.28.1920.1014@0.28.1920.1014" timestamp="1594027658371" />
     <state x="430" y="183" key="SettingsEditor/0.28.1920.1018@0.28.1920.1018" timestamp="1593758705993" />
     <state x="482" y="187" key="SettingsEditor/67.27.1853.1053@67.27.1853.1053" timestamp="1592143584063" />
-    <state x="167" y="181" width="1653" height="855" key="VCS.FileHistoryDialog" timestamp="1592162183322">
-      <screen x="67" y="27" width="1853" height="1053" />
+    <state x="104" y="176" width="1713" height="824" maximized="true" key="VCS.FileHistoryDialog" timestamp="1594027543272">
+      <screen x="0" y="28" width="1920" height="1014" />
     </state>
+    <state x="104" y="176" width="1713" height="824" maximized="true" key="VCS.FileHistoryDialog/0.28.1920.1014@0.28.1920.1014" timestamp="1594027543272" />
     <state x="167" y="181" width="1653" height="855" key="VCS.FileHistoryDialog/67.27.1853.1053@67.27.1853.1053" timestamp="1592162183322" />
     <state x="521" y="265" width="934" height="575" key="com.intellij.xdebugger.impl.breakpoints.ui.BreakpointsDialogFactory$2" timestamp="1592147692373">
       <screen x="67" y="27" width="1853" height="1053" />
@@ -227,13 +325,13 @@
         </line-breakpoint>
         <line-breakpoint enabled="true" type="DotNet Breakpoints">
           <url>file://$PROJECT_DIR$/IBox.Modem.IRZ/Shell/ModelModemEx.cs</url>
-          <line>51</line>
+          <line>53</line>
           <properties documentPath="$PROJECT_DIR$/IBox.Modem.IRZ/Shell/ModelModemEx.cs" initialLine="51">
             <startOffsets>
-              <option value="2142" />
+              <option value="2129" />
             </startOffsets>
             <endOffsets>
-              <option value="2155" />
+              <option value="2142" />
             </endOffsets>
           </properties>
           <option name="timeStamp" value="42" />

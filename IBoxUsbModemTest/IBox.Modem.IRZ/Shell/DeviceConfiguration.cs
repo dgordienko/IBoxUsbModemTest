@@ -2,13 +2,12 @@
 
 namespace IBox.Modem.IRZ.Shell
 {
-
     public class DeviceConfiguration : DbStorageItem
     {
-        [JsonProperty("port")]
-        public string PortName { get; set; }
-
         private int _baudRate = 19200;
+
+        [JsonProperty("port")] public string PortName { get; set; }
+
         [JsonProperty("baudrate")]
         public int BaudRate
         {
@@ -28,7 +27,7 @@ namespace IBox.Modem.IRZ.Shell
 
         public bool Equals(DeviceConfiguration other)
         {
-            return (other != null) && string.Equals(PortName, other.PortName) && (BaudRate == other.BaudRate);
+            return other != null && string.Equals(PortName, other.PortName) && BaudRate == other.BaudRate;
         }
     }
 }

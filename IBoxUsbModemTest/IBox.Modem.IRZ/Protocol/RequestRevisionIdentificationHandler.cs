@@ -1,25 +1,23 @@
-﻿using System;
+using System;
 using System.Diagnostics;
 using System.Text.RegularExpressions;
 using System.Threading;
 using IBox.Modem.IRZ.Core;
-using IBox.Modem.IRZ.Shell;
 
 namespace IBox.Modem.IRZ.Protocol
 {
     /// <summary>
-    ///     Imsi handler.(AT+CIMI)
+    ///     AT+CGMR  Request revision identification of software status
     /// </summary>
-    public sealed class RequestImsiHandler : AbstractModemCommandHandler
+    public sealed class RequestRevisionIdentificationHandler : AbstractModemCommandHandler
     {
-        private const string ATCIMI = "AT+CIMI";
-        private const string ISOPERATOR = "Есть оператор";
-        private const string NOTOPERATOR = "Нет оператора";
+        private const string Command = "AT+CGMR";
+        private const string Ok = "OK";
 
         public override ModemRequestContext Handle(ModemRequestContext request, string param)
         {
             var result = request.Response;
-            if (param == ATCIMI)
+            if (param == Command)
             {
                 var helper = ModemManager.Instance;
                 var received = false;
@@ -35,9 +33,8 @@ namespace IBox.Modem.IRZ.Protocol
                         catch (Exception exception)
                         {
                             Debug.WriteLine(exception.Message);
-                            result.State = exception.Message;
+                            request.Description.Add($"{Command} - {exception.Message}");
                             request.Response.IsSuccess = false;
-                            request.Description.Add($"Error send {ATCIMI} - {exception.Message}");
                             received = false;
 #if DEBUG
                             throw;
@@ -48,25 +45,15 @@ namespace IBox.Modem.IRZ.Protocol
                 helper.OnStatusChanged += (sender, response) => { Debug.WriteLine(response); };
                 helper.OnDataReceived += (sender, response) =>
                 {
-                    var matches = Regex.Matches(response, @"\d{10,}", RegexOptions.IgnoreCase);
-                    if (matches.Count > 0)
-                    {
-                        result.Imsi = matches[0].Value;
-                        //оператор
-                        var @operator =
-                            GprsProviderEx.ParseSimIMSI(result.Imsi); //Преобразует оператор+IMSI в значение оператора
-                        result.OperatorName = @operator.ProviderName();
-                        result.IsSuccess = @operator != GprsProvider.Undefined;
-                        var desc = @operator != GprsProvider.Undefined ? ISOPERATOR : NOTOPERATOR;
-                        request.Description.Add(desc);
-                    }
-                    result.IsSuccess = !string.IsNullOrEmpty(result.Imsi);
-                    var description = !string.IsNullOrEmpty(result.Imsi) ? "Есть IMSI" : "Нет IMSI";
-                    request.Description.Add(description);
-                    //result.State = string.Join(",", result.State, description);
+                    var matches = Regex.Matches(response, @"[\S ]+", RegexOptions.Singleline);
+                    if (matches.Count >= 2 && Ok.Equals(matches[matches.Count - 1].Value,
+                        StringComparison.OrdinalIgnoreCase))
+                        result.RevisionId = matches[matches.Count - 2].Value;
+                    result.IsSuccess = true;
                     received = false;
                     (sender as ModemManager)?.Close();
                 };
+
                 if (!helper.IsOpen) helper.Open(request.Connection.PortName);
                 while (received) Thread.Sleep(300);
                 return request;

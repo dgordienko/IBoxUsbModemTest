@@ -1,11 +1,12 @@
 ﻿using System;
+
 namespace IBox.Modem.IRZ.Shell
 {
     public static class ShellConsole
     {
-        private static readonly ConsoleColor BackColor = Console.ForegroundColor;
         public const ConsoleColor InfoColor = ConsoleColor.Gray;
         public const ConsoleColor ErrorColor = ConsoleColor.Red;
+        private static readonly ConsoleColor BackColor = Console.ForegroundColor;
 
         public static bool Colored;
         public static bool WithDateTime;

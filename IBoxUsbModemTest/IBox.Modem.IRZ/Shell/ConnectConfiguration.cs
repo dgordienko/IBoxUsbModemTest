@@ -2,15 +2,16 @@
 
 namespace IBox.Modem.IRZ.Shell
 {
-
     public class ConnectConfiguration : DeviceConfiguration
     {
-        [JsonProperty("type")]
-        public ConnectionType ConnectionType { get; set; } = ConnectionType.Gprs;
-
         private const int NetErrorLimitDefault = 15;
 
+        private ConnectionInfo _lastInfo;
+
         private int _netErrorLimit = NetErrorLimitDefault;
+
+        [JsonProperty("type")] public ConnectionType ConnectionType { get; set; } = ConnectionType.Gprs;
+
         public int NetErrorLimit
         {
             get => _netErrorLimit;
@@ -22,6 +23,12 @@ namespace IBox.Modem.IRZ.Shell
             }
         }
 
+        public ConnectionInfo LastInfo
+        {
+            get => _lastInfo ?? (_lastInfo = new ConnectionInfo());
+            set => _lastInfo = value;
+        }
+
         public override string ToString()
         {
             return $" {base.ToString()}, connectType: {ConnectionType}";
@@ -29,14 +36,7 @@ namespace IBox.Modem.IRZ.Shell
 
         public bool Equals(ConnectConfiguration other)
         {
-            return base.Equals(other) && (ConnectionType == other.ConnectionType);
-        }
-
-        private ConnectionInfo _lastInfo;
-        public ConnectionInfo LastInfo
-        {
-            get => _lastInfo ?? (_lastInfo = new ConnectionInfo());
-            set => _lastInfo = value;
+            return base.Equals(other) && ConnectionType == other.ConnectionType;
         }
     }
 }

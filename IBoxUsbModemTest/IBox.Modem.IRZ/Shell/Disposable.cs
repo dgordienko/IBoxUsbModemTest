@@ -1,8 +1,14 @@
 ﻿using System;
+
 namespace IBox.Modem.IRZ.Shell
 {
     public abstract class Disposable : IDisposable
     {
+        public void Dispose()
+        {
+            Dispose(true);
+            GC.SuppressFinalize(this);
+        }
         //public Disposable()
         //{
         //    // Constructor
@@ -16,12 +22,6 @@ namespace IBox.Modem.IRZ.Shell
             }
 
             // Dispose unmanaged resources
-        }
-
-        public void Dispose()
-        {
-            Dispose(true);
-            GC.SuppressFinalize(this);
         }
 
         ~Disposable()

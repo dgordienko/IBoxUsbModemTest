@@ -4,7 +4,7 @@
     {
         public static string ToResponseData(this string value)
         {
-            return $"{ value.Replace('\r', '|').Replace('\n', '|')}";
+            return $"{value.Replace('\r', '|').Replace('\n', '|')}";
         }
     }
 }

@@ -9,6 +9,19 @@ namespace IBox.Modem.IRZ.Shell
 
         public string Manufacturer { get; set; }
         public string ModelName { get; set; }
+
+        [JsonProperty("revisionId")] public string RevisionId { get; set; }
+
+        [JsonProperty("serialnumber")] public string SerialNumber { get; set; }
+
+        [JsonProperty("networkQuality")] public SignalQuality SignalQuality { get; set; }
+
+        [JsonProperty("imsi")] public string Imsi { get; set; }
+
+        [JsonProperty("imei")] public string Imei { get; set; }
+
+        public string OperatorName { get; set; }
+
         public ModelModem AsModel()
         {
             var res = ModelModemEx.ParseManufacturer(Manufacturer);
@@ -16,6 +29,7 @@ namespace IBox.Modem.IRZ.Shell
                 res = ModelModemEx.ParseModelName(ModelName);
             return res;
         }
+
         public string GetFullModelName()
         {
             if (string.IsNullOrEmpty(ModelName))
@@ -25,21 +39,6 @@ namespace IBox.Modem.IRZ.Shell
             return Manufacturer + " " + ModelName;
         }
 
-        [JsonProperty("revisionId")]
-        public string RevisionId { get; set; }
-
-        [JsonProperty("serialnumber")]
-        public string SerialNumber { get; set; }
-
-        [JsonProperty("networkQuality")]
-        public SignalQuality SignalQuality { get; set; }
-
-        [JsonProperty("imsi")]
-        public string Imsi { get; set; }
-        [JsonProperty("imei")]
-        public string Imei { get; set; }
-
-        public string OperatorName { get; set; }
         public GprsProvider AsGprsProvider()
         {
             return GprsProviderEx.ParseSimIMSI(Imsi);
@@ -58,29 +57,29 @@ namespace IBox.Modem.IRZ.Shell
             var oth = obj as ModemStatus;
             if (oth == null)
                 return false;
-            return (IsSuccess == oth.IsSuccess) &&
-                State.Equals(oth.State) &&
-                Manufacturer.Equals(oth.Manufacturer) &&
-                ModelName.Equals(oth.ModelName) &&
-                SerialNumber.Equals(oth.SerialNumber) &&
-                (SignalQuality == oth.SignalQuality) &&
-                Imsi.Equals(oth.Imsi) &&
-                Imei.Equals(oth.Imei) &&
-                OperatorName.Equals(oth.OperatorName);
+            return IsSuccess == oth.IsSuccess &&
+                   State.Equals(oth.State) &&
+                   Manufacturer.Equals(oth.Manufacturer) &&
+                   ModelName.Equals(oth.ModelName) &&
+                   SerialNumber.Equals(oth.SerialNumber) &&
+                   SignalQuality == oth.SignalQuality &&
+                   Imsi.Equals(oth.Imsi) &&
+                   Imei.Equals(oth.Imei) &&
+                   OperatorName.Equals(oth.OperatorName);
         }
 
         public override int GetHashCode()
         {
             return base.GetHashCode() ^
-                IsSuccess.GetHashCode() ^
-                State.GetHashCode() ^
-                Manufacturer.GetHashCode() ^
-                ModelName.GetHashCode() ^
-                SerialNumber.GetHashCode() ^
-                SignalQuality.GetHashCode() ^
-                Imsi.GetHashCode() ^
-                Imei.GetHashCode() ^
-                OperatorName.GetHashCode();
+                   IsSuccess.GetHashCode() ^
+                   State.GetHashCode() ^
+                   Manufacturer.GetHashCode() ^
+                   ModelName.GetHashCode() ^
+                   SerialNumber.GetHashCode() ^
+                   SignalQuality.GetHashCode() ^
+                   Imsi.GetHashCode() ^
+                   Imei.GetHashCode() ^
+                   OperatorName.GetHashCode();
         }
 
         public override string ToString()

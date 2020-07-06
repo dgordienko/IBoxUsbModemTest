@@ -1,33 +1,21 @@
-﻿using System;
+using System;
 using System.Diagnostics;
-using System.Text.RegularExpressions;
 using System.Threading;
 using IBox.Modem.IRZ.Core;
+using IBox.Modem.IRZ.Shell;
 
 namespace IBox.Modem.IRZ.Protocol
 {
-    /// <summary>
-    /// Команда Echo (AT)
-    /// </summary>
-    public sealed class RequestEchoHandler : AbstractModemCommandHandler
+    public sealed class RequestNetworkStatusHandler : AbstractModemCommandHandler
     {
-        private const string NOECHO = @"Нет ответа ЭХО";
-        private const string ECHO = @"ЭХО";
-        private const string AT = @"AT";
-        private const string OK = @"OK";
+        private const string Command = @"AT+CREG?";
+        private const string Default = "неизвестно";
 
-        /// <summary>
-        ///     Send command AT
-        /// </summary>
-        /// <param name="request"></param>
-        /// <param name="param">AT</param>
-        /// <returns cref="ModemRequestContext"></returns>
-        public override ModemRequestContext
-            Handle(ModemRequestContext request, string param)
+        public override ModemRequestContext Handle(ModemRequestContext request, string param)
         {
-            if (param == AT)
+            var result = request.Response;
+            if (param == Command)
             {
-                var result = request.Response;
                 var helper = ModemManager.Instance;
                 var received = false;
                 helper.OnSerialPortOpened += (sender, response) =>
@@ -41,10 +29,10 @@ namespace IBox.Modem.IRZ.Protocol
                         }
                         catch (Exception exception)
                         {
-                            request.Description.Add($"{AT} - {exception.Message}");
-                            received = false;
-                            request.Response.IsSuccess = false;
                             Debug.WriteLine(exception.Message);
+                            received = false;
+                            request.Description.Add($"Error send {Command} - {exception.Message}");
+                            request.Response.IsSuccess = false;
 #if DEBUG
                             throw;
 #endif
@@ -54,9 +42,18 @@ namespace IBox.Modem.IRZ.Protocol
                 helper.OnStatusChanged += (sender, response) => { Debug.WriteLine(response); };
                 helper.OnDataReceived += (sender, response) =>
                 {
-                    result.IsSuccess = Regex.Matches(response, $"{OK}",
-                         RegexOptions.IgnoreCase).Count > 0;
-                    request.Description.Add(result.IsSuccess ? ECHO : NOECHO);
+                    var netstatus = -1;
+                    var netStatusDescr = Default;
+                    var pos = response.IndexOf("+CREG:", StringComparison.Ordinal);
+                    if (pos >= 0)
+                    {
+                        pos += "+CREG: 0,".Length;
+                        if (int.TryParse(response.Substring(pos, 1), out netstatus))
+                            netStatusDescr = netstatus.ToNetworkStatus();
+                    }
+
+                    result.IsSuccess = netstatus == 1;
+                    request.Description.Add($"Сеть:{netStatusDescr}");
                     received = false;
                     (sender as ModemManager)?.Close();
                 };

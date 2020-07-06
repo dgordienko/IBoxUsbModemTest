@@ -6,7 +6,8 @@
         Mts,
         KyivStar,
         Cdma,
-        Life,
+
+        Life
         //Ukrtelecom
     }
 }

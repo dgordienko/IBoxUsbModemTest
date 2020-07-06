@@ -17,10 +17,14 @@
         </e>
         <e p="Protocol" t="Include">
           <e p="RequestEchoHandler.cs" t="Include" />
+          <e p="RequestImeiHandler.cs" t="Include" />
           <e p="RequestImsiHandler.cs" t="Include" />
           <e p="RequestManufaturerHandler.cs" t="Include" />
           <e p="RequestModelHandler.cs" t="Include" />
+          <e p="RequestNetworkStatusHanler.cs" t="Include" />
           <e p="RequestResetHandler.cs" t="Include" />
+          <e p="RequestRevisionIdentificationHandler.cs" t="Include" />
+          <e p="RequestSignalQuality.cs" t="Include" />
         </e>
         <e p="Shell" t="Include">
           <e p="Adapter.cs" t="Include" />

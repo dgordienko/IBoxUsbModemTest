@@ -9,28 +9,39 @@
             switch (value)
             {
                 case 0:
-                    result = "не зарегистрирован"; break;
+                    result = "не зарегистрирован";
+                    break;
                 case 1:
-                    result = "зарегистрирован"; break;
+                    result = "зарегистрирован";
+                    break;
                 case 2:
-                    result = "поиск"; break;
+                    result = "поиск";
+                    break;
                 case 3:
-                    result = "доступ запрещен"; break;
+                    result = "доступ запрещен";
+                    break;
                 case 4:
-                    result = "неизвестно"; break;
+                    result = "неизвестно";
+                    break;
                 case 5:
-                    result = "в роуминге"; break;
+                    result = "в роуминге";
+                    break;
                 case 6:
                 case 7:
-                    result = "только SMS"; break;
+                    result = "только SMS";
+                    break;
                 case 8:
-                    result = "только экстренные службы"; break;
+                    result = "только экстренные службы";
+                    break;
                 case 9:
                 case 10:
-                    result = "CSFB not preferred"; break;
+                    result = "CSFB not preferred";
+                    break;
                 default:
-                    result = "неопознанное состояние"; break;
+                    result = "неопознанное состояние";
+                    break;
             }
+
             return result;
         }
     }

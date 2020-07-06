@@ -6,21 +6,19 @@ using System.IO;
 using System.IO.Ports;
 using System.Linq;
 using System.Reflection;
+using Microsoft.Win32;
 
 namespace IBox.Modem.IRZ.Shell
 {
     public static class HostEnvironment
     {
-        private static readonly HostOsType HostOsType;
-
         public static string OsVersion;
-        //DEVSPACE-1752
-        //public static readonly LinuxIBoxOsVersion IBoxOsVersion;
-        public static HostOsType HostOs { get { return HostOsType; } }
-        public static bool IsLinux { get { return HostOsType == HostOsType.Linux; } }
-        public static bool IsWindows { get { return HostOsType == HostOsType.Windows; } }
 
-        public static CultureInfo LocaleInfo { get; private set; }
+        private static readonly string[] AllSerialPorts = GetAllSerialPorts().ToArray();
+
+        public static Func<TimeSpan> FuncUpTime;
+
+        public static Func<DateTime> FuncUpTimeAsDateTime;
 
         /*
          //DEVSPACE-1752 - no need
@@ -35,15 +33,15 @@ namespace IBox.Modem.IRZ.Shell
 
         static HostEnvironment()
         {
-            var platformNumber = (int)Environment.OSVersion.Platform;
+            var platformNumber = (int) Environment.OSVersion.Platform;
 
             //determine if the host is a *nix operating system these numbers take into account historic values, do an internet search for details
-            if ((platformNumber == 4) || (platformNumber == 6) || (platformNumber == 128))
+            if (platformNumber == 4 || platformNumber == 6 || platformNumber == 128)
                 // running on *nix
-                HostOsType = HostOsType.Linux;
+                HostOs = HostOsType.Linux;
             else
                 // not running on *nix (this function defaults to windows)
-                HostOsType = HostOsType.Windows;
+                HostOs = HostOsType.Windows;
 
             OsVersion = Environment.OSVersion.ToString();
             //DEVSPACE-1752 - no need to output this in log - doubling!
@@ -64,7 +62,7 @@ namespace IBox.Modem.IRZ.Shell
                     */
             try
             {
-                var regKey = Microsoft.Win32.Registry.LocalMachine.OpenSubKey(@"SOFTWARE\Microsoft\Windows NT\CurrentVersion");
+                var regKey = Registry.LocalMachine.OpenSubKey(@"SOFTWARE\Microsoft\Windows NT\CurrentVersion");
                 // @"SOFTWARE\Wow6432Node\Microsoft\Windows NT\CurrentVersion"
                 if (regKey != null)
                     OsVersion = $"{regKey.GetValue("ProductName")} ({OsVersion})";
@@ -80,12 +78,68 @@ namespace IBox.Modem.IRZ.Shell
                 LocaleInfo.NumberFormat.NumberDecimalSeparator = ".";
         }
 
+        //DEVSPACE-1752
+        //public static readonly LinuxIBoxOsVersion IBoxOsVersion;
+        public static HostOsType HostOs { get; }
+
+        public static bool IsLinux => HostOs == HostOsType.Linux;
+        public static bool IsWindows => HostOs == HostOsType.Windows;
+
+        public static CultureInfo LocaleInfo { get; }
+        public static char[] NewLineAsCharArray { get; } = Environment.NewLine.ToCharArray();
+
+        public static TimeSpan UpTime
+        {
+            get
+            {
+                try
+                {
+                    if (FuncUpTime != null)
+                        return FuncUpTime();
+                    //using (var uptime = new PerformanceCounter("System", "System Up Time"))
+                    //{
+                    //    uptime.NextValue(); // Call this an extra time before reading its value
+                    //    return TimeSpan.FromSeconds(uptime.NextValue());
+                    //}
+                }
+                catch (Exception ex)
+                {
+                    var err = "HostEnvironment::UpTime: call FuncUpTime: " + ex.Message;
+                    ShellConsole.WriteError(err);
+                    Debug.Assert(false, err);
+                }
+
+                return TimeSpan.FromMilliseconds(Environment.TickCount);
+            }
+        }
+
+        public static DateTime UpTimeAsDateTime
+        {
+            get
+            {
+                try
+                {
+                    if (FuncUpTimeAsDateTime != null)
+                        return FuncUpTimeAsDateTime();
+                }
+                catch (Exception ex)
+                {
+                    var err = "HostEnvironment::UpTimeAsDateTime: call FuncUpTimeAsDateTime: " + ex.Message;
+                    ShellConsole.WriteError(err);
+                    Debug.Assert(false, err);
+                }
+
+                return DateTime.Now.Subtract(UpTime);
+            }
+        }
+
+        public static string ExeAssemblyVersion => FileVersionInfo
+            .GetVersionInfo(Assembly.GetExecutingAssembly().Location).FileVersion;
+
         private static IEnumerable<string> GetAllSerialPorts()
         {
             return SerialPort.GetPortNames().Where(com => !com.EndsWith("USB0"));
         }
-
-        private static readonly string[] AllSerialPorts = GetAllSerialPorts().ToArray();
 
         public static string CheckSerialPortName(string portName)
         {
@@ -93,19 +147,18 @@ namespace IBox.Modem.IRZ.Shell
                 throw new ArgumentException("Invalid port name " + portName);
             return portName;
         }
+
         public static string[] GetSerialPorts()
         {
             return AllSerialPorts;
         }
+
         public static string GetAvailableSerialPort(uint index)
         {
-            if (AllSerialPorts.Any() && (AllSerialPorts.Length > index))
+            if (AllSerialPorts.Any() && AllSerialPorts.Length > index)
                 return AllSerialPorts[index];
             return IsLinux ? "/dev/ttyS0" : "COM1";
         }
-
-        private static readonly char[] NewLine = Environment.NewLine.ToCharArray();
-        public static char[] NewLineAsCharArray { get { return NewLine; } }
 
         /// <summary> каталог откуда запущено приложение </summary>
         public static string AppPath()
@@ -149,53 +202,5 @@ namespace IBox.Modem.IRZ.Shell
 
             return location;
         }
-
-        public static Func<TimeSpan> FuncUpTime;
-        public static TimeSpan UpTime
-        {
-            get
-            {
-                try
-                {
-                    if (FuncUpTime != null)
-                        return FuncUpTime();
-                    //using (var uptime = new PerformanceCounter("System", "System Up Time"))
-                    //{
-                    //    uptime.NextValue(); // Call this an extra time before reading its value
-                    //    return TimeSpan.FromSeconds(uptime.NextValue());
-                    //}
-                }
-                catch (Exception ex)
-                {
-                    var err = "HostEnvironment::UpTime: call FuncUpTime: " + ex.Message;
-                    ShellConsole.WriteError(err);
-                    Debug.Assert(false, err);
-                }
-                return TimeSpan.FromMilliseconds(Environment.TickCount);
-            }
-        }
-
-        public static Func<DateTime> FuncUpTimeAsDateTime;
-        public static DateTime UpTimeAsDateTime
-        {
-            get
-            {
-                try
-                {
-                    if (FuncUpTimeAsDateTime != null)
-                        return FuncUpTimeAsDateTime();
-                }
-                catch (Exception ex)
-                {
-                    var err = "HostEnvironment::UpTimeAsDateTime: call FuncUpTimeAsDateTime: " + ex.Message;
-                    ShellConsole.WriteError(err);
-                    Debug.Assert(false, err);
-                }
-                return DateTime.Now.Subtract(UpTime);
-            }
-        }
-
-        public static string ExeAssemblyVersion => FileVersionInfo
-            .GetVersionInfo(Assembly.GetExecutingAssembly().Location).FileVersion;
     }
 }

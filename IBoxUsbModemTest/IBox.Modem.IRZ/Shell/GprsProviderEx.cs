@@ -5,6 +5,8 @@ namespace IBox.Modem.IRZ.Shell
 {
     public static class GprsProviderEx
     {
+        private const string LinuxBridgePath = "/etc/ppp/peers/";
+
         public static string ProviderName(this GprsProvider self)
         {
             switch (self)
@@ -14,8 +16,9 @@ namespace IBox.Modem.IRZ.Shell
                 case GprsProvider.KyivStar: return "KyivStar";
                 case GprsProvider.Cdma: return "CDMA";
                 case GprsProvider.Life: return "Life";
-                    //case GprsProvider.Ukrtelecom: return "Ukrtelecom";
+                //case GprsProvider.Ukrtelecom: return "Ukrtelecom";
             }
+
             throw new ArgumentOutOfRangeException("...добавь case...");
         }
 
@@ -28,18 +31,16 @@ namespace IBox.Modem.IRZ.Shell
         {
             if (fullPath)
                 return "/etc/chatscript/" + self.LinuxName() + "-connect";
-            else
-                return self.LinuxName() + "-connect";
+            return self.LinuxName() + "-connect";
         }
 
-        private const string LinuxBridgePath = "/etc/ppp/peers/";
         public static string LinuxBridgeFile(this GprsProvider self, bool fullPath)
         {
             if (fullPath)
                 return LinuxBridgePath + self.LinuxName();
-            else
-                return self.LinuxName();
+            return self.LinuxName();
         }
+
         public static string LinuxLogFile(this GprsProvider self)
         {
             return "/var/log/" + self.LinuxName();
@@ -50,11 +51,18 @@ namespace IBox.Modem.IRZ.Shell
             // http://da3rx.com/K750toW800/FS/tpa/preset/default/networklist
             // http://docs.openmoko.org/trac/attachment/ticket/666/gsmlog.txt
             // http://sandbox.dfrws.org/2010/jacob/evidence/part_tpa/part1/Fat%20File%20System/tpa/preset/default/networklist
-            if ("25501".Equals(val) || "UA UMC".Equals(val, StringComparison.InvariantCultureIgnoreCase) || "UMC".Equals(val, StringComparison.InvariantCultureIgnoreCase) || "MTS UKR".Equals(val, StringComparison.InvariantCultureIgnoreCase))
+            if ("25501".Equals(val) || "UA UMC".Equals(val, StringComparison.InvariantCultureIgnoreCase) ||
+                "UMC".Equals(val, StringComparison.InvariantCultureIgnoreCase) ||
+                "MTS UKR".Equals(val, StringComparison.InvariantCultureIgnoreCase))
                 return GprsProvider.Mts;
-            if ("25503".Equals(val) || "UA-KYIVSTAR".Equals(val, StringComparison.InvariantCultureIgnoreCase) || "Kyivstar".Equals(val, StringComparison.InvariantCultureIgnoreCase) || "UA-KS".Equals(val, StringComparison.InvariantCultureIgnoreCase))
+            if ("25503".Equals(val) || "UA-KYIVSTAR".Equals(val, StringComparison.InvariantCultureIgnoreCase) ||
+                "Kyivstar".Equals(val, StringComparison.InvariantCultureIgnoreCase) ||
+                "UA-KS".Equals(val, StringComparison.InvariantCultureIgnoreCase))
                 return GprsProvider.KyivStar;
-            if ("25506".Equals(val) || "UA ASTELIT".Equals(val, StringComparison.InvariantCultureIgnoreCase) || "CC 255 NC 06".Equals(val, StringComparison.InvariantCultureIgnoreCase) || "UA life:)".Equals(val, StringComparison.InvariantCultureIgnoreCase) || "life:)".Equals(val, StringComparison.InvariantCultureIgnoreCase))
+            if ("25506".Equals(val) || "UA ASTELIT".Equals(val, StringComparison.InvariantCultureIgnoreCase) ||
+                "CC 255 NC 06".Equals(val, StringComparison.InvariantCultureIgnoreCase) ||
+                "UA life:)".Equals(val, StringComparison.InvariantCultureIgnoreCase) ||
+                "life:)".Equals(val, StringComparison.InvariantCultureIgnoreCase))
                 return GprsProvider.Life;
             //if ("25505".Equals(val) || "UA-GT".Equals(val, StringComparison.InvariantCultureIgnoreCase))
             //    return GprsProvider.GoldenTelecom;
@@ -76,7 +84,7 @@ namespace IBox.Modem.IRZ.Shell
         {
             foreach (GprsProvider e in Enum.GetValues(typeof(GprsProvider)))
                 if (e.ProviderName().Equals(val, StringComparison.OrdinalIgnoreCase) ||
-                    (e.ToString().Equals(val, StringComparison.OrdinalIgnoreCase)))
+                    e.ToString().Equals(val, StringComparison.OrdinalIgnoreCase))
                     return e;
             throw new ArgumentException(string.Format("Unknown value '{0}'", val));
         }
@@ -91,6 +99,7 @@ namespace IBox.Modem.IRZ.Shell
                 case GprsProvider.Life: return GprsProvider.Mts; // Cdma;
                 case GprsProvider.Cdma: return GprsProvider.Mts;
             }
+
             throw new ArgumentOutOfRangeException("...добавь case...");
         }
 
@@ -100,10 +109,11 @@ namespace IBox.Modem.IRZ.Shell
             {
                 case GprsProvider.Undefined: return string.Empty;
                 case GprsProvider.Mts: return "*99#";
-                case GprsProvider.KyivStar: return ((tryIndex & 1) == 0) ? "*99***1#" : "*99#";
-                case GprsProvider.Life: return ((tryIndex & 1) == 0) ? "*99***1#" : "*99#";
+                case GprsProvider.KyivStar: return (tryIndex & 1) == 0 ? "*99***1#" : "*99#";
+                case GprsProvider.Life: return (tryIndex & 1) == 0 ? "*99***1#" : "*99#";
                 case GprsProvider.Cdma: return "#777";
             }
+
             throw new ArgumentOutOfRangeException("...добавь case...");
         }
 
@@ -113,13 +123,19 @@ namespace IBox.Modem.IRZ.Shell
             switch (self)
             {
                 case GprsProvider.Undefined: return string.Empty;
-                case GprsProvider.Mts: return cnstInit + "umc.ua\"";//"AT+CGDCONT=1,\"IP\",\"ibox.umc.ua\"";
-                case GprsProvider.KyivStar: return cnstInit + "kyivstar.net\"";//"AT +CGDCONT=1,ip,\"ibox.kyivstar.net\"";
-                case GprsProvider.Life: return cnstInit + "life.ua\"";//"AT +CGDCONT=1,ip,\"ibox.life.ua\""; // "AT+CGDCONT=1,ip,\"internet\""; // "AT+CGDCONT=1,ip,\"www.djuice.com.ua\"";
+                case GprsProvider.Mts: return cnstInit + "umc.ua\""; //"AT+CGDCONT=1,\"IP\",\"ibox.umc.ua\"";
+                case GprsProvider.KyivStar:
+                    return cnstInit + "kyivstar.net\""; //"AT +CGDCONT=1,ip,\"ibox.kyivstar.net\"";
+                case GprsProvider.Life:
+                    return
+                        cnstInit +
+                        "life.ua\""; //"AT +CGDCONT=1,ip,\"ibox.life.ua\""; // "AT+CGDCONT=1,ip,\"internet\""; // "AT+CGDCONT=1,ip,\"www.djuice.com.ua\"";
                 case GprsProvider.Cdma: return "AT+CRM=1";
             }
+
             throw new ArgumentOutOfRangeException("...добавь case...");
         }
+
         public static string AdditionalInitCommand(this GprsProvider self, ModelModem eModelModem)
         {
             switch (eModelModem)
@@ -134,13 +150,14 @@ namespace IBox.Modem.IRZ.Shell
                 case ModelModem.MU709:
                     return self.AdditionalInitCommand(); // TODO: выяснить при тестировании
             }
+
             throw new ArgumentOutOfRangeException("...добавь case...");
         }
 
         // https://www.assembla.com/spaces/ibox-processing/wiki/Linux_I_GPRS-connection_I_configuration
         /// <summary>
-        /// Меняем настройку модема - в консоли  cp /etc/chatscript/life-connect /etc/chatscript/mts-connect
-        /// но пишем весь файл
+        ///     Меняем настройку модема - в консоли  cp /etc/chatscript/life-connect /etc/chatscript/mts-connect
+        ///     но пишем весь файл
         /// </summary>
         /// <param name="ModelModem"></param>
         public static void CreateScriptFile(this GprsProvider provider, ModelModem modelModem, int tryIndex)
@@ -179,7 +196,7 @@ namespace IBox.Modem.IRZ.Shell
                 using (var writer = new StreamWriter(file, false))
                 {
                     writer.WriteLine("debug");
-                    if ((modem == ModelModem.SiemensMC35) || (modem == ModelModem.Cinterion)) //DEVSPACE-3943
+                    if (modem == ModelModem.SiemensMC35 || modem == ModelModem.Cinterion) //DEVSPACE-3943
                     {
                         writer.WriteLine("noauth"); // TODO !!! login psw
                         writer.WriteLine("defaultroute");
@@ -214,17 +231,20 @@ namespace IBox.Modem.IRZ.Shell
                         writer.WriteLine("user ibox");
                     }
                 }
+
             return File.ReadAllText(file);
         }
 
         /// <summary>
-        /// Настраиваем бридж cp /etc/ppp/peers/life /etc/ppp/peers/mts
-        /// Открываем для редактирования nano -w /etc/ppp/peers/mts
-        /// Меняем connect '/usr/sbin/chat -v -f /etc/chatscript/life-connect'   на connect '/usr/sbin/chat -v -f /etc/chatscript/mts-connect'
-        /// ( в начале открывшегося файла должен быть указан порт, по которому подключен модем скорее всего dev/ttyS0 )
-        /// но пишем весь файл
+        ///     Настраиваем бридж cp /etc/ppp/peers/life /etc/ppp/peers/mts
+        ///     Открываем для редактирования nano -w /etc/ppp/peers/mts
+        ///     Меняем connect '/usr/sbin/chat -v -f /etc/chatscript/life-connect'   на connect '/usr/sbin/chat -v -f
+        ///     /etc/chatscript/mts-connect'
+        ///     ( в начале открывшегося файла должен быть указан порт, по которому подключен модем скорее всего dev/ttyS0 )
+        ///     но пишем весь файл
         /// </summary>
-        public static void CreateBridgeFile(this GprsProvider provider, ModelModem modelModem, string ttyDevice, int speed)
+        public static void CreateBridgeFile(this GprsProvider provider, ModelModem modelModem, string ttyDevice,
+            int speed)
         {
             var file = provider.LinuxBridgeFile(true);
             {
@@ -249,7 +269,7 @@ namespace IBox.Modem.IRZ.Shell
                     writer.Write(preconfig);
                     writer.WriteLine("connect '/usr/sbin/chat -e -v -f " + provider.LinuxScriptFile(true) + "'");
 
-                    if ((modelModem == ModelModem.Wavecom) && preconfig.Contains("user ibox"))
+                    if (modelModem == ModelModem.Wavecom && preconfig.Contains("user ibox"))
                         try
                         {
                             using (var writer2 = new StreamWriter("/etc/ppp/pap-secrets", false))

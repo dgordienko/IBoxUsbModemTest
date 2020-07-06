@@ -42,6 +42,10 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Protocol\RequestImeiHandler.cs" />
+    <Compile Include="Protocol\RequestNetworkStatusHandler.cs" />
+    <Compile Include="Protocol\RequestRevisionIdentificationHandler.cs" />
+    <Compile Include="Protocol\RequestSignalQualityHandler.cs" />
     <Compile Include="Shell\Adapter.cs" />
     <Compile Include="Shell\IAdapter.cs" />
     <Compile Include="Shell\ConnectConfiguration.cs" />
@@ -74,7 +78,7 @@
     <Compile Include="Protocol\RequestImsiHandler.cs" />
     <Compile Include="Core\IModemRequestHandler.cs" />
     <Compile Include="Core\ModemRequestContext.cs" />
-    <Compile Include="Core\AbstractModemCommandHandle.cs" />
+    <Compile Include="Core\AbstractModemCommandHandler.cs" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Shell\" />

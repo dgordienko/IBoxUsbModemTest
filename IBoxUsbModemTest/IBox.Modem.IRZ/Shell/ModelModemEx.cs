@@ -13,12 +13,13 @@ namespace IBox.Modem.IRZ.Shell
                 case ModelModem.SiemensMC35: return "MC35";
                 case ModelModem.Wavecom: return "Wavecom";
                 case ModelModem.PantechUM175: return "PantechUM175";
-                case ModelModem.Cinterion: return "BGS2-E";//DEVSPACE-3943
+                case ModelModem.Cinterion: return "BGS2-E"; //DEVSPACE-3943
                 case ModelModem.Quectel: return "Quectel M95";
                 case ModelModem.TU32: return "Huawei TU32";
 
                 case ModelModem.MU709: return "iRZ";
             }
+
             throw new ArgumentOutOfRangeException("...добавь case...");
         }
 
@@ -36,6 +37,7 @@ namespace IBox.Modem.IRZ.Shell
                 case ModelModem.TU32: return "Huawei TU32";
                 case ModelModem.MU709: return "iRZ";
             }
+
             throw new ArgumentOutOfRangeException("...добавь case...");
         }
 
@@ -46,11 +48,12 @@ namespace IBox.Modem.IRZ.Shell
             {
                 var description = model.Description();
                 var mdl = model.ToString();
-                
+
                 if (model.Description().Equals(request, StringComparison.OrdinalIgnoreCase) ||
                     model.ToString().Equals(request, StringComparison.OrdinalIgnoreCase))
                     return model;
             }
+
             throw new ArgumentException($"Unknown value '{request}'");
         }
 
@@ -62,9 +65,11 @@ namespace IBox.Modem.IRZ.Shell
             if (atManufacturer.Equals("SIEMENS", StringComparison.OrdinalIgnoreCase) ||
                 atManufacturer.Equals("Cinterion", StringComparison.OrdinalIgnoreCase)) //DEVSPACE-3943
                 return ModelModem.SiemensMC35;
-            if (atManufacturer.StartsWith("WAVECOM", StringComparison.OrdinalIgnoreCase)) // WAVECOM MODEM  MULTIBAND  900E  1800
+            if (atManufacturer.StartsWith("WAVECOM", StringComparison.OrdinalIgnoreCase)
+            ) // WAVECOM MODEM  MULTIBAND  900E  1800
                 return ModelModem.Wavecom;
-            if (atManufacturer.StartsWith("PANTECH", StringComparison.OrdinalIgnoreCase)) // PANTECH UM175      PANTECH UM175AL
+            if (atManufacturer.StartsWith("PANTECH", StringComparison.OrdinalIgnoreCase)
+            ) // PANTECH UM175      PANTECH UM175AL
                 return ModelModem.PantechUM175;
 
             if (atManufacturer.StartsWith("Huawei", StringComparison.OrdinalIgnoreCase))
@@ -82,9 +87,11 @@ namespace IBox.Modem.IRZ.Shell
                 atModelName.Equals("MC35i", StringComparison.OrdinalIgnoreCase) ||
                 atModelName.Equals("BGS2-E", StringComparison.OrdinalIgnoreCase)) //DEVSPACE-3943
                 return ModelModem.SiemensMC35;
-            if (atModelName.Equals("MULTIBAND  900E  1800", StringComparison.OrdinalIgnoreCase)) // WAVECOM MODEM  MULTIBAND  900E  1800
+            if (atModelName.Equals("MULTIBAND  900E  1800", StringComparison.OrdinalIgnoreCase)
+            ) // WAVECOM MODEM  MULTIBAND  900E  1800
                 return ModelModem.Wavecom;
-            if (atModelName.StartsWith("UM175", StringComparison.OrdinalIgnoreCase)) // PANTECH UM175      PANTECH UM175AL
+            if (atModelName.StartsWith("UM175", StringComparison.OrdinalIgnoreCase)
+            ) // PANTECH UM175      PANTECH UM175AL
                 return ModelModem.PantechUM175;
 
             if (atModelName.StartsWith("MU709", StringComparison.OrdinalIgnoreCase))
@@ -92,6 +99,5 @@ namespace IBox.Modem.IRZ.Shell
 
             return ModelModem.Unknown;
         }
-
     }
 }

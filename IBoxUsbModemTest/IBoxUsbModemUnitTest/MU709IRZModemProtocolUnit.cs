@@ -1,32 +1,14 @@
 ﻿using System.Configuration;
 using FluentAssertions;
-using Serilog;
-using Serilog.Core;
-using Xunit;
-
-using IBox.Modem.IRZ.Shell;
-using IBox.Modem.IRZ.Protocol;
 using IBox.Modem.IRZ.Core;
+using IBox.Modem.IRZ.Protocol;
+using IBox.Modem.IRZ.Shell;
+using Xunit;
 
 namespace IBoxUsbModemUnitTest
 {
-    public class MU709IRZModemProtocolUnit
+    public class Mu709IrzModemProtocolUnit
     {
-        private readonly Logger _logger = new LoggerConfiguration()
-            .WriteTo.Console().CreateLogger();
-
-        private ModemStatus _status = new ModemStatus
-        {
-            IsSuccess = false,
-            State = "Not initialized",
-            Manufacturer = "None",
-            ModelName = string.Empty,
-            SerialNumber = "SN xyz",
-            SignalQuality = new SignalQuality { dBmW = 0, Percent = "0.0", IsValid = false },
-            Imsi = string.Empty,
-            Imei = string.Empty,
-            OperatorName = string.Empty
-        };
 
         private readonly ConnectConfiguration _configuration = new ConnectConfiguration
         {
@@ -35,74 +17,188 @@ namespace IBoxUsbModemUnitTest
             PortName = ConfigurationManager.AppSettings["port"]
         };
 
-        [Fact(DisplayName = "Get echo handle test")]
-        public void EchoHandlerTest()
+        [Fact(DisplayName = "Request echo handle test")]
+        public void EchoHandleTest()
         {
+            var status = new ModemStatus
+            {
+                IsSuccess = false,
+                State = "Not initialized",
+                Manufacturer = "None",
+                ModelName = string.Empty,
+                SerialNumber = "SN xyz",
+                SignalQuality = new SignalQuality { dBmW = 0, Percent = "0.0", IsValid = false },
+                Imsi = string.Empty,
+                Imei = string.Empty,
+                OperatorName = string.Empty
+            };
             var request = new ModemRequestContext
             {
-                Response = _status,
+                Response = status,
                 Connection = _configuration
             };
             var handlerRequest = new RequestEchoHandler();
-            var result = handlerRequest.Handel(request, "AT");
+            var result = handlerRequest.Handle(request, "AT");
             result.Should().NotBeNull();
             result.Response.IsSuccess.Should().BeTrue();
         }
 
-        [Fact(DisplayName = "Get atz handle test")]
-        public void ResetHandlerTest()
+        [Fact(DisplayName = "Request IMSI handle test")]
+        public void ImsiHandleTest()
         {
+            var status = new ModemStatus
+            {
+                IsSuccess = false,
+                State = "Not initialized",
+                Manufacturer = "None",
+                ModelName = string.Empty,
+                SerialNumber = "SN xyz",
+                SignalQuality = new SignalQuality { dBmW = 0, Percent = "0.0", IsValid = false },
+                Imsi = string.Empty,
+                Imei = string.Empty,
+                OperatorName = string.Empty
+            };
             var request = new ModemRequestContext
             {
-                Response = _status,
+                Response = status,
                 Connection = _configuration
             };
-            var handler = new RequestResetHandler();
-            var result = handler.Handel(request, "ATZ");
+            var handler = new RequestImsiHandler();
+            var result = handler.Handle(request, "AT+CIMI");
             result.Should().NotBeNull();
             result.Response.IsSuccess.Should().BeTrue();
         }
 
-        [Fact(DisplayName = "Get manufacturer test")]
+        [Fact(DisplayName = "Request manufacturer test")]
         public void RequestManufacturerTest()
         {
+            var status = new ModemStatus
+            {
+                IsSuccess = false,
+                State = "Not initialized",
+                Manufacturer = "None",
+                ModelName = string.Empty,
+                SerialNumber = "SN xyz",
+                SignalQuality = new SignalQuality { dBmW = 0, Percent = "0.0", IsValid = false },
+                Imsi = string.Empty,
+                Imei = string.Empty,
+                OperatorName = string.Empty
+            };
             var request = new ModemRequestContext
             {
-                Response = _status,
+                Response = status,
                 Connection = _configuration
             };
             var handler = new RequestManufaturerHandler();
-            var result = handler.Handel(request, "AT+GMI");
+            var result = handler.Handle(request, "AT+GMI");
             result.Should().NotBeNull();
             result.Response.Manufacturer.Should().NotBeEmpty();
             result.Response.IsSuccess.Should().BeTrue();
         }
 
-        [Fact(DisplayName = "Get model name handle test")]
-        public void RequestModelHandlerTest()
+        [Fact(DisplayName = "Request model name handle test")]
+        public void RequestModelTest()
         {
+            var status = new ModemStatus
+            {
+                IsSuccess = false,
+                State = "Not initialized",
+                Manufacturer = "None",
+                ModelName = string.Empty,
+                SerialNumber = "SN xyz",
+                SignalQuality = new SignalQuality { dBmW = 0, Percent = "0.0", IsValid = false },
+                Imsi = string.Empty,
+                Imei = string.Empty,
+                OperatorName = string.Empty
+            };
             var request = new ModemRequestContext
             {
-                Response = _status,
+                Response = status,
                 Connection = _configuration
             };
             var handler = new RequestModelHandler();
-            var result = handler.Handel(request, "AT+GMM");
+            var result = handler.Handle(request, "AT+GMM");
             result.Should().NotBeNull();
             result.Response.ModelName.Should().NotBeEmpty();
             result.Response.IsSuccess.Should().BeTrue();
         }
 
-        [Fact(DisplayName = "Get IMSI handle test")]
-        public void ImsiHandlerTest()
+        [Fact(DisplayName = "Request atz handle test")]
+        public void ResetHandlerTest()
         {
+            var status = new ModemStatus
+            {
+                IsSuccess = false,
+                State = "Not initialized",
+                Manufacturer = "None",
+                ModelName = string.Empty,
+                SerialNumber = "SN xyz",
+                SignalQuality = new SignalQuality { dBmW = 0, Percent = "0.0", IsValid = false },
+                Imsi = string.Empty,
+                Imei = string.Empty,
+                OperatorName = string.Empty
+            };
             var request = new ModemRequestContext
             {
-                Response = _status,
+                Response = status,
                 Connection = _configuration
             };
-            var handler = new RequestImsiHandler();
-            var result = handler.Handel(request, "AT+CIMI");
+            var handler = new RequestResetHandler();
+            var result = handler.Handle(request, "ATZ");
+            result.Should().NotBeNull();
+            result.Response.IsSuccess.Should().BeTrue();
+        }
+
+        [Fact(DisplayName = "Request revision identification of software status")]
+        public void RequestRevisionIdentificationHandleTest()
+        {
+            var status = new ModemStatus
+            {
+                IsSuccess = false,
+                State = "Not initialized",
+                Manufacturer = "None",
+                ModelName = string.Empty,
+                SerialNumber = "SN xyz",
+                SignalQuality = new SignalQuality { dBmW = 0, Percent = "0.0", IsValid = false },
+                Imsi = string.Empty,
+                Imei = string.Empty,
+                OperatorName = string.Empty
+            };
+            var command = "AT+CGMR";
+            var request = new ModemRequestContext
+            {
+                Response = status,
+                Connection = _configuration
+            };
+            var handle = new RequestRevisionIdentificationHandler();
+            var result = handle.Handle(request, command);
+            result.Should().NotBeNull();
+            result.Response.IsSuccess.Should().BeTrue();
+        }
+
+        [Fact(DisplayName ="Request network status")]
+        public void RequestNetworkStatusHandelTest()
+        {
+            var status = new ModemStatus
+            {
+                IsSuccess = false,
+                State = "Not initialized",
+                Manufacturer = "None",
+                ModelName = string.Empty,
+                SerialNumber = "SN xyz",
+                SignalQuality = new SignalQuality { dBmW = 0, Percent = "0.0", IsValid = false },
+                Imsi = string.Empty,
+                Imei = string.Empty,
+                OperatorName = string.Empty
+            };
+            var handle = new RequestNetworkStatusHandler();
+            var request = new ModemRequestContext
+            {
+                Response = status,
+                Connection = _configuration
+            };
+            var command = @"AT+CREG?";
+            var result = handle.Handle(request, command);
             result.Should().NotBeNull();
             result.Response.IsSuccess.Should().BeTrue();
         }

@@ -1,8 +1,6 @@
 ﻿namespace IBox.Modem.IRZ.Shell
 {
-
-    public class Adapter :Disposable, IAdapter
+    public class Adapter : Disposable, IAdapter
     {
-
     }
 }
