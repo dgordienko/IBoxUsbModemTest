@@ -12,7 +12,9 @@ namespace IBox.Modem.IRZ.Core
     /// </summary>
     public sealed class ModemManager
     {
-        private static readonly Lazy<ModemManager> Lazy = 
+        private const int Sleep = 500;
+        private readonly object _locker = new object();
+        private static readonly Lazy<ModemManager> Lazy =
             new Lazy<ModemManager>(() => new ModemManager());
 
         private readonly SerialPort _serial;
@@ -116,12 +118,12 @@ namespace IBox.Modem.IRZ.Core
                 }
 
                 var p = _serial.Parity.ToString().Substring(0, 1);
-                var hs = _serial.Handshake == Handshake.None ? "No Handshake" : 
+                var hs = _serial.Handshake == Handshake.None ? "No Handshake" :
                     _serial.Handshake.ToString();
 
                 OnStatusChanged?.Invoke(this,
                     $"Connected to {_serial.PortName}: {_serial.BaudRate} bps, " +
-                    	"{_serial.DataBits}{p}{sb}, {hs}.");
+                        "{_serial.DataBits}{p}{sb}, {hs}.");
 
                 OnSerialPortOpened?.Invoke(this, true);
             }
@@ -149,20 +151,21 @@ namespace IBox.Modem.IRZ.Core
         /// <param name="message"></param>
         public void SendString(string message)
         {
-            if (_serial.IsOpen)
-                try
-                {
-                    var data = Encoding.ASCII.GetBytes($"{message}\r\n");
-                    _serial.Write(data, 0, data.Length);
-                    OnStatusChanged?.Invoke(this, $"Command sent: {message}");
-                }
-                catch (Exception exception)
-                {
-                    OnStatusChanged?.Invoke(this, $"Failed to send command {message}: {exception.Message}");
-#if DEBUG
-                    throw;
-#endif
-                }
+
+            {
+                if (_serial.IsOpen)
+                    try
+                    {
+                        var data = Encoding.ASCII.GetBytes($"{message}\r\n");
+                        _serial.Write(data, 0, data.Length);
+                        OnStatusChanged?.Invoke(this, $"Command sent: {message}");
+                    }
+                    catch (Exception exception)
+                    {
+                        OnStatusChanged?.Invoke(this, $"Failed to send command {message}: {exception.Message}");
+                    }
+            }
+
         }
 
         private void StartReading()
@@ -179,35 +182,49 @@ namespace IBox.Modem.IRZ.Core
         {
             if (_keepReading)
             {
-                _keepReading = false;
-                _readThread.Join();
+                //_readThread.Abort(100);
+               // _readThread.Join();
                 _readThread = null;
+                _keepReading = false;
             }
         }
 
         private void ReadPort()
         {
-            while (_keepReading)
-                if (_serial.IsOpen)
+            var waitTime = new TimeSpan(0, 0, 0, 0, Sleep);
+            lock (this)
+            {
+                while (_keepReading)
                 {
-                    var readBuffer = new byte[_serial.ReadBufferSize + 1];
-                    try
+                    if (_serial.IsOpen)
                     {
-                        var count = _serial.Read(readBuffer, 0, _serial.ReadBufferSize);
-                        var data = Encoding.ASCII.GetString(readBuffer, 0, count);
-                        OnDataReceived?.Invoke(this, data);
+                        try
+                        {
+                            var readBuffer = new byte[_serial.ReadBufferSize + 1];
+                            var count = _serial.Read(readBuffer, 0, _serial.ReadBufferSize);
+                            var data = Encoding.ASCII.GetString(readBuffer, 0, count);
+                            OnDataReceived?.Invoke(this, data);
+                        }
+                        catch (ThreadAbortException abort)
+                        {
+                            Debug.WriteLine(abort.Message);
+                        }
+                        catch (TimeoutException timeout)
+                        {
+                            Debug.WriteLine(timeout.Message);
+                        }
                     }
-                    catch (TimeoutException exception)
+                    else
                     {
-                        //_keepReading = false;
-                        Debug.WriteLine(exception);
+                        //lock (_locker)
+                        {
+                            Monitor.Wait(this, waitTime);
+                        }
                     }
                 }
-                else
-                {
-                    var waitTime = new TimeSpan(0, 0, 0, 0, 300);
-                    Thread.Sleep(waitTime);
-                }
+            }
         }
+
     }
+
 }

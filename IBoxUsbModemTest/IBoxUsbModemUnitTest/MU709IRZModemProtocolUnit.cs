@@ -17,7 +17,7 @@ namespace IBoxUsbModemUnitTest
             PortName = ConfigurationManager.AppSettings["port"]
         };
 
-        [Fact(DisplayName = "Request echo handle test")]
+        [Fact(DisplayName = "Request echo handler test")]
         public void EchoHandleTest()
         {
             var status = new ModemStatus
@@ -43,7 +43,7 @@ namespace IBoxUsbModemUnitTest
             result.Response.IsSuccess.Should().BeTrue();
         }
 
-        [Fact(DisplayName = "Request IMSI handle test")]
+        [Fact(DisplayName = "Request IMSI handler test",Skip ="insert sim card")]
         public void ImsiHandleTest()
         {
             var status = new ModemStatus
@@ -96,7 +96,7 @@ namespace IBoxUsbModemUnitTest
             result.Response.IsSuccess.Should().BeTrue();
         }
 
-        [Fact(DisplayName = "Request model name handle test")]
+        [Fact(DisplayName = "Request model name handler test")]
         public void RequestModelTest()
         {
             var status = new ModemStatus
@@ -123,7 +123,7 @@ namespace IBoxUsbModemUnitTest
             result.Response.IsSuccess.Should().BeTrue();
         }
 
-        [Fact(DisplayName = "Request atz handle test")]
+        [Fact(DisplayName = "Request atz handler test")]
         public void ResetHandlerTest()
         {
             var status = new ModemStatus
@@ -176,7 +176,7 @@ namespace IBoxUsbModemUnitTest
             result.Response.IsSuccess.Should().BeTrue();
         }
 
-        [Fact(DisplayName ="Request network status")]
+        [Fact(DisplayName = "Request network status", Skip = "insert sim card")]
         public void RequestNetworkStatusHandelTest()
         {
             var status = new ModemStatus
@@ -198,6 +198,33 @@ namespace IBoxUsbModemUnitTest
                 Connection = _configuration
             };
             var command = @"AT+CREG?";
+            var result = handle.Handle(request, command);
+            result.Should().NotBeNull();
+            result.Response.IsSuccess.Should().BeTrue();
+        }
+
+        [Fact(DisplayName = "Request signal quality", Skip = "insert sim card")]
+        public void RequestSignalQualityHandlerTest()
+        {
+            var status = new ModemStatus
+            {
+                IsSuccess = false,
+                State = "Not initialized",
+                Manufacturer = "None",
+                ModelName = string.Empty,
+                SerialNumber = "SN xyz",
+                SignalQuality = new SignalQuality { dBmW = 0, Percent = "0.0", IsValid = false },
+                Imsi = string.Empty,
+                Imei = string.Empty,
+                OperatorName = string.Empty
+            };
+            var handle = new RequestSignalQualityHandler();
+            var request = new ModemRequestContext
+            {
+                Response = status,
+                Connection = _configuration
+            };
+            var command = @"AT+CSQ";
             var result = handle.Handle(request, command);
             result.Should().NotBeNull();
             result.Response.IsSuccess.Should().BeTrue();

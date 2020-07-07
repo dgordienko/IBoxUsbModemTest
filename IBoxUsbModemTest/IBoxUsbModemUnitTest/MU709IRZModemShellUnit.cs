@@ -38,25 +38,16 @@ namespace IBoxUsbModemUnitTest
         }
 
 
-        [Fact(DisplayName = "interface IModem, method GetModemStatus()")]
+        [Fact(DisplayName = "Get modem status")]
         public void GetModemStatusTest()
         {
-            // modem commands
-            var echo = new RequestEchoHandler();
-            var imai = new RequestImeiHandler();
-            var imsi = new RequestImsiHandler();
-            var manufacturer = new RequestManufaturerHandler();
-            var model = new RequestModelHandler();
-            var atz = new RequestResetHandler();
-            var revision = new RequestRevisionIdentificationHandler();
-            var quality = new RequestSignalQualityHandler();
-
             var configuration = new ConnectConfiguration
             {
                 ConnectionType = ConnectionType.Usb,
                 BaudRate = int.Parse(ConfigurationManager.AppSettings["baudrate"]),
                 PortName = ConfigurationManager.AppSettings["port"]
             };
+
             var status = new ModemStatus
             {
                 IsSuccess = false,
@@ -69,45 +60,31 @@ namespace IBoxUsbModemUnitTest
                 Imei = string.Empty,
                 OperatorName = string.Empty
             };
+
             var request = new ModemRequestContext
             {
                 Response = status,
                 Connection = configuration
             };
 
-
-           echo.SetNext(atz)
-            .SetNext(model)
-            .SetNext(manufacturer)
-            .SetNext(imsi)
-            .SetNext(imai)
-            .SetNext(revision)
-            .SetNext(quality);  
-                         
-            var commads = new List<string> 
-            { 
-                "AT","AT+GMI"
-            };
-            ModemCommandWorkflow.Commands = commads;
-            var result = ModemCommandWorkflow.Workflow(request, echo);
-
-        }
-    }
-
-    public static class ModemCommandWorkflow
-    {
-        public static List<string> Commands { get; set; }
-        public static List<ModemRequestContext> Workflow(ModemRequestContext context, 
-            AbstractModemCommandHandler handler)
-        {
-            var request = context;
-            List<ModemRequestContext> results = new List<ModemRequestContext>();
-            foreach (var command in Commands)
+            var commands = new Dictionary<string, AbstractModemCommandHandler>
             {
-               var result =  handler.Handle(request,command);
-               results.Add(result);
+                {"AT",new RequestEchoHandler() },
+                {"AT+GMI", new RequestManufaturerHandler() },
+                {"AT+GMM", new RequestModelHandler()},
+                {"AT+CGMR", new RequestRevisionIdentificationHandler()}
+            };
+            var results = new Dictionary<string, ModemRequestContext>();
+            foreach (var command in commands)
+            {
+                var commandString = command.Key;
+                var commandClass = command.Value;
+                var commandResult = commandClass.Handle(request, commandString);
+                results.Add(commandString,commandResult);
             }
-            return results;
+
         }
     }
+
+
 }

@@ -13,6 +13,9 @@ namespace IBox.Modem.IRZ.Protocol
     public sealed class RequestSignalQualityHandler : AbstractModemCommandHandler
     {
         private const string Command = "AT+CSQ";
+        private const int Sleep = 500;
+
+        protected override string ModemCommand => Command;
 
         /// <summary>
         /// </summary>
@@ -44,7 +47,7 @@ namespace IBox.Modem.IRZ.Protocol
                     {
                         Debug.WriteLine(exception.Message);
                         request.Response.IsSuccess = false;
-                        request.Description.Add($"Error send {Command} - {exception.Message}");
+                        //request.Description.Add($"Error send {Command} - {exception.Message}");
                         received = false;
 #if DEBUG
                         throw;
@@ -103,12 +106,32 @@ namespace IBox.Modem.IRZ.Protocol
                 {
                     helper.Open(request.Connection.PortName);
                 }
+                else
+                {
+                    helper.Close();
+                    helper.Open(request.Connection.PortName);
+                }
+                lock (_locker)
+                {
+                    while (received)
+                    {
+                        Monitor.Wait(_locker, TimeSpan.FromMilliseconds(Sleep));
+                    }
+                }
 
-                while (received)
-                    Thread.Sleep(300);
                 return request;
             }
             return base.Handle(request, param);
+        }
+
+        protected override void OnDataReceived(object sender, string response)
+        {
+            throw new NotImplementedException();
+        }
+
+        protected override void OnStatusChanged(object sender, string response)
+        {
+            throw new NotImplementedException();
         }
     }
 }
